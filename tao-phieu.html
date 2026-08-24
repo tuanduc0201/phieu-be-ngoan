@@ -75,7 +75,7 @@
   }
   .o textarea { resize: vertical; min-height: 76px; line-height: 1.5; }
   .o input::placeholder, .o textarea::placeholder { color: var(--xam); }
-  .hai { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .hai { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); gap: 14px; }
 
   .goi { display: flex; flex-wrap: wrap; gap: 7px; }
   .goi button {
@@ -259,6 +259,10 @@
         <div class="o">
           <label for="i-n">Ngày</label>
           <input id="i-n" data-k="n" placeholder="24.08.2026">
+        </div>
+        <div class="o">
+          <label for="i-so">Số phiếu</label>
+          <input id="i-so" data-k="so" placeholder="1" inputmode="numeric">
         </div>
       </div>
     </form>
