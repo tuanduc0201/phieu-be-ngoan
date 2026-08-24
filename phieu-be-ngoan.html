@@ -58,10 +58,19 @@
     @keyframes troi { to { transform: translate(14px, -22px) rotate(12deg); } }
   }
 
+  /* pháo giấy phủ trên cùng, không chắn thao tác */
+  .phao {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+  }
+
   @media print {
     .sanh { min-height: 0; padding: 0; }
     .sanh::before, .bui { display: none; }
     .the { box-shadow: none; animation: none; max-width: none; }
+    .phao { display: none; }
     .the .sao svg { animation: none; }
   }
 </style>
@@ -75,6 +84,9 @@
 
 <script>
 {{include:partials/phieu.js}}
+</script>
+<script>
+{{include:partials/phao.js}}
 </script>
 <script>
 (function () {
