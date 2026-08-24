@@ -595,7 +595,8 @@ var PHIEU = (function () {
     var tt = document.getElementById("trang-thai");
     if (!nut) return;
 
-    var khoa = "pbn-dung-so-" + (d.so || "1");
+    // khoá theo từng phiếu: mỗi liên kết khác nhau là một phiếu riêng
+    var khoa = "pbn-dung-" + (location.hash || "#mac-dinh");
     try {
       var cu = localStorage.getItem(khoa);
       if (cu) { khoaNut(nut, cu); return; }
