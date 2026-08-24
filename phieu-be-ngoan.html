@@ -80,11 +80,13 @@
 (function () {
   var d = PHIEU.tuDiaChi();
   PHIEU.veThe(document.getElementById("the"), d);
+  PHIEU.ganNutDung(d);
   if (d.t) document.title = "Phiếu bé ngoan · " + d.t;
   // đổi nội dung khi phần neo thay đổi (bấm lại liên kết khác)
   window.addEventListener("hashchange", function () {
     var m = PHIEU.tuDiaChi();
     PHIEU.veThe(document.getElementById("the"), m);
+    PHIEU.ganNutDung(m);
     if (m.t) document.title = "Phiếu bé ngoan · " + m.t;
   });
 })();

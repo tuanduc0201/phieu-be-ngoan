@@ -11,6 +11,14 @@ var PHIEU = (function () {
 
   var SO_PHIEU = "Số 2504";
 
+  /* Nơi nhận thư khi người ta bấm "Sử dụng". FormSubmit không cần tài khoản,
+     nhưng lần gửi đầu tiên nó chỉ gửi thư kích hoạt tới địa chỉ này — phải bấm
+     liên kết trong thư đó thì các lần sau mới nhận được nội dung.
+     Sau khi kích hoạt, FormSubmit cho một mã ẩn dùng thay địa chỉ email, thay
+     vào đây để email không lộ trong mã nguồn trang. */
+  var NOI_NHAN = "luutuanduc020201@gmail.com";
+  var URL_GUI = "https://formsubmit.co/ajax/" + NOI_NHAN;
+
   var GOI_Y_LOI = [
     "làm xong việc khó mà không càu nhàu",
     "đi ngủ trước mười hai giờ, ba đêm liền",
@@ -112,7 +120,7 @@ var PHIEU = (function () {
            '<div class="meo meo-3"><svg viewBox="0 0 32 30" fill="#FFC95C" aria-hidden="true"><use href="#sao"/></svg></div>';
   }
 
-  function veThe(el, d) {
+  function veThe(el, d, xemTruoc) {
     var n = Math.max(0, Math.min(5, parseInt(d.s, 10) || 0));
     el.innerHTML =
       '<div class="dau-the"><span class="nhan-the">Phiếu bé ngoan</span></div>' +
@@ -121,7 +129,11 @@ var PHIEU = (function () {
       '<div class="sao" role="img" aria-label="' + n + ' trên 5 sao">' + saoHtml(n) + '</div>' +
       '<p class="vi"><span>Vì đã</span>' + esc(d.l) + '</p>' +
       (d.r ? '<div class="doi"><span class="doi-nhan">Đổi được</span>' +
-             '<strong class="doi-noi">' + esc(d.r) + '</strong></div>' : '') +
+             '<strong class="doi-noi">' + esc(d.r) + '</strong>' +
+             '<button type="button" class="nut-dung" id="nut-dung"' +
+             (xemTruoc ? ' disabled title="Người nhận phiếu mới bấm được nút này"' : '') +
+             '>Sử dụng</button>' +
+             '<span class="trang-thai" id="trang-thai" role="status"></span></div>' : '') +
       '<div class="chan-the">' +
         '<div><span class="nhan-nho">Người trao</span><b>' + esc(d.g) + '</b></div>' +
         '<div class="ngay"><span class="nhan-nho">Ngày</span><b>' + esc(d.n) + '</b></div>' +
@@ -131,11 +143,78 @@ var PHIEU = (function () {
       meoHtml(d.c);
   }
 
+  /* ---------- nút "Sử dụng" ---------- */
+
+  function gioPhut(dt) {
+    var hai = function (x) { return (x < 10 ? "0" : "") + x; };
+    return hai(dt.getHours()) + ":" + hai(dt.getMinutes()) + " · " +
+           hai(dt.getDate()) + "." + hai(dt.getMonth() + 1) + "." + dt.getFullYear();
+  }
+
+  function khoaNut(nut, luc) {
+    nut.disabled = true;
+    nut.classList.add("da-dung");
+    nut.textContent = "Đã dùng lúc " + luc;
+  }
+
+  function ganNutDung(d) {
+    var nut = document.getElementById("nut-dung");
+    var tt = document.getElementById("trang-thai");
+    if (!nut) return;
+
+    var khoa = "pbn-dung-" + (location.hash || "#mac-dinh");
+    try {
+      var cu = localStorage.getItem(khoa);
+      if (cu) { khoaNut(nut, cu); return; }
+    } catch (e) { /* không có bộ nhớ thì thôi */ }
+
+    nut.addEventListener("click", function () {
+      var luc = gioPhut(new Date());
+      nut.disabled = true;
+      nut.textContent = "Đang gửi…";
+      tt.textContent = "";
+
+      fetch(URL_GUI, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: "Phiếu bé ngoan: " + (d.t || "") + " đã dùng phần thưởng",
+          _template: "table",
+          _captcha: "false",
+          "Phần thưởng": d.r,
+          "Bấm sử dụng lúc": luc,
+          "Trao cho": d.t,
+          "Người trao": d.g,
+          "Ngày trên phiếu": d.n,
+          "Số phiếu": SO_PHIEU
+        })
+      }).then(function (r) {
+        return r.json().catch(function () { return {}; });
+      }).then(function (kq) {
+        if (kq && String(kq.success) === "true") {
+          try { localStorage.setItem(khoa, luc); } catch (e) { /* bỏ qua */ }
+          khoaNut(nut, luc);
+          tt.textContent = "Đã báo cho người trao phiếu.";
+        } else {
+          nut.disabled = false;
+          nut.textContent = "Sử dụng";
+          tt.textContent = kq && kq.message
+            ? "Chưa gửi được: " + kq.message
+            : "Chưa gửi được, thử lại nhé.";
+        }
+      }).catch(function () {
+        nut.disabled = false;
+        nut.textContent = "Sử dụng";
+        tt.textContent = "Chưa gửi được — kiểm tra mạng rồi thử lại nhé.";
+      });
+    });
+  }
+
   return {
     MEO: MEO, MEO_TEN: MEO_TEN,
     GOI_Y_LOI: GOI_Y_LOI, GOI_Y_THUONG: GOI_Y_THUONG,
     macDinh: macDinh, homNay: homNay,
     maHoa: maHoa, giaiMa: giaiMa, tuDiaChi: tuDiaChi, diaChiPhieu: diaChiPhieu,
-    veThe: veThe
+    veThe: veThe, ganNutDung: ganNutDung
   };
 })();

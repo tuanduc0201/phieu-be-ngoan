@@ -373,7 +373,7 @@
   }
 
   function ve() {
-    PHIEU.veThe(el("the"), d);
+    PHIEU.veThe(el("the"), d, true);   // true = bản xem trước, nút Sử dụng bị khoá
 
     document.querySelectorAll("[data-k]").forEach(function (inp) {
       if (inp.value !== d[inp.getAttribute("data-k")]) inp.value = d[inp.getAttribute("data-k")];
