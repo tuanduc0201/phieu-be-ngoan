@@ -1,15 +1,15 @@
 <title>Làm Phiếu Bé Ngoan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Be+Vietnam+Pro:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Be+Vietnam+Pro:wght@400;500;600&display=swap">
 <style>
 {{include:partials/tokens.css}}
 
   body {
     background:
-      radial-gradient(46% 34% at 8% 4%, rgba(255, 94, 122, 0.14), transparent 70%),
-      radial-gradient(40% 34% at 96% 96%, rgba(228, 179, 99, 0.10), transparent 70%),
-      var(--dem);
+      radial-gradient(44% 32% at 4% 0%, var(--mint-nhat), transparent 64%),
+      radial-gradient(40% 32% at 98% 100%, #FFE7C2, transparent 62%),
+      var(--nen);
     background-attachment: fixed;
     overflow-x: clip;   /* mèo dán tràn mép không được sinh thanh cuộn ngang */
   }
@@ -17,29 +17,28 @@
   .trang {
     max-width: 1180px;
     margin: 0 auto;
-    padding: clamp(28px, 6vw, 64px) clamp(18px, 4vw, 40px) clamp(48px, 8vw, 96px);
+    padding: clamp(28px, 6vw, 64px) clamp(22px, 4vw, 40px) clamp(48px, 8vw, 96px);
     display: flex; flex-direction: column;
     gap: clamp(28px, 5vw, 44px);
   }
 
   /* ---------- đầu trang ---------- */
-  .dinh { display: flex; flex-direction: column; gap: 12px; max-width: 46ch; }
+  .dinh { display: flex; flex-direction: column; gap: 12px; max-width: 52ch; }
   .mi {
-    font-size: .7rem; font-weight: 600;
-    letter-spacing: .3em; text-transform: uppercase;
-    color: var(--dong);
+    font-size: .72rem; font-weight: 600;
+    letter-spacing: .28em; text-transform: uppercase;
+    color: var(--mint);
   }
   .dinh h1 {
     margin: 0;
     font-family: var(--serif);
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-size: clamp(2.3rem, 7vw, 3.6rem);
+    font-weight: 700;
+    font-size: clamp(2.2rem, 7vw, 3.5rem);
     line-height: 1.02;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.035em;
     text-wrap: balance;
   }
-  .dinh p { margin: 0; color: var(--nga-mo); font-size: clamp(.98rem, 2.6vw, 1.08rem); line-height: 1.6; }
+  .dinh p { margin: 0; color: var(--muc-mo); font-size: clamp(.98rem, 2.6vw, 1.08rem); line-height: 1.6; }
 
   /* ---------- khung hai cột ---------- */
   .khung {
@@ -60,29 +59,29 @@
   }
   .o input, .o textarea {
     font: inherit; font-size: 1rem;
-    color: var(--nga);
-    background: rgba(247, 239, 232, 0.045);
+    color: var(--muc);
+    background: var(--the);
     border: 1px solid var(--vien);
     border-radius: 14px;
     padding: 13px 15px;
     width: 100%;
-    transition: border-color .18s ease, background .18s ease;
+    transition: border-color .18s ease, box-shadow .18s ease;
   }
   .o input:hover, .o textarea:hover { border-color: var(--vien-ro); }
   .o input:focus, .o textarea:focus {
     outline: none;
-    border-color: var(--hong);
-    background: rgba(255, 94, 122, 0.07);
+    border-color: var(--mint);
+    box-shadow: 0 0 0 3px var(--mint-rat);
   }
   .o textarea { resize: vertical; min-height: 76px; line-height: 1.5; }
-  .o input::placeholder, .o textarea::placeholder { color: var(--xam); opacity: .7; }
+  .o input::placeholder, .o textarea::placeholder { color: var(--xam); }
   .hai { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
   .goi { display: flex; flex-wrap: wrap; gap: 7px; }
   .goi button {
     font: inherit; font-size: .82rem;
     cursor: pointer;
-    color: var(--nga-mo);
+    color: var(--muc-mo);
     background: transparent;
     border: 1px solid var(--vien);
     border-radius: 999px;
@@ -90,14 +89,14 @@
     text-align: left;
     transition: color .16s ease, border-color .16s ease, background .16s ease;
   }
-  .goi button:hover { color: var(--nga); border-color: var(--hong); background: rgba(255, 94, 122, 0.08); }
+  .goi button:hover { color: var(--muc); border-color: var(--mint); background: var(--mint-rat); }
 
   .chon { display: flex; flex-wrap: wrap; gap: 8px; }
   .chon button {
     font: inherit; font-size: .9rem; font-weight: 500;
     cursor: pointer;
-    color: var(--nga-mo);
-    background: rgba(247, 239, 232, 0.04);
+    color: var(--muc-mo);
+    background: var(--the);
     border: 1px solid var(--vien);
     border-radius: 12px;
     padding: 9px 14px;
@@ -105,11 +104,12 @@
     transition: all .16s ease;
   }
   .chon button[aria-pressed="true"] {
-    color: var(--nga);
-    border-color: var(--hong);
-    background: rgba(255, 94, 122, 0.14);
+    color: var(--muc);
+    border-color: var(--mint);
+    background: var(--mint-rat);
+    box-shadow: inset 0 0 0 1px var(--mint);
   }
-  .chon .tim-nho { width: 15px; height: 15px; display: block; }
+  .chon .sao-nho { width: 15px; height: 15px; display: block; }
   .chon .meo-nho { width: 26px; height: 26px; display: block; }
 
   /* ---------- cột phải ---------- */
@@ -119,118 +119,130 @@
     font-size: .68rem; font-weight: 600;
     letter-spacing: .2em; text-transform: uppercase; color: var(--xam);
   }
+  .xem .the { max-width: 100%; }
 
-  /* khối quét */
-  .quet {
+  /* ---------- tạo mã ---------- */
+  .tao { display: flex; flex-direction: column; gap: 18px; }
+
+  .nut-lon {
+    font: inherit; font-size: 1.02rem; font-weight: 600;
+    cursor: pointer;
+    padding: 15px 24px;
+    border-radius: 999px;
+    border: none;
+    background: var(--mint);
+    color: #fff;
+    align-self: flex-start;
+    display: inline-flex; align-items: center; gap: 10px;
+    box-shadow: 0 10px 22px -12px rgba(23, 177, 149, 0.9);
+    transition: background .16s ease, transform .12s ease;
+  }
+  .nut-lon:hover { background: #12A085; }
+  .nut-lon:active { transform: translateY(1px); }
+
+  .kq {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    gap: clamp(10px, 2.4vw, 26px);
-  }
-  .chi-dan { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .nhan-quet {
-    margin: 0;
-    font-family: var(--serif);
-    font-weight: 600;
-    font-size: clamp(1.3rem, 4.4vw, 1.9rem);
-    line-height: 1.05;
-    color: var(--hong-nhat);
-    transform: rotate(-5deg);
-    text-wrap: balance;
-    text-align: center;
-  }
-  .mui { width: clamp(104px, 18vw, 168px); color: var(--hong); }
-  .mui.doc { display: none; width: clamp(48px, 12vw, 66px); }
-  .mui svg { width: 100%; height: auto; display: block; }
-
-  .ma {
-    background: #FFFDFB;
-    padding: clamp(13px, 2.6vw, 20px);
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: clamp(16px, 2.6vw, 24px);
+    align-items: start;
+    background: var(--the);
+    border: 1px solid var(--vien);
     border-radius: 22px;
-    box-shadow: 0 26px 50px -26px rgba(0, 0, 0, 0.85);
-    justify-self: end;
+    padding: clamp(16px, 3vw, 22px);
+    box-shadow: 0 24px 46px -30px rgba(22, 59, 54, 0.4);
   }
-  .ma svg { display: block; width: clamp(168px, 34vw, 232px); height: auto; color: #1F1730; }
+  .kq[hidden] { display: none; }
+  @media (max-width: 560px) { .kq { grid-template-columns: 1fr; justify-items: center; text-align: center; } }
 
-  @media (max-width: 920px) {
-    .quet { grid-template-columns: 1fr; justify-items: center; gap: 6px; }
-    .chi-dan { order: -1; }
-    .mui.ngang { display: none; }
-    .mui.doc { display: block; }
-    .ma { justify-self: center; }
+  .kq .ma-nho {
+    background: #fff;
+    border: 1px solid var(--vien);
+    border-radius: 16px;
+    padding: 10px;
   }
+  .kq .ma-nho svg { display: block; width: clamp(120px, 26vw, 156px); height: auto; color: var(--muc); }
+
+  .cot-link { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .cot-link > label {
+    font-size: .68rem; font-weight: 600;
+    letter-spacing: .2em; text-transform: uppercase; color: var(--xam);
+  }
+  .hop { display: flex; gap: 8px; }
+  .hop input {
+    font: inherit; font-size: .88rem;
+    flex: 1; min-width: 0;
+    color: var(--muc-mo);
+    background: var(--mint-rat);
+    border: 1px solid var(--vien);
+    border-radius: 12px;
+    padding: 11px 13px;
+    text-overflow: ellipsis;
+  }
+  .hop button {
+    font: inherit; font-size: .9rem; font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    padding: 11px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--mint);
+    background: var(--mint);
+    color: #fff;
+    transition: background .16s ease;
+  }
+  .hop button:hover { background: #12A085; }
+
+  .kq .ghi { margin: 0; font-size: .86rem; line-height: 1.6; color: var(--muc-mo); }
+  .kq .xem-qr {
+    font-size: .9rem; font-weight: 600;
+    color: var(--mint); text-decoration: none;
+    align-self: flex-start;
+  }
+  .kq .xem-qr:hover { text-decoration: underline; }
 
   .canh-bao {
     display: none;
     font-size: .88rem; line-height: 1.5;
-    color: var(--dong);
-    background: rgba(228, 179, 99, 0.1);
-    border: 1px solid rgba(228, 179, 99, 0.3);
+    color: #8A5A12;
+    background: #FFF3DC;
+    border: 1px solid #F5D9A0;
     border-radius: 12px;
     padding: 11px 14px;
   }
   .canh-bao.hien { display: block; }
 
-  .nut { display: flex; flex-wrap: wrap; gap: 10px; }
-  .nut button, .nut a {
-    font: inherit; font-size: .96rem; font-weight: 500;
-    cursor: pointer; text-decoration: none;
-    padding: 13px 20px;
-    border-radius: 999px;
-    border: 1px solid transparent;
-    display: inline-flex; align-items: center; gap: 8px;
-    transition: all .16s ease;
-  }
-  .nut .chinh { background: var(--hong); color: #241019; }
-  .nut .chinh:hover { background: var(--hong-nhat); }
-  .nut .mo { background: transparent; color: var(--nga); border-color: var(--vien-ro); }
-  .nut .mo:hover { border-color: var(--hong); color: var(--hong-nhat); }
-
-  .ghi-chu { margin: 0; font-size: .84rem; line-height: 1.6; color: var(--xam); max-width: 52ch; }
-
 {{include:partials/phieu.css}}
-
-  /* thu nhỏ thẻ trong khung xem trước cho vừa cột */
-  .xem .the { max-width: 100%; }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .mui.ngang { animation: nhun 1.6s ease-in-out infinite; }
-    @keyframes nhun { 50% { transform: translateX(8px); } }
-    .mui.doc { animation: nhun-doc 1.6s ease-in-out infinite; }
-    @keyframes nhun-doc { 50% { transform: translateY(8px); } }
-  }
 </style>
 
 {{include:partials/sprite.html}}
 
 <div class="trang">
   <header class="dinh">
-    <span class="mi">Dành cho người thương</span>
-    <h1>Làm phiếu bé ngoan</h1>
-    <p>Điền vài dòng bên dưới, rồi đưa mã QR cho người ấy quét. Điện thoại họ sẽ mở ra đúng tấm phiếu này — không cần cài gì, không cần đăng nhập.</p>
+    <span class="mi">Phiếu bé ngoan</span>
+    <h1>Làm phiếu, rồi gửi liên kết</h1>
+    <p>Soạn phiếu bên dưới rồi bấm tạo mã QR. Bạn sẽ được một liên kết để gửi đi — người nhận bấm vào là thấy mã QR, quét bằng điện thoại thì phiếu hiện ra.</p>
   </header>
 
   <div class="khung">
     <form class="bang" id="bang" autocomplete="off">
       <div class="o">
         <label for="i-t">Trao cho ai</label>
-        <input id="i-t" data-k="t" placeholder="Bảo Ngọc">
+        <input id="i-t" data-k="t" placeholder="Tên người được khen">
       </div>
 
       <div class="o">
         <label for="i-l">Vì đã…</label>
-        <textarea id="i-l" data-k="l" placeholder="kiên nhẫn nghe anh kể chuyện công việc suốt bốn mươi phút"></textarea>
+        <textarea id="i-l" data-k="l" placeholder="làm xong việc khó mà không càu nhàu"></textarea>
         <div class="goi" id="goi-l"></div>
       </div>
 
       <div class="o">
         <label for="i-r">Đổi được</label>
-        <input id="i-r" data-k="r" placeholder="một lần được chọn phim, không được cãi">
+        <input id="i-r" data-k="r" placeholder="một lần được chọn quán ăn">
         <div class="goi" id="goi-r"></div>
       </div>
 
       <div class="o">
-        <span class="nhan">Mấy tim</span>
+        <span class="nhan">Mấy sao</span>
         <div class="chon" id="chon-s"></div>
       </div>
 
@@ -242,7 +254,7 @@
       <div class="hai">
         <div class="o">
           <label for="i-g">Người trao</label>
-          <input id="i-g" data-k="g" placeholder="Anh">
+          <input id="i-g" data-k="g" placeholder="Ban Phát Phiếu">
         </div>
         <div class="o">
           <label for="i-n">Ngày</label>
@@ -257,35 +269,26 @@
         <article class="the" id="the"></article>
       </div>
 
-      <div class="quet">
-        <div class="chi-dan">
-          <p class="nhan-quet">Quét vào đây!</p>
-          <div class="mui ngang" aria-hidden="true">
-            <svg viewBox="0 0 200 92">
-              <path d="M8 22c26 42 82 52 158 42" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
-              <path d="M132 40l30 24-38 13" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+      <div class="tao">
+        <button type="button" class="nut-lon" id="nut-tao">Tạo mã QR và liên kết</button>
+
+        <p class="canh-bao" id="canh-bao"></p>
+
+        <div class="kq" id="kq" hidden>
+          <div class="ma-nho">
+            <svg id="qr" role="img" aria-label="Mã QR mở phiếu bé ngoan"></svg>
           </div>
-          <div class="mui doc" aria-hidden="true">
-            <svg viewBox="0 0 84 112">
-              <path d="M16 8c34 14 10 40 26 82" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
-              <path d="M22 66l20 26 22-22" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+          <div class="cot-link">
+            <label for="o-link">Liên kết gửi đi</label>
+            <div class="hop">
+              <input id="o-link" readonly>
+              <button type="button" id="nut-sao">Sao chép</button>
+            </div>
+            <p class="ghi">Gửi liên kết này cho người ta. Họ bấm vào sẽ thấy trang có mã QR to để quét. Mã nhỏ bên cạnh chính là mã đó — bạn cũng có thể chìa máy cho họ quét ngay.</p>
+            <a class="xem-qr" id="nut-xem" href="#" target="_blank" rel="noopener">Xem trước trang mã QR →</a>
           </div>
         </div>
-        <div class="ma">
-          <svg id="qr" role="img" aria-label="Mã QR mở phiếu bé ngoan"></svg>
-        </div>
       </div>
-
-      <p class="canh-bao" id="canh-bao"></p>
-
-      <div class="nut">
-        <button type="button" class="chinh" id="nut-sao">Sao chép liên kết</button>
-        <a class="mo" id="nut-mo" href="#" target="_blank" rel="noopener">Mở phiếu trong tab mới</a>
-      </div>
-
-      <p class="ghi-chu">Mã QR đổi theo từng chữ bạn nhập. Nội dung phiếu nằm trong phần sau dấu <b>#</b> của địa chỉ nên không được gửi lên máy chủ — lời nhắn chỉ nằm trong liên kết và trong máy người xem.</p>
     </div>
   </div>
 </div>
@@ -301,8 +304,9 @@
   "use strict";
 
   var el = function (id) { return document.getElementById(id); };
-  var KHOA = "tao-phieu-v1";
-  var GOC = location.href.replace(/[^/]*$/, "") + "phieu.html";
+  var KHOA = "tao-phieu-v2";
+  var THU_MUC = location.href.replace(/[^/#?]*(?:[?#].*)?$/, "");
+  var daTao = false;
 
   var d = PHIEU.macDinh();
   try {
@@ -314,7 +318,7 @@
   var hs = "";
   for (var i = 1; i <= 5; i++) {
     hs += '<button type="button" data-dat="s=' + i + '" aria-pressed="false">' +
-          '<svg class="tim-nho" viewBox="0 0 32 30" fill="#FF5E7A" aria-hidden="true"><use href="#tim"/></svg>' + i + '</button>';
+          '<svg class="sao-nho" viewBox="0 0 32 30" fill="#FFC95C" aria-hidden="true"><use href="#sao"/></svg>' + i + '</button>';
   }
   el("chon-s").innerHTML = hs;
 
@@ -332,38 +336,44 @@
   goiY("goi-l", PHIEU.GOI_Y_LOI, "l");
   goiY("goi-r", PHIEU.GOI_Y_THUONG, "r");
 
-  // --- vẽ mã QR ---
-  function veQR(url) {
-    var q, mucCuoi = "M";
-    try { q = QR.taoMa(url, "M"); }
+  // --- mã QR: nội dung là địa chỉ trang phiếu, giống mã người nhận sẽ quét ---
+  function veQR(urlPhieu) {
+    var q;
+    try { q = QR.taoMa(urlPhieu, "M"); }
     catch (e1) {
-      try { q = QR.taoMa(url, "L"); mucCuoi = "L"; }
+      try { q = QR.taoMa(urlPhieu, "L"); }
       catch (e2) { return null; }
     }
     var vien = 4, s = q.n + 2 * vien, svg = el("qr");
     svg.setAttribute("viewBox", (-vien) + " " + (-vien) + " " + s + " " + s);
     svg.innerHTML =
-      '<rect x="' + (-vien) + '" y="' + (-vien) + '" width="' + s + '" height="' + s + '" fill="#FFFDFB"/>' +
+      '<rect x="' + (-vien) + '" y="' + (-vien) + '" width="' + s + '" height="' + s + '" fill="#FFFFFF"/>' +
       '<path d="' + QR.duongDan(q) + '" fill="none" stroke="currentColor" stroke-width="1" shape-rendering="crispEdges"/>';
-    return { v: q.phienBan, muc: mucCuoi };
+    return q.phienBan;
   }
 
-  function ve() {
-    PHIEU.veThe(el("the"), d);
+  function capNhatKetQua() {
+    var neo = PHIEU.maHoa(d);
+    var linkGui = THU_MUC + "qr.html" + (neo ? "#" + neo : "");
+    var linkPhieu = THU_MUC + "phieu.html" + (neo ? "#" + neo : "");
 
-    var url = PHIEU.diaChiPhieu(GOC, d);
-    el("nut-mo").href = url;
+    el("o-link").value = linkGui;
+    el("nut-xem").href = linkGui;
 
-    var kq = veQR(url), cb = el("canh-bao");
-    if (!kq) {
-      cb.textContent = "Nội dung dài quá nên không nhét vừa mã QR. Rút ngắn dòng “Vì đã…” hoặc “Đổi được” giúp mình nhé.";
+    var v = veQR(linkPhieu), cb = el("canh-bao");
+    if (!v) {
+      cb.textContent = "Nội dung dài quá, không nhét vừa mã QR. Rút ngắn dòng “Vì đã…” hoặc “Đổi được” giúp mình nhé.";
       cb.classList.add("hien");
-    } else if (kq.v >= 16) {
-      cb.textContent = "Mã QR đang khá dày (phiên bản " + kq.v + "). Vẫn quét được nhưng nên rút ngắn lời nhắn cho máy quét nhanh hơn.";
+    } else if (v >= 16) {
+      cb.textContent = "Mã QR đang khá dày (phiên bản " + v + "). Vẫn quét được, nhưng rút ngắn lời nhắn thì máy quét nhanh hơn.";
       cb.classList.add("hien");
     } else {
       cb.classList.remove("hien");
     }
+  }
+
+  function ve() {
+    PHIEU.veThe(el("the"), d);
 
     document.querySelectorAll("[data-k]").forEach(function (inp) {
       if (inp.value !== d[inp.getAttribute("data-k")]) inp.value = d[inp.getAttribute("data-k")];
@@ -373,8 +383,19 @@
       b.setAttribute("aria-pressed", String(d[p[0]] === p[1]));
     });
 
+    // đã tạo rồi thì cập nhật luôn để liên kết không bị cũ so với phiếu
+    if (daTao) capNhatKetQua();
+
     try { localStorage.setItem(KHOA, JSON.stringify(d)); } catch (e) { /* bỏ qua */ }
   }
+
+  el("nut-tao").addEventListener("click", function () {
+    daTao = true;
+    el("kq").hidden = false;
+    capNhatKetQua();
+    el("nut-tao").textContent = "Tạo lại mã QR";
+    el("kq").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
 
   document.addEventListener("click", function (e) {
     var b = e.target.closest("button[data-dat], button[data-goi]");
@@ -397,14 +418,17 @@
   });
 
   el("nut-sao").addEventListener("click", function () {
-    var nut = el("nut-sao"), cu = nut.textContent, url = PHIEU.diaChiPhieu(GOC, d);
+    var nut = el("nut-sao"), cu = nut.textContent, o = el("o-link");
     function xong(ok) {
-      nut.textContent = ok ? "Đã sao chép" : "Không sao chép được";
+      nut.textContent = ok ? "Đã sao chép" : "Không được";
       setTimeout(function () { nut.textContent = cu; }, 2000);
     }
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url).then(function () { xong(true); }, function () { xong(false); });
-    } else { xong(false); }
+      navigator.clipboard.writeText(o.value).then(function () { xong(true); }, function () { xong(false); });
+    } else {
+      o.select();
+      xong(false);
+    }
   });
 
   ve();

@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#F1FAF6">
+<meta name="description" content="Có người gửi bạn một tấm phiếu bé ngoan — quét mã QR để mở.">
+<meta name="color-scheme" content="light">
+<style>*{margin:0;padding:0}html,body{min-height:100%}svg,img{max-width:100%}</style>
+<title>Có Phiếu Gửi Bạn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Be+Vietnam+Pro:wght@400;500;600&display=swap">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    /* nền sáng: mint sương và kem */
+    --nen:      #F1FAF6;
+    --nen-2:    #FFF7EC;
+    --the:      #FFFFFF;
+    --the-2:    #F3FFFB;
+
+    /* chữ: mực xanh rừng, không dùng đen thuần */
+    --muc:      #163B36;
+    --muc-mo:   #3E625C;
+    --xam:      #7F9A94;
+
+    /* sắc nhấn pastel */
+    --mint:     #17B195;
+    --mint-nhat:#B6EFE1;
+    --mint-rat: #E4FAF4;
+    --dao:      #FF9E86;
+    --vang:     #FFC95C;
+    --lav:      #B9AEFF;
+
+    --vien:     rgba(22, 59, 54, 0.12);
+    --vien-ro:  rgba(22, 59, 54, 0.26);
+
+    --serif: "Bricolage Grotesque", "Be Vietnam Pro", system-ui, sans-serif;
+    --sans: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+    /* viền trắng kiểu sticker + bóng nổi */
+    --keyline:
+      drop-shadow(2.5px 0 0 #fff) drop-shadow(-2.5px 0 0 #fff)
+      drop-shadow(0 2.5px 0 #fff) drop-shadow(0 -2.5px 0 #fff)
+      drop-shadow(1.8px 1.8px 0 #fff) drop-shadow(-1.8px 1.8px 0 #fff)
+      drop-shadow(1.8px -1.8px 0 #fff) drop-shadow(-1.8px -1.8px 0 #fff)
+      drop-shadow(0 6px 12px rgba(22, 59, 54, 0.22));
+  }
+
+  body {
+    margin: 0;
+    background: var(--nen);
+    color: var(--muc);
+    font-family: var(--sans);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  :focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; border-radius: 8px; }
+
+  body {
+    background:
+      radial-gradient(46% 34% at 8% 2%, var(--mint-nhat), transparent 66%),
+      radial-gradient(42% 34% at 96% 98%, #FFE7C2, transparent 64%),
+      var(--nen);
+    background-attachment: fixed;
+    overflow-x: clip;
+  }
+
+  .trang {
+    min-height: 100svh;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: clamp(34px, 7vw, 72px) clamp(24px, 5vw, 40px) clamp(44px, 8vw, 80px);
+    display: flex; flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(22px, 4vw, 34px);
+    text-align: center;
+  }
+
+  .mi {
+    font-size: .72rem; font-weight: 600;
+    letter-spacing: .28em; text-transform: uppercase;
+    color: var(--mint);
+  }
+  h1 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(2.1rem, 8vw, 3.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+    color: var(--muc);
+  }
+  .phu {
+    margin: 0;
+    max-width: 34ch;
+    font-size: clamp(1rem, 3vw, 1.12rem);
+    line-height: 1.6;
+    color: var(--muc-mo);
+    text-wrap: pretty;
+  }
+
+  /* ---------- khối quét ---------- */
+  .quet {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(8px, 2vw, 20px);
+    margin-top: 4px;
+  }
+  .chi-dan { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .nhan-quet {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(1.4rem, 5vw, 2.1rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    color: var(--muc);
+    transform: rotate(-5deg);
+    text-wrap: balance;
+  }
+  .nhan-quet em { font-style: normal; color: var(--mint); }
+  .mui { width: clamp(110px, 20vw, 180px); color: var(--mint); }
+  .mui.doc { display: none; width: clamp(50px, 13vw, 70px); }
+  .mui svg { width: 100%; height: auto; display: block; }
+
+  .bang {
+    position: relative;
+    background: var(--the);
+    padding: clamp(16px, 3vw, 24px);
+    border-radius: 26px;
+    border: 1px solid var(--vien);
+    box-shadow: 0 30px 60px -30px rgba(22, 59, 54, 0.4);
+  }
+  .bang svg.ma { display: block; width: clamp(190px, 44vw, 262px); height: auto; color: var(--muc); }
+
+  .meo-canh {
+    position: absolute;
+    width: clamp(64px, 14vw, 96px);
+    filter: var(--keyline);
+    pointer-events: none;
+  }
+  .meo-canh svg { width: 100%; height: auto; display: block; }
+  .m-a { top: -34px; right: -22px; transform: rotate(10deg); }
+  .m-b { bottom: -26px; left: -24px; transform: rotate(-12deg); width: clamp(52px, 11vw, 74px); }
+
+  .buoc {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 10px;
+    font-size: .92rem; color: var(--muc-mo);
+  }
+  .buoc span {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--the);
+    border: 1px solid var(--vien);
+    border-radius: 999px;
+    padding: 9px 15px;
+    font-weight: 500;
+  }
+  .buoc b {
+    display: grid; place-items: center;
+    width: 21px; height: 21px; border-radius: 50%;
+    background: var(--mint-nhat); color: var(--muc);
+    font-size: .78rem;
+  }
+
+  .du-phong { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .du-phong p { margin: 0; font-size: .9rem; color: var(--xam); }
+  .nut-mo {
+    font: inherit; font-size: .98rem; font-weight: 600;
+    text-decoration: none;
+    padding: 13px 24px;
+    border-radius: 999px;
+    background: var(--mint);
+    color: #fff;
+    border: 1px solid transparent;
+    transition: background .16s ease;
+  }
+  .nut-mo:hover { background: #12A085; }
+
+  @media (max-width: 720px) {
+    .quet { grid-template-columns: 1fr; justify-items: center; gap: 6px; }
+    .chi-dan { order: -1; }
+    .mui.ngang { display: none; }
+    .mui.doc { display: block; }
+    .m-b { bottom: -14px; left: -14px; width: clamp(44px, 10vw, 58px); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .bang { animation: hien .6s cubic-bezier(.16, .8, .3, 1.2) both; }
+    @keyframes hien { from { opacity: 0; transform: translateY(16px) scale(.97); } }
+    .mui.ngang { animation: nhun 1.6s ease-in-out infinite; }
+    @keyframes nhun { 50% { transform: translateX(8px); } }
+    .mui.doc { animation: nhun-doc 1.6s ease-in-out infinite; }
+    @keyframes nhun-doc { 50% { transform: translateY(8px); } }
+    .m-a { animation: lac 3.6s ease-in-out infinite; }
+    @keyframes lac {
+      0%, 100% { transform: rotate(10deg) translateY(0); }
+      50%      { transform: rotate(10deg) translateY(-5px); }
+    }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="sao" viewBox="0 0 32 30">
+      <path d="M16 1.5 L19.3 10.5 L28.8 10.8 L21.3 16.7 L23.9 25.9 L16 20.6 L8.1 25.9 L10.7 16.7 L3.2 10.8 L12.7 10.5 Z"/>
+    </symbol>
+
+    <!-- mèo mập ngồi, mắt nhắm tít -->
+    <symbol id="meo-map" viewBox="0 0 100 100">
+      <ellipse cx="50" cy="80" rx="29" ry="19" fill="#FFE3C0"/>
+      <ellipse cx="33" cy="94" rx="9" ry="5.5" fill="#FFF3E2"/>
+      <ellipse cx="67" cy="94" rx="9" ry="5.5" fill="#FFF3E2"/>
+      <path d="M25 36 L28 11 L47 27 Z" fill="#FFE3C0"/>
+      <path d="M75 36 L72 11 L53 27 Z" fill="#FFE3C0"/>
+      <path d="M29 31 L31 18 L41 27 Z" fill="#FFB4A2"/>
+      <path d="M71 31 L69 18 L59 27 Z" fill="#FFB4A2"/>
+      <circle cx="50" cy="47" r="27" fill="#FFEDD6"/>
+      <path d="M36 45c2.4 3.4 6.6 3.4 9 0" stroke="#2E4A44" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+      <path d="M55 45c2.4 3.4 6.6 3.4 9 0" stroke="#2E4A44" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="31" cy="55" rx="7" ry="4.6" fill="#FFB4A2" opacity=".85"/>
+      <ellipse cx="69" cy="55" rx="7" ry="4.6" fill="#FFB4A2" opacity=".85"/>
+      <path d="M50 54l-3.4 3h6.8z" fill="#FF9E86"/>
+      <path d="M50 57v2.6m0 0c-1.9 3-6.2 2.8-7.6-.4M50 59.6c1.9 3 6.2 2.8 7.6-.4" stroke="#2E4A44" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+    </symbol>
+
+    <!-- mèo cam ôm ngôi sao -->
+    <symbol id="meo-sao" viewBox="0 0 100 100">
+      <ellipse cx="50" cy="78" rx="26" ry="20" fill="#FFC078"/>
+      <path d="M27 38 L30 14 L48 29 Z" fill="#FFC078"/>
+      <path d="M73 38 L70 14 L52 29 Z" fill="#FFC078"/>
+      <path d="M31 33 L33 21 L42 29 Z" fill="#FFB4A2"/>
+      <path d="M69 33 L67 21 L58 29 Z" fill="#FFB4A2"/>
+      <circle cx="50" cy="46" r="25" fill="#FFD9A5"/>
+      <path d="M43 28c1.6 2.6 1.6 4.6 0 7M50 26.4c1.7 2.8 1.7 5 0 7.6M57 28c-1.6 2.6-1.6 4.6 0 7" stroke="#EFA959" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="41" cy="46" r="4.4" fill="#2E4A44"/>
+      <circle cx="59" cy="46" r="4.4" fill="#2E4A44"/>
+      <circle cx="42.6" cy="44.4" r="1.5" fill="#fff"/>
+      <circle cx="60.6" cy="44.4" r="1.5" fill="#fff"/>
+      <ellipse cx="32" cy="54" rx="6" ry="4" fill="#FF9E86" opacity=".8"/>
+      <ellipse cx="68" cy="54" rx="6" ry="4" fill="#FF9E86" opacity=".8"/>
+      <path d="M50 52l-3 2.8h6z" fill="#FF9E86"/>
+      <path d="M50 55.6c-1.6 2.6-5.4 2.4-6.6-.4M50 55.6c1.6 2.6 5.4 2.4 6.6-.4" stroke="#2E4A44" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <path d="M50 66.5 L54.4 78.4 L67 78.8 L57.1 86.6 L60.5 98.7 L50 91.7 L39.5 98.7 L42.9 86.6 L33 78.8 L45.6 78.4 Z" fill="#FFC95C" stroke="#F5A623" stroke-width="2" stroke-linejoin="round"/>
+      <ellipse cx="28" cy="80" rx="8" ry="6" fill="#FFD9A5" transform="rotate(-18 28 80)"/>
+      <ellipse cx="72" cy="80" rx="8" ry="6" fill="#FFD9A5" transform="rotate(18 72 80)"/>
+    </symbol>
+
+    <!-- mèo tím cuộn tròn ngủ -->
+    <symbol id="meo-ngu" viewBox="0 0 100 100">
+      <path d="M88 62c0 14.4-17 24-38 24S12 76.4 12 62s17-22 38-22 38 7.6 38 22z" fill="#CFC6FF"/>
+      <path d="M86 60c6-2 10 3 8 9-1.6 4.8-7 6-10.6 3.4" fill="none" stroke="#CFC6FF" stroke-width="9" stroke-linecap="round"/>
+      <circle cx="36" cy="60" r="21" fill="#E1DCFF"/>
+      <path d="M20 50 L21 33 L34 44 Z" fill="#E1DCFF"/>
+      <path d="M50 46 L52 30 L38 41 Z" fill="#E1DCFF"/>
+      <path d="M23 46 L24 37 L31 44 Z" fill="#FFB4A2"/>
+      <path d="M47 43 L48 34 L41 41 Z" fill="#FFB4A2"/>
+      <path d="M26 58c1.8 2.6 5 2.6 6.8 0" stroke="#2E4A44" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <path d="M40 58c1.8 2.6 5 2.6 6.8 0" stroke="#2E4A44" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <ellipse cx="22" cy="66" rx="5.4" ry="3.6" fill="#FFB4A2" opacity=".8"/>
+      <ellipse cx="50" cy="66" rx="5.4" ry="3.6" fill="#FFB4A2" opacity=".8"/>
+      <path d="M36 65l-2.6 2.4h5.2z" fill="#FF9E86"/>
+      <path d="M62 30h10l-10 12h10" stroke="#17B195" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M78 14h7l-7 8h7" stroke="#17B195" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+
+    <!-- mèo mint vẫy tay -->
+    <symbol id="meo-vay" viewBox="0 0 100 100">
+      <ellipse cx="52" cy="79" rx="25" ry="19" fill="#9FE7D4"/>
+      <path d="M70 72 L84 48" stroke="#9FE7D4" stroke-width="13" stroke-linecap="round" fill="none"/>
+      <circle cx="87" cy="43" r="9" fill="#CFF5EA"/>
+      <path d="M84 38.5v3.2M88 37.6v3.6M91.6 39v3" stroke="#6FCDB8" stroke-width="2" stroke-linecap="round"/>
+      <path d="M29 38 L32 14 L50 29 Z" fill="#9FE7D4"/>
+      <path d="M75 38 L72 14 L54 29 Z" fill="#9FE7D4"/>
+      <path d="M33 33 L35 21 L44 29 Z" fill="#FFB4A2"/>
+      <path d="M71 33 L69 21 L60 29 Z" fill="#FFB4A2"/>
+      <circle cx="52" cy="46" r="25" fill="#CFF5EA"/>
+      <circle cx="43" cy="45" r="4.2" fill="#2E4A44"/>
+      <circle cx="61" cy="45" r="4.2" fill="#2E4A44"/>
+      <circle cx="44.5" cy="43.5" r="1.4" fill="#fff"/>
+      <circle cx="62.5" cy="43.5" r="1.4" fill="#fff"/>
+      <ellipse cx="34" cy="54" rx="6" ry="4" fill="#FFB4A2" opacity=".85"/>
+      <ellipse cx="70" cy="54" rx="6" ry="4" fill="#FFB4A2" opacity=".85"/>
+      <path d="M52 52l-3 2.8h6z" fill="#FF9E86"/>
+      <path d="M52 55.4c-1.7 2.8-5.6 2.6-6.9-.4M52 55.4c1.7 2.8 5.6 2.6 6.9-.4" stroke="#2E4A44" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="trang">
+  <span class="mi">Có người gửi bạn cái này</span>
+  <h1>Một tấm phiếu bé ngoan</h1>
+  <p class="phu">Phiếu nằm trong mã dưới đây. Mở camera điện thoại, quét là thấy.</p>
+
+  <div class="quet">
+    <div class="chi-dan">
+      <p class="nhan-quet">Quét <em>vào đây</em>!</p>
+      <div class="mui ngang" aria-hidden="true">
+        <svg viewBox="0 0 200 92">
+          <path d="M8 22c26 42 82 52 158 42" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+          <path d="M132 40l30 24-38 13" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="mui doc" aria-hidden="true">
+        <svg viewBox="0 0 84 112">
+          <path d="M16 8c34 14 10 40 26 82" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+          <path d="M22 66l20 26 22-22" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="bang">
+      <svg class="ma" id="qr" role="img" aria-label="Mã QR mở phiếu bé ngoan"></svg>
+      <div class="meo-canh m-a" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#meo-vay"/></svg></div>
+      <div class="meo-canh m-b" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#meo-sao"/></svg></div>
+    </div>
+  </div>
+
+  <div class="buoc">
+    <span><b>1</b>Mở camera điện thoại</span>
+    <span><b>2</b>Hướng vào mã</span>
+    <span><b>3</b>Bấm đường dẫn hiện ra</span>
+  </div>
+
+  <div class="du-phong">
+    <p>Đang xem sẵn trên điện thoại rồi?</p>
+    <a class="nut-mo" id="nut-mo" href="#">Mở phiếu luôn</a>
+  </div>
+</div>
+
+<script>
+/* Bộ mã hoá QR chạy trong trình duyệt: chế độ byte, mức lỗi L/M, phiên bản 1..20.
+   Bảng ECC và vị trí ô căn chỉnh sinh từ thư viện segno (xem README).
+   Đã kiểm chứng: render rồi giải mã ngược 16/17 trường hợp thử, phiên bản 1..15. */
+const ECC_TB=[[[[1,26,19]],[[1,26,16]]],[[[1,44,34]],[[1,44,28]]],[[[1,70,55]],[[1,70,44]]],[[[1,100,80]],[[2,50,32]]],[[[1,134,108]],[[2,67,43]]],[[[2,86,68]],[[4,43,27]]],[[[2,98,78]],[[4,49,31]]],[[[2,121,97]],[[2,60,38],[2,61,39]]],[[[2,146,116]],[[3,58,36],[2,59,37]]],[[[2,86,68],[2,87,69]],[[4,69,43],[1,70,44]]],[[[4,101,81]],[[1,80,50],[4,81,51]]],[[[2,116,92],[2,117,93]],[[6,58,36],[2,59,37]]],[[[4,133,107]],[[8,59,37],[1,60,38]]],[[[3,145,115],[1,146,116]],[[4,64,40],[5,65,41]]],[[[5,109,87],[1,110,88]],[[5,65,41],[5,66,42]]],[[[5,122,98],[1,123,99]],[[7,73,45],[3,74,46]]],[[[1,135,107],[5,136,108]],[[10,74,46],[1,75,47]]],[[[5,150,120],[1,151,121]],[[9,69,43],[4,70,44]]],[[[3,141,113],[4,142,114]],[[3,70,44],[11,71,45]]],[[[3,135,107],[5,136,108]],[[3,67,41],[13,68,42]]]];
+const ALIGN_TB=[[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90]];
+
+/* Bộ mã hoá QR tối giản: chế độ byte, mức lỗi L/M, phiên bản 1..20.
+   Bảng ECC và vị trí ô căn chỉnh lấy từ thư viện segno để khỏi sai số liệu. */
+var QR = (function () {
+  "use strict";
+
+  // --- trường Galois GF(256), đa thức nguyên thuỷ 0x11D ---
+  var EXP = new Uint8Array(512), LOG = new Uint8Array(256);
+  (function () {
+    for (var i = 0, x = 1; i < 255; i++) { EXP[i] = x; LOG[x] = i; x <<= 1; if (x & 0x100) x ^= 0x11d; }
+    for (var j = 255; j < 512; j++) EXP[j] = EXP[j - 255];
+  })();
+  function nhan(a, b) { return a && b ? EXP[LOG[a] + LOG[b]] : 0; }
+
+  function daThucSinh(n) {
+    var g = [1];
+    for (var i = 0; i < n; i++) {
+      var t = new Array(g.length + 1);
+      for (var k = 0; k < t.length; k++) t[k] = 0;
+      for (var j = 0; j < g.length; j++) {
+        t[j] ^= g[j];
+        t[j + 1] ^= nhan(g[j], EXP[i]);
+      }
+      g = t;
+    }
+    return g;
+  }
+
+  function duLoi(data, n) {
+    var g = daThucSinh(n), res = new Uint8Array(data.length + n), i, j;
+    res.set(data);
+    for (i = 0; i < data.length; i++) {
+      var c = res[i];
+      if (!c) continue;
+      for (j = 0; j < g.length; j++) res[i + j] ^= nhan(g[j], c);
+    }
+    return res.subarray(data.length);
+  }
+
+  // --- chuỗi bit ---
+  function Bit() { this.b = []; }
+  Bit.prototype.day = function (val, len) {
+    for (var i = len - 1; i >= 0; i--) this.b.push((val >>> i) & 1);
+  };
+  Bit.prototype.byteHoa = function (n) {
+    var out = new Uint8Array(n), i;
+    for (i = 0; i < this.b.length; i++) if (this.b[i]) out[i >> 3] |= 0x80 >> (i & 7);
+    return out;
+  };
+
+  function utf8(s) { return new TextEncoder().encode(s); }
+
+  var MUC = { L: 0, M: 1 };           // chỉ số trong ECC_TB
+  var BIT_MUC = { L: 1, M: 0 };       // 2 bit mức lỗi trong ô thông tin định dạng
+
+  function khoi(v, muc) { return ECC_TB[v - 1][MUC[muc]]; }
+  function soODuLieu(v, muc) {
+    return khoi(v, muc).reduce(function (t, b) { return t + b[0] * b[2]; }, 0);
+  }
+  function dem(v) { return v < 10 ? 8 : 16; }   // độ dài chỉ báo số ký tự, chế độ byte
+
+  function chonPhienBan(len, muc) {
+    for (var v = 1; v <= 20; v++) {
+      if (4 + dem(v) + 8 * len <= soODuLieu(v, muc) * 8) return v;
+    }
+    return 0;
+  }
+
+  // --- ghép dữ liệu + sửa lỗi, có xen kẽ khối ---
+  function taoODuLieu(bytes, v, muc) {
+    var bs = new Bit(), tong = soODuLieu(v, muc), i;
+    bs.day(4, 4);                 // chế độ byte
+    bs.day(bytes.length, dem(v));
+    for (i = 0; i < bytes.length; i++) bs.day(bytes[i], 8);
+    var conLai = tong * 8 - bs.b.length;
+    bs.day(0, Math.min(4, conLai));                 // dấu kết thúc
+    while (bs.b.length % 8) bs.b.push(0);
+    var d = bs.byteHoa(tong), vt = Math.ceil(bs.b.length / 8), dem2 = 0;
+    while (vt < tong) d[vt++] = (dem2++ % 2) ? 0x11 : 0xec;   // ô đệm
+
+    var nhom = [], vtri = 0;
+    khoi(v, muc).forEach(function (b) {
+      for (var k = 0; k < b[0]; k++) {
+        nhom.push({ d: d.subarray(vtri, vtri + b[2]), n: b[1] - b[2] });
+        vtri += b[2];
+      }
+    });
+    var ec = nhom.map(function (n) { return duLoi(n.d, n.n); });
+
+    var ra = [], maxD = Math.max.apply(null, nhom.map(function (n) { return n.d.length; }));
+    var maxE = Math.max.apply(null, ec.map(function (e) { return e.length; })), j;
+    for (i = 0; i < maxD; i++) for (j = 0; j < nhom.length; j++) if (i < nhom[j].d.length) ra.push(nhom[j].d[i]);
+    for (i = 0; i < maxE; i++) for (j = 0; j < ec.length; j++) if (i < ec[j].length) ra.push(ec[j][i]);
+    return ra;
+  }
+
+  // --- BCH cho ô thông tin định dạng và phiên bản ---
+  function soBit(x) { var n = 0; while (x) { n++; x >>>= 1; } return n; }
+  function bch(d, poly, bitPoly) {
+    while (soBit(d) >= bitPoly) d ^= poly << (soBit(d) - bitPoly);
+    return d;
+  }
+  function thongTinDinhDang(muc, mask) {
+    var so = (BIT_MUC[muc] << 3) | mask;
+    return ((so << 10) | bch(so << 10, 0x537, 11)) ^ 0x5412;
+  }
+  function thongTinPhienBan(v) {
+    return (v << 12) | bch(v << 12, 0x1f25, 13);
+  }
+
+  // --- khung ma trận ---
+  function khungMoi(v) {
+    var n = 4 * v + 17, i, j;
+    var m = [], giu = [];
+    for (i = 0; i < n; i++) { m.push(new Uint8Array(n)); giu.push(new Uint8Array(n)); }
+
+    function dat(r, c, val) { m[r][c] = val; giu[r][c] = 1; }
+
+    // ba ô định vị + dải phân cách
+    [[0, 0], [0, n - 7], [n - 7, 0]].forEach(function (p) {
+      for (i = -1; i <= 7; i++) for (j = -1; j <= 7; j++) {
+        var r = p[0] + i, c = p[1] + j;
+        if (r < 0 || c < 0 || r >= n || c >= n) continue;
+        var v1 = (i >= 0 && i <= 6 && (j === 0 || j === 6)) ||
+                 (j >= 0 && j <= 6 && (i === 0 || i === 6)) ||
+                 (i >= 2 && i <= 4 && j >= 2 && j <= 4);
+        dat(r, c, v1 ? 1 : 0);
+      }
+    });
+
+    // dải nhịp
+    for (i = 8; i < n - 8; i++) { dat(6, i, i % 2 === 0 ? 1 : 0); dat(i, 6, i % 2 === 0 ? 1 : 0); }
+
+    // ô căn chỉnh
+    if (v >= 2) {
+      var pos = ALIGN_TB[v - 2];
+      pos.forEach(function (r) {
+        pos.forEach(function (c) {
+          if ((r === 6 && c === 6) || (r === 6 && c === n - 7) || (r === n - 7 && c === 6)) return;
+          for (i = -2; i <= 2; i++) for (j = -2; j <= 2; j++) {
+            var t = Math.max(Math.abs(i), Math.abs(j));
+            dat(r + i, c + j, t !== 1 ? 1 : 0);
+          }
+        });
+      });
+    }
+
+    // chỗ dành cho thông tin định dạng
+    for (i = 0; i <= 8; i++) { if (i !== 6) { dat(8, i, 0); dat(i, 8, 0); } }
+    for (i = 0; i < 8; i++) { dat(8, n - 1 - i, 0); dat(n - 1 - i, 8, 0); }
+    dat(n - 8, 8, 1);   // ô luôn tối
+
+    // chỗ dành cho thông tin phiên bản
+    if (v >= 7) {
+      for (i = 0; i < 6; i++) for (j = 0; j < 3; j++) { dat(n - 11 + j, i, 0); dat(i, n - 11 + j, 0); }
+    }
+    return { m: m, giu: giu, n: n };
+  }
+
+  function datDuLieu(k, o) {
+    var n = k.n, bit = 0, tong = o.length * 8;
+    for (var c = n - 1; c > 0; c -= 2) {
+      if (c === 6) c--;
+      for (var i = 0; i < n; i++) {
+        for (var t = 0; t < 2; t++) {
+          var r = ((c + 1) & 2) === 0 ? n - 1 - i : i;   // hướng zigzag theo cột
+          var cc = c - t;
+          if (k.giu[r][cc]) continue;
+          var v = bit < tong ? (o[bit >> 3] >> (7 - (bit & 7))) & 1 : 0;
+          k.m[r][cc] = v; bit++;
+        }
+      }
+    }
+  }
+
+  function mask(r, c, k) {
+    switch (k) {
+      case 0: return (r + c) % 2 === 0;
+      case 1: return r % 2 === 0;
+      case 2: return c % 3 === 0;
+      case 3: return (r + c) % 3 === 0;
+      case 4: return (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0;
+      case 5: return (r * c) % 2 + (r * c) % 3 === 0;
+      case 6: return ((r * c) % 2 + (r * c) % 3) % 2 === 0;
+      default: return ((r + c) % 2 + (r * c) % 3) % 2 === 0;
+    }
+  }
+
+  function diem(m, n) {
+    var p = 0, i, j, k, d;
+    // luật 1: dãy cùng màu từ 5 ô
+    for (i = 0; i < n; i++) {
+      for (d = 0; d < 2; d++) {
+        var run = 1;
+        for (j = 1; j < n; j++) {
+          var a = d ? m[j][i] : m[i][j], b = d ? m[j - 1][i] : m[i][j - 1];
+          if (a === b) { run++; } else { if (run >= 5) p += run - 2; run = 1; }
+        }
+        if (run >= 5) p += run - 2;
+      }
+    }
+    // luật 2: khối 2x2 cùng màu
+    for (i = 0; i < n - 1; i++) for (j = 0; j < n - 1; j++) {
+      var v = m[i][j];
+      if (v === m[i][j + 1] && v === m[i + 1][j] && v === m[i + 1][j + 1]) p += 3;
+    }
+    // luật 3: mẫu 1:1:3:1:1 kèm 4 ô sáng
+    var mau = [1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0];
+    var maur = [0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1];
+    for (i = 0; i < n; i++) for (j = 0; j + 11 <= n; j++) {
+      var ok1 = true, ok2 = true, ok3 = true, ok4 = true;
+      for (k = 0; k < 11; k++) {
+        if (m[i][j + k] !== mau[k]) ok1 = false;
+        if (m[i][j + k] !== maur[k]) ok2 = false;
+        if (m[j + k][i] !== mau[k]) ok3 = false;
+        if (m[j + k][i] !== maur[k]) ok4 = false;
+      }
+      if (ok1) p += 40; if (ok2) p += 40; if (ok3) p += 40; if (ok4) p += 40;
+    }
+    // luật 4: tỉ lệ ô tối
+    var toi = 0;
+    for (i = 0; i < n; i++) for (j = 0; j < n; j++) if (m[i][j]) toi++;
+    p += Math.floor(Math.abs(toi * 100 / (n * n) - 50) / 5) * 10;
+    return p;
+  }
+
+  function taoMa(text, muc, maskEp) {
+    muc = muc || "M";
+    var bytes = utf8(text), v = chonPhienBan(bytes.length, muc);
+    if (!v) throw new Error("Nội dung quá dài cho mã QR (tối đa phiên bản 20)");
+    var o = taoODuLieu(bytes, v, muc);
+
+    var tot = null, totDiem = Infinity, mk;
+    var dsMask = maskEp == null ? [0, 1, 2, 3, 4, 5, 6, 7] : [maskEp];
+    for (var im = 0; im < dsMask.length; im++) {
+      mk = dsMask[im];
+      var k = khungMoi(v);
+      datDuLieu(k, o);
+      var i, j, n = k.n;
+      for (i = 0; i < n; i++) for (j = 0; j < n; j++) if (!k.giu[i][j] && mask(i, j, mk)) k.m[i][j] ^= 1;
+
+      // thông tin định dạng
+      var f = thongTinDinhDang(muc, mk);
+      for (i = 0; i < 15; i++) {
+        var b = (f >> i) & 1;
+        if (i < 6) k.m[i][8] = b;
+        else if (i < 8) k.m[i + 1][8] = b;
+        else k.m[n - 15 + i][8] = b;
+        if (i < 8) k.m[8][n - 1 - i] = b;
+        else if (i < 9) k.m[8][15 - i - 1 + 1] = b;
+        else k.m[8][15 - i - 1] = b;
+      }
+      k.m[n - 8][8] = 1;
+
+      // thông tin phiên bản
+      if (v >= 7) {
+        var vi = thongTinPhienBan(v);
+        for (i = 0; i < 18; i++) {
+          var bb = (vi >> i) & 1;
+          k.m[Math.floor(i / 3)][n - 11 + (i % 3)] = bb;
+          k.m[n - 11 + (i % 3)][Math.floor(i / 3)] = bb;
+        }
+      }
+
+      var d = diem(k.m, n);
+      if (d < totDiem) { totDiem = d; tot = k; tot.mask = mk; }
+    }
+    return { n: tot.n, m: tot.m, phienBan: v, muc: muc, mask: tot.mask };
+  }
+
+  // đường dẫn SVG dạng nét ngang, mỗi nét dày 1 đơn vị
+  function duongDan(ma) {
+    var d = "", n = ma.n, r, c;
+    for (r = 0; r < n; r++) {
+      c = 0;
+      while (c < n) {
+        if (!ma.m[r][c]) { c++; continue; }
+        var dai = 0;
+        while (c + dai < n && ma.m[r][c + dai]) dai++;
+        d += "M" + c + " " + (r + 0.5) + "h" + dai;
+        c += dai;
+      }
+    }
+    return d;
+  }
+
+  return { taoMa: taoMa, duongDan: duongDan };
+})();
+</script>
+<script>
+(function () {
+  "use strict";
+  var url = location.href.replace(/[^/#?]*(?:[?#].*)?$/, "") + "phieu.html" + location.hash;
+  document.getElementById("nut-mo").href = url;
+
+  var q;
+  try { q = QR.taoMa(url, "M"); }
+  catch (e) { try { q = QR.taoMa(url, "L"); } catch (e2) { q = null; } }
+
+  var svg = document.getElementById("qr");
+  if (!q) {
+    svg.outerHTML = '<p class="phu">Liên kết này dài quá nên không dựng được mã QR. ' +
+                    'Bấm nút bên dưới để mở phiếu trực tiếp nhé.</p>';
+    return;
+  }
+  var vien = 4, s = q.n + 2 * vien;
+  svg.setAttribute("viewBox", (-vien) + " " + (-vien) + " " + s + " " + s);
+  svg.innerHTML =
+    '<rect x="' + (-vien) + '" y="' + (-vien) + '" width="' + s + '" height="' + s + '" fill="#FFFFFF"/>' +
+    '<path d="' + QR.duongDan(q) + '" fill="none" stroke="currentColor" stroke-width="1" shape-rendering="crispEdges"/>';
+})();
+</script>
+</body>
+</html>

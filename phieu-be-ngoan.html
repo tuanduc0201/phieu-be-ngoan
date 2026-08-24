@@ -18,26 +18,25 @@
     content: "";
     position: absolute; inset: -20%;
     background:
-      radial-gradient(38% 30% at 22% 18%, rgba(255, 94, 122, 0.16), transparent 70%),
-      radial-gradient(34% 28% at 82% 82%, rgba(228, 179, 99, 0.12), transparent 70%);
+      radial-gradient(40% 32% at 18% 14%, var(--mint-nhat), transparent 68%),
+      radial-gradient(36% 30% at 86% 86%, #FFE7C2, transparent 66%);
+    opacity: .55;
     pointer-events: none;
   }
 
-  /* tim bay lơ lửng phía sau, rất nhẹ */
+  /* sao pastel lơ lửng phía sau, rất nhẹ */
   .bui { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
   .bui i {
     position: absolute;
     display: block;
-    width: 14px; height: 14px;
-    background: var(--hong);
-    opacity: .12;
-    clip-path: path("M7 13.5C3.9 11 0.5 8.6 0.5 5.4 0.5 3 2.4 1.3 4.5 1.3c1.2 0 2.2.5 2.5 1.4.3-.9 1.3-1.4 2.5-1.4 2.1 0 4 1.7 4 4.1 0 3.2-3.4 5.6-6.5 8.1z");
-    transform: scale(1);
+    width: 22px; height: 22px;
+    opacity: .5;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
   }
-  .bui i:nth-child(1) { left: 12%; top: 22%; width: 26px; height: 26px; }
-  .bui i:nth-child(2) { left: 80%; top: 30%; width: 18px; height: 18px; }
-  .bui i:nth-child(3) { left: 26%; top: 74%; width: 34px; height: 34px; opacity: .08; }
-  .bui i:nth-child(4) { left: 68%; top: 80%; width: 20px; height: 20px; }
+  .bui i:nth-child(1) { left: 11%; top: 20%; width: 30px; height: 30px; background: var(--vang); }
+  .bui i:nth-child(2) { left: 82%; top: 28%; width: 20px; height: 20px; background: var(--mint); opacity: .38; }
+  .bui i:nth-child(3) { left: 24%; top: 76%; width: 38px; height: 38px; background: var(--lav); opacity: .42; }
+  .bui i:nth-child(4) { left: 70%; top: 82%; width: 24px; height: 24px; background: var(--dao); opacity: .45; }
 
 {{include:partials/phieu.css}}
 
@@ -45,12 +44,12 @@
   @media (prefers-reduced-motion: no-preference) {
     .the { animation: len .7s cubic-bezier(.16, .8, .3, 1) both; }
     @keyframes len { from { opacity: 0; transform: translateY(22px) scale(.985); } }
-    .the .tim svg { animation: bung .45s cubic-bezier(.2, .9, .3, 1.5) both; }
-    .the .tim svg:nth-child(1) { animation-delay: .42s; }
-    .the .tim svg:nth-child(2) { animation-delay: .50s; }
-    .the .tim svg:nth-child(3) { animation-delay: .58s; }
-    .the .tim svg:nth-child(4) { animation-delay: .66s; }
-    .the .tim svg:nth-child(5) { animation-delay: .74s; }
+    .the .sao svg { animation: bung .45s cubic-bezier(.2, .9, .3, 1.5) both; }
+    .the .sao svg:nth-child(1) { animation-delay: .42s; }
+    .the .sao svg:nth-child(2) { animation-delay: .50s; }
+    .the .sao svg:nth-child(3) { animation-delay: .58s; }
+    .the .sao svg:nth-child(4) { animation-delay: .66s; }
+    .the .sao svg:nth-child(5) { animation-delay: .74s; }
     @keyframes bung { from { opacity: 0; transform: scale(.4) rotate(-14deg); } }
     .bui i { animation: troi 9s ease-in-out infinite alternate; }
     .bui i:nth-child(2) { animation-duration: 11s; animation-delay: -3s; }
@@ -63,7 +62,7 @@
     .sanh { min-height: 0; padding: 0; }
     .sanh::before, .bui { display: none; }
     .the { box-shadow: none; animation: none; max-width: none; }
-    .the .tim svg { animation: none; }
+    .the .sao svg { animation: none; }
   }
 </style>
 

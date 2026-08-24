@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#120D1A">
-<meta name="description" content="Một tấm phiếu bé ngoan dành riêng cho người thương.">
-<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#F1FAF6">
+<meta name="description" content="Một tấm phiếu bé ngoan.">
+<meta name="color-scheme" content="light">
 <style>*{margin:0;padding:0}html,body{min-height:100%}svg,img{max-width:100%}</style>
 <title>Phiếu Bé Ngoan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,48 +15,51 @@
   *, *::before, *::after { box-sizing: border-box; }
 
   :root {
-    /* nền đêm */
-    --dem:      #120D1A;
-    --dem-2:    #1A1226;
-    --the:      #1F1730;
-    --the-2:    #2C1A34;
+    /* nền sáng: mint sương và kem */
+    --nen:      #F1FAF6;
+    --nen-2:    #FFF7EC;
+    --the:      #FFFFFF;
+    --the-2:    #F3FFFB;
 
-    /* chữ */
-    --nga:      #F7EFE8;
-    --nga-mo:   #CFC3C9;
-    --xam:      #9C90AA;   /* xám lệch tím cho ăn với sắc nhấn */
+    /* chữ: mực xanh rừng, không dùng đen thuần */
+    --muc:      #163B36;
+    --muc-mo:   #3E625C;
+    --xam:      #7F9A94;
 
-    /* nhấn */
-    --hong:     #FF5E7A;
-    --hong-nhat:#FFA8B8;
-    --dong:     #E4B363;
+    /* sắc nhấn pastel */
+    --mint:     #17B195;
+    --mint-nhat:#B6EFE1;
+    --mint-rat: #E4FAF4;
+    --dao:      #FF9E86;
+    --vang:     #FFC95C;
+    --lav:      #B9AEFF;
 
-    --vien:     rgba(247, 239, 232, 0.14);
-    --vien-ro:  rgba(247, 239, 232, 0.28);
+    --vien:     rgba(22, 59, 54, 0.12);
+    --vien-ro:  rgba(22, 59, 54, 0.26);
 
-    --serif: Fraunces, "Playfair Display", Georgia, "Times New Roman", serif;
+    --serif: "Bricolage Grotesque", "Be Vietnam Pro", system-ui, sans-serif;
     --sans: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
 
     /* viền trắng kiểu sticker + bóng nổi */
     --keyline:
-      drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff)
-      drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff)
-      drop-shadow(1.5px 1.5px 0 #fff) drop-shadow(-1.5px 1.5px 0 #fff)
-      drop-shadow(1.5px -1.5px 0 #fff) drop-shadow(-1.5px -1.5px 0 #fff)
-      drop-shadow(0 8px 14px rgba(0, 0, 0, 0.45));
+      drop-shadow(2.5px 0 0 #fff) drop-shadow(-2.5px 0 0 #fff)
+      drop-shadow(0 2.5px 0 #fff) drop-shadow(0 -2.5px 0 #fff)
+      drop-shadow(1.8px 1.8px 0 #fff) drop-shadow(-1.8px 1.8px 0 #fff)
+      drop-shadow(1.8px -1.8px 0 #fff) drop-shadow(-1.8px -1.8px 0 #fff)
+      drop-shadow(0 6px 12px rgba(22, 59, 54, 0.22));
   }
 
   body {
     margin: 0;
-    background: var(--dem);
-    color: var(--nga);
+    background: var(--nen);
+    color: var(--muc);
     font-family: var(--sans);
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
-  :focus-visible { outline: 2px solid var(--hong); outline-offset: 3px; border-radius: 8px; }
+  :focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; border-radius: 8px; }
 
   /* ---------- sảnh: chỉ có tấm phiếu, không có gì khác ---------- */
   .sanh {
@@ -71,26 +74,25 @@
     content: "";
     position: absolute; inset: -20%;
     background:
-      radial-gradient(38% 30% at 22% 18%, rgba(255, 94, 122, 0.16), transparent 70%),
-      radial-gradient(34% 28% at 82% 82%, rgba(228, 179, 99, 0.12), transparent 70%);
+      radial-gradient(40% 32% at 18% 14%, var(--mint-nhat), transparent 68%),
+      radial-gradient(36% 30% at 86% 86%, #FFE7C2, transparent 66%);
+    opacity: .55;
     pointer-events: none;
   }
 
-  /* tim bay lơ lửng phía sau, rất nhẹ */
+  /* sao pastel lơ lửng phía sau, rất nhẹ */
   .bui { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
   .bui i {
     position: absolute;
     display: block;
-    width: 14px; height: 14px;
-    background: var(--hong);
-    opacity: .12;
-    clip-path: path("M7 13.5C3.9 11 0.5 8.6 0.5 5.4 0.5 3 2.4 1.3 4.5 1.3c1.2 0 2.2.5 2.5 1.4.3-.9 1.3-1.4 2.5-1.4 2.1 0 4 1.7 4 4.1 0 3.2-3.4 5.6-6.5 8.1z");
-    transform: scale(1);
+    width: 22px; height: 22px;
+    opacity: .5;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
   }
-  .bui i:nth-child(1) { left: 12%; top: 22%; width: 26px; height: 26px; }
-  .bui i:nth-child(2) { left: 80%; top: 30%; width: 18px; height: 18px; }
-  .bui i:nth-child(3) { left: 26%; top: 74%; width: 34px; height: 34px; opacity: .08; }
-  .bui i:nth-child(4) { left: 68%; top: 80%; width: 20px; height: 20px; }
+  .bui i:nth-child(1) { left: 11%; top: 20%; width: 30px; height: 30px; background: var(--vang); }
+  .bui i:nth-child(2) { left: 82%; top: 28%; width: 20px; height: 20px; background: var(--mint); opacity: .38; }
+  .bui i:nth-child(3) { left: 24%; top: 76%; width: 38px; height: 38px; background: var(--lav); opacity: .42; }
+  .bui i:nth-child(4) { left: 70%; top: 82%; width: 24px; height: 24px; background: var(--dao); opacity: .45; }
 
   /* ============ TẤM PHIẾU ============ */
   .the {
@@ -100,20 +102,20 @@
     padding: clamp(26px, 6.5vw, 44px) clamp(22px, 6vw, 40px) clamp(22px, 5vw, 34px);
     border-radius: 28px;
     background:
-      radial-gradient(120% 80% at 12% 0%, rgba(255, 94, 122, 0.22), transparent 60%),
-      radial-gradient(90% 70% at 100% 100%, rgba(228, 179, 99, 0.16), transparent 62%),
-      linear-gradient(158deg, var(--the-2), var(--the) 58%);
-    border: 1px solid var(--vien-ro);
-    box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      radial-gradient(120% 80% at 6% 0%, var(--mint-rat), transparent 58%),
+      radial-gradient(90% 70% at 100% 100%, #FFF4E2, transparent 60%),
+      linear-gradient(158deg, var(--the-2), var(--the) 62%);
+    border: 1px solid var(--vien);
+    box-shadow: 0 28px 60px -34px rgba(22, 59, 54, 0.45), 0 2px 0 rgba(22, 59, 54, 0.04);
     container-type: inline-size;
   }
-  /* vệt sáng chéo rất nhẹ, cho cảm giác giấy tráng */
-  .the::after {
+  /* dải mint mảnh ở mép trên, cho ra dáng giấy in */
+  .the::before {
     content: "";
-    position: absolute; inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(102deg, transparent 42%, rgba(255, 255, 255, 0.05) 50%, transparent 58%);
-    pointer-events: none;
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 6px;
+    border-radius: 28px 28px 0 0;
+    background: linear-gradient(90deg, var(--mint), var(--mint-nhat) 45%, var(--vang));
   }
 
   .dau-the {
@@ -126,14 +128,14 @@
   .nhan-the {
     font-size: clamp(.62rem, 2.4cqw, .74rem);
     font-weight: 600;
-    letter-spacing: .32em;
+    letter-spacing: .3em;
     text-transform: uppercase;
-    color: var(--dong);
+    color: var(--mint);
   }
   .so-the {
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
-    color: var(--nga-mo);
+    color: var(--muc-mo);
   }
 
   .trao {
@@ -145,67 +147,76 @@
   }
 
   .ten {
-    margin: .18em 0 0;
+    margin: .14em 0 0;
     font-family: var(--serif);
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-size: clamp(2.3rem, 13cqw, 3.9rem);
+    font-weight: 700;
+    font-size: clamp(2.2rem, 12.5cqw, 3.7rem);
     line-height: 1.02;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     text-wrap: balance;
-    color: var(--nga);
+    color: var(--muc);
   }
   .ten::after {
     content: "";
     display: block;
-    width: clamp(52px, 18cqw, 84px);
-    height: 3px;
-    margin-top: .42em;
-    border-radius: 3px;
-    background: linear-gradient(90deg, var(--hong), rgba(255, 94, 122, 0));
+    width: clamp(56px, 20cqw, 92px);
+    height: 5px;
+    margin-top: .38em;
+    border-radius: 5px;
+    background: linear-gradient(90deg, var(--mint), var(--mint-nhat));
   }
 
-  .tim {
-    display: flex; gap: .32em;
+  .sao {
+    display: flex; gap: .3em;
     margin-top: clamp(18px, 4.4cqw, 26px);
   }
-  .tim svg { width: clamp(20px, 6.2cqw, 27px); height: auto; display: block; }
-  .tim .tat { opacity: .22; }
+  .sao svg { width: clamp(22px, 6.6cqw, 30px); height: auto; display: block; }
+  .sao .tat { opacity: .16; }
 
   .vi {
     margin: clamp(16px, 4cqw, 22px) 0 0;
     font-family: var(--serif);
     font-weight: 500;
-    font-style: italic;
-    font-size: clamp(1.06rem, 4.6cqw, 1.42rem);
-    line-height: 1.5;
-    color: var(--nga);
+    font-size: clamp(1.06rem, 4.6cqw, 1.38rem);
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+    color: var(--muc);
     text-wrap: pretty;
   }
-  .vi span { color: var(--xam); font-style: normal; font-family: var(--sans); font-size: .74em; display: block; margin-bottom: .3em; letter-spacing: .16em; text-transform: uppercase; }
+  .vi span {
+    display: block;
+    margin-bottom: .34em;
+    font-family: var(--sans);
+    font-size: .68em;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--xam);
+  }
 
   /* cuống vé "đổi được" */
   .doi {
     margin-top: clamp(22px, 5.4cqw, 32px);
     padding: clamp(14px, 3.6cqw, 20px) clamp(16px, 4cqw, 22px);
-    border: 1px dashed var(--vien-ro);
+    border: 2px dashed var(--mint-nhat);
     border-radius: 18px;
-    background: rgba(255, 255, 255, 0.035);
-    display: flex; flex-direction: column; gap: .28em;
+    background: var(--mint-rat);
+    display: flex; flex-direction: column; gap: .3em;
   }
   .doi-nhan {
     font-size: clamp(.6rem, 2.4cqw, .7rem);
     font-weight: 600;
-    letter-spacing: .26em;
+    letter-spacing: .24em;
     text-transform: uppercase;
-    color: var(--dong);
+    color: var(--mint);
   }
   .doi-noi {
     font-family: var(--serif);
     font-weight: 600;
-    font-size: clamp(1.12rem, 5cqw, 1.5rem);
+    font-size: clamp(1.1rem, 5cqw, 1.44rem);
     line-height: 1.25;
-    color: var(--nga);
+    letter-spacing: -0.015em;
+    color: var(--muc);
     text-wrap: balance;
   }
 
@@ -222,7 +233,7 @@
   .chan-the b {
     font-family: var(--serif); font-weight: 600;
     font-size: clamp(.98rem, 4cqw, 1.14rem);
-    color: var(--nga);
+    color: var(--muc);
   }
   .chan-the .ngay b { font-variant-numeric: tabular-nums; }
   .chan-the .ngay { text-align: right; }
@@ -233,7 +244,6 @@
     letter-spacing: .12em;
     text-transform: uppercase;
     color: var(--xam);
-    opacity: .8;
   }
 
   /* ============ MÈO DÁN ============ */
@@ -246,7 +256,7 @@
   .meo svg { width: 100%; height: auto; display: block; }
   .meo-1 { width: clamp(74px, 21cqw, 108px); top: -34px;  right: -18px; transform: rotate(9deg); }
   .meo-2 { width: clamp(58px, 16cqw, 82px);  bottom: -20px; right: -22px; transform: rotate(-11deg); }
-  .meo-3 { width: clamp(48px, 13cqw, 66px);  bottom: 34%; left: -24px; transform: rotate(14deg); }
+  .meo-3 { width: clamp(44px, 12cqw, 60px);  bottom: 34%; left: -22px; transform: rotate(-12deg); }
 
   @media (prefers-reduced-motion: no-preference) {
     .meo-1 { animation: nhun-meo 3.4s ease-in-out infinite; }
@@ -260,12 +270,12 @@
   @media (prefers-reduced-motion: no-preference) {
     .the { animation: len .7s cubic-bezier(.16, .8, .3, 1) both; }
     @keyframes len { from { opacity: 0; transform: translateY(22px) scale(.985); } }
-    .the .tim svg { animation: bung .45s cubic-bezier(.2, .9, .3, 1.5) both; }
-    .the .tim svg:nth-child(1) { animation-delay: .42s; }
-    .the .tim svg:nth-child(2) { animation-delay: .50s; }
-    .the .tim svg:nth-child(3) { animation-delay: .58s; }
-    .the .tim svg:nth-child(4) { animation-delay: .66s; }
-    .the .tim svg:nth-child(5) { animation-delay: .74s; }
+    .the .sao svg { animation: bung .45s cubic-bezier(.2, .9, .3, 1.5) both; }
+    .the .sao svg:nth-child(1) { animation-delay: .42s; }
+    .the .sao svg:nth-child(2) { animation-delay: .50s; }
+    .the .sao svg:nth-child(3) { animation-delay: .58s; }
+    .the .sao svg:nth-child(4) { animation-delay: .66s; }
+    .the .sao svg:nth-child(5) { animation-delay: .74s; }
     @keyframes bung { from { opacity: 0; transform: scale(.4) rotate(-14deg); } }
     .bui i { animation: troi 9s ease-in-out infinite alternate; }
     .bui i:nth-child(2) { animation-duration: 11s; animation-delay: -3s; }
@@ -278,94 +288,94 @@
     .sanh { min-height: 0; padding: 0; }
     .sanh::before, .bui { display: none; }
     .the { box-shadow: none; animation: none; max-width: none; }
-    .the .tim svg { animation: none; }
+    .the .sao svg { animation: none; }
   }
 </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
-    <symbol id="tim" viewBox="0 0 32 30">
-      <path d="M16 28C8.6 22.4 2 17.4 2 11.2 2 6.4 5.8 3 10.2 3c2.5 0 4.6 1.1 5.8 2.9C17.2 4.1 19.3 3 21.8 3 26.2 3 30 6.4 30 11.2c0 6.2-6.6 11.2-14 16.8z"/>
+    <symbol id="sao" viewBox="0 0 32 30">
+      <path d="M16 1.5 L19.3 10.5 L28.8 10.8 L21.3 16.7 L23.9 25.9 L16 20.6 L8.1 25.9 L10.7 16.7 L3.2 10.8 L12.7 10.5 Z"/>
     </symbol>
 
     <!-- mèo mập ngồi, mắt nhắm tít -->
     <symbol id="meo-map" viewBox="0 0 100 100">
-      <ellipse cx="50" cy="80" rx="29" ry="19" fill="#F3E2CF"/>
-      <ellipse cx="33" cy="94" rx="9" ry="5.5" fill="#FFF4E6"/>
-      <ellipse cx="67" cy="94" rx="9" ry="5.5" fill="#FFF4E6"/>
-      <path d="M25 36 L28 11 L47 27 Z" fill="#F3E2CF"/>
-      <path d="M75 36 L72 11 L53 27 Z" fill="#F3E2CF"/>
-      <path d="M29 31 L31 18 L41 27 Z" fill="#FFB9C6"/>
-      <path d="M71 31 L69 18 L59 27 Z" fill="#FFB9C6"/>
-      <circle cx="50" cy="47" r="27" fill="#F6E7D5"/>
-      <path d="M36 45c2.4 3.4 6.6 3.4 9 0" stroke="#3A2B3F" stroke-width="3.2" fill="none" stroke-linecap="round"/>
-      <path d="M55 45c2.4 3.4 6.6 3.4 9 0" stroke="#3A2B3F" stroke-width="3.2" fill="none" stroke-linecap="round"/>
-      <ellipse cx="31" cy="55" rx="7" ry="4.6" fill="#FFB9C6" opacity=".85"/>
-      <ellipse cx="69" cy="55" rx="7" ry="4.6" fill="#FFB9C6" opacity=".85"/>
-      <path d="M50 54l-3.4 3h6.8z" fill="#FF8DA1"/>
-      <path d="M50 57v2.6m0 0c-1.9 3-6.2 2.8-7.6-.4M50 59.6c1.9 3 6.2 2.8 7.6-.4" stroke="#3A2B3F" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <ellipse cx="50" cy="80" rx="29" ry="19" fill="#FFE3C0"/>
+      <ellipse cx="33" cy="94" rx="9" ry="5.5" fill="#FFF3E2"/>
+      <ellipse cx="67" cy="94" rx="9" ry="5.5" fill="#FFF3E2"/>
+      <path d="M25 36 L28 11 L47 27 Z" fill="#FFE3C0"/>
+      <path d="M75 36 L72 11 L53 27 Z" fill="#FFE3C0"/>
+      <path d="M29 31 L31 18 L41 27 Z" fill="#FFB4A2"/>
+      <path d="M71 31 L69 18 L59 27 Z" fill="#FFB4A2"/>
+      <circle cx="50" cy="47" r="27" fill="#FFEDD6"/>
+      <path d="M36 45c2.4 3.4 6.6 3.4 9 0" stroke="#2E4A44" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+      <path d="M55 45c2.4 3.4 6.6 3.4 9 0" stroke="#2E4A44" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="31" cy="55" rx="7" ry="4.6" fill="#FFB4A2" opacity=".85"/>
+      <ellipse cx="69" cy="55" rx="7" ry="4.6" fill="#FFB4A2" opacity=".85"/>
+      <path d="M50 54l-3.4 3h6.8z" fill="#FF9E86"/>
+      <path d="M50 57v2.6m0 0c-1.9 3-6.2 2.8-7.6-.4M50 59.6c1.9 3 6.2 2.8 7.6-.4" stroke="#2E4A44" stroke-width="2.8" fill="none" stroke-linecap="round"/>
     </symbol>
 
-    <!-- mèo vàng ôm trái tim -->
-    <symbol id="meo-tim" viewBox="0 0 100 100">
-      <ellipse cx="50" cy="78" rx="26" ry="20" fill="#FFD9A5"/>
-      <path d="M27 38 L30 14 L48 29 Z" fill="#FFD9A5"/>
-      <path d="M73 38 L70 14 L52 29 Z" fill="#FFD9A5"/>
-      <path d="M31 33 L33 21 L42 29 Z" fill="#FFB9C6"/>
-      <path d="M69 33 L67 21 L58 29 Z" fill="#FFB9C6"/>
-      <circle cx="50" cy="46" r="25" fill="#FFE3BC"/>
-      <path d="M43 28c1.6 2.6 1.6 4.6 0 7M50 26.4c1.7 2.8 1.7 5 0 7.6M57 28c-1.6 2.6-1.6 4.6 0 7" stroke="#E9A94F" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <circle cx="41" cy="46" r="4.4" fill="#3A2B3F"/>
-      <circle cx="59" cy="46" r="4.4" fill="#3A2B3F"/>
+    <!-- mèo cam ôm ngôi sao -->
+    <symbol id="meo-sao" viewBox="0 0 100 100">
+      <ellipse cx="50" cy="78" rx="26" ry="20" fill="#FFC078"/>
+      <path d="M27 38 L30 14 L48 29 Z" fill="#FFC078"/>
+      <path d="M73 38 L70 14 L52 29 Z" fill="#FFC078"/>
+      <path d="M31 33 L33 21 L42 29 Z" fill="#FFB4A2"/>
+      <path d="M69 33 L67 21 L58 29 Z" fill="#FFB4A2"/>
+      <circle cx="50" cy="46" r="25" fill="#FFD9A5"/>
+      <path d="M43 28c1.6 2.6 1.6 4.6 0 7M50 26.4c1.7 2.8 1.7 5 0 7.6M57 28c-1.6 2.6-1.6 4.6 0 7" stroke="#EFA959" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="41" cy="46" r="4.4" fill="#2E4A44"/>
+      <circle cx="59" cy="46" r="4.4" fill="#2E4A44"/>
       <circle cx="42.6" cy="44.4" r="1.5" fill="#fff"/>
       <circle cx="60.6" cy="44.4" r="1.5" fill="#fff"/>
-      <ellipse cx="32" cy="54" rx="6" ry="4" fill="#FF9DAE" opacity=".8"/>
-      <ellipse cx="68" cy="54" rx="6" ry="4" fill="#FF9DAE" opacity=".8"/>
-      <path d="M50 52l-3 2.8h6z" fill="#FF8DA1"/>
-      <path d="M50 55.6c-1.6 2.6-5.4 2.4-6.6-.4M50 55.6c1.6 2.6 5.4 2.4 6.6-.4" stroke="#3A2B3F" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-      <path d="M50 92c-9-6.2-15-10.6-15-16.6 0-4.4 3.5-7.4 7.4-7.4 2.9 0 5.6 1.6 7.6 4.2 2-2.6 4.7-4.2 7.6-4.2 3.9 0 7.4 3 7.4 7.4C65 81.4 59 85.8 50 92z" fill="#FF5E7A"/>
-      <ellipse cx="28" cy="80" rx="8" ry="6" fill="#FFE3BC" transform="rotate(-18 28 80)"/>
-      <ellipse cx="72" cy="80" rx="8" ry="6" fill="#FFE3BC" transform="rotate(18 72 80)"/>
+      <ellipse cx="32" cy="54" rx="6" ry="4" fill="#FF9E86" opacity=".8"/>
+      <ellipse cx="68" cy="54" rx="6" ry="4" fill="#FF9E86" opacity=".8"/>
+      <path d="M50 52l-3 2.8h6z" fill="#FF9E86"/>
+      <path d="M50 55.6c-1.6 2.6-5.4 2.4-6.6-.4M50 55.6c1.6 2.6 5.4 2.4 6.6-.4" stroke="#2E4A44" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <path d="M50 66.5 L54.4 78.4 L67 78.8 L57.1 86.6 L60.5 98.7 L50 91.7 L39.5 98.7 L42.9 86.6 L33 78.8 L45.6 78.4 Z" fill="#FFC95C" stroke="#F5A623" stroke-width="2" stroke-linejoin="round"/>
+      <ellipse cx="28" cy="80" rx="8" ry="6" fill="#FFD9A5" transform="rotate(-18 28 80)"/>
+      <ellipse cx="72" cy="80" rx="8" ry="6" fill="#FFD9A5" transform="rotate(18 72 80)"/>
     </symbol>
 
-    <!-- mèo xám cuộn tròn ngủ -->
+    <!-- mèo tím cuộn tròn ngủ -->
     <symbol id="meo-ngu" viewBox="0 0 100 100">
-      <path d="M88 62c0 14.4-17 24-38 24S12 76.4 12 62s17-22 38-22 38 7.6 38 22z" fill="#DCD5E6"/>
-      <path d="M86 60c6-2 10 3 8 9-1.6 4.8-7 6-10.6 3.4" fill="none" stroke="#DCD5E6" stroke-width="9" stroke-linecap="round"/>
-      <circle cx="36" cy="60" r="21" fill="#EAE5F2"/>
-      <path d="M20 50 L21 33 L34 44 Z" fill="#EAE5F2"/>
-      <path d="M50 46 L52 30 L38 41 Z" fill="#EAE5F2"/>
-      <path d="M23 46 L24 37 L31 44 Z" fill="#FFB9C6"/>
-      <path d="M47 43 L48 34 L41 41 Z" fill="#FFB9C6"/>
-      <path d="M26 58c1.8 2.6 5 2.6 6.8 0" stroke="#3A2B3F" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-      <path d="M40 58c1.8 2.6 5 2.6 6.8 0" stroke="#3A2B3F" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-      <ellipse cx="22" cy="66" rx="5.4" ry="3.6" fill="#FFB9C6" opacity=".8"/>
-      <ellipse cx="50" cy="66" rx="5.4" ry="3.6" fill="#FFB9C6" opacity=".8"/>
-      <path d="M36 65l-2.6 2.4h5.2z" fill="#FF8DA1"/>
-      <path d="M62 30h10l-10 12h10" stroke="#FFA8B8" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M78 14h7l-7 8h7" stroke="#FFA8B8" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M88 62c0 14.4-17 24-38 24S12 76.4 12 62s17-22 38-22 38 7.6 38 22z" fill="#CFC6FF"/>
+      <path d="M86 60c6-2 10 3 8 9-1.6 4.8-7 6-10.6 3.4" fill="none" stroke="#CFC6FF" stroke-width="9" stroke-linecap="round"/>
+      <circle cx="36" cy="60" r="21" fill="#E1DCFF"/>
+      <path d="M20 50 L21 33 L34 44 Z" fill="#E1DCFF"/>
+      <path d="M50 46 L52 30 L38 41 Z" fill="#E1DCFF"/>
+      <path d="M23 46 L24 37 L31 44 Z" fill="#FFB4A2"/>
+      <path d="M47 43 L48 34 L41 41 Z" fill="#FFB4A2"/>
+      <path d="M26 58c1.8 2.6 5 2.6 6.8 0" stroke="#2E4A44" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <path d="M40 58c1.8 2.6 5 2.6 6.8 0" stroke="#2E4A44" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <ellipse cx="22" cy="66" rx="5.4" ry="3.6" fill="#FFB4A2" opacity=".8"/>
+      <ellipse cx="50" cy="66" rx="5.4" ry="3.6" fill="#FFB4A2" opacity=".8"/>
+      <path d="M36 65l-2.6 2.4h5.2z" fill="#FF9E86"/>
+      <path d="M62 30h10l-10 12h10" stroke="#17B195" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M78 14h7l-7 8h7" stroke="#17B195" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
     </symbol>
 
-    <!-- mèo vẫy tay -->
+    <!-- mèo mint vẫy tay -->
     <symbol id="meo-vay" viewBox="0 0 100 100">
-      <ellipse cx="52" cy="79" rx="25" ry="19" fill="#F3E2CF"/>
-      <path d="M70 72 L84 48" stroke="#F3E2CF" stroke-width="13" stroke-linecap="round" fill="none"/>
-      <circle cx="87" cy="43" r="9" fill="#FFF4E6"/>
-      <path d="M84 38.5v3.2M88 37.6v3.6M91.6 39v3" stroke="#E8CDB0" stroke-width="2" stroke-linecap="round"/>
-      <path d="M29 38 L32 14 L50 29 Z" fill="#F3E2CF"/>
-      <path d="M75 38 L72 14 L54 29 Z" fill="#F3E2CF"/>
-      <path d="M33 33 L35 21 L44 29 Z" fill="#FFB9C6"/>
-      <path d="M71 33 L69 21 L60 29 Z" fill="#FFB9C6"/>
-      <circle cx="52" cy="46" r="25" fill="#F6E7D5"/>
-      <circle cx="43" cy="45" r="4.2" fill="#3A2B3F"/>
-      <circle cx="61" cy="45" r="4.2" fill="#3A2B3F"/>
+      <ellipse cx="52" cy="79" rx="25" ry="19" fill="#9FE7D4"/>
+      <path d="M70 72 L84 48" stroke="#9FE7D4" stroke-width="13" stroke-linecap="round" fill="none"/>
+      <circle cx="87" cy="43" r="9" fill="#CFF5EA"/>
+      <path d="M84 38.5v3.2M88 37.6v3.6M91.6 39v3" stroke="#6FCDB8" stroke-width="2" stroke-linecap="round"/>
+      <path d="M29 38 L32 14 L50 29 Z" fill="#9FE7D4"/>
+      <path d="M75 38 L72 14 L54 29 Z" fill="#9FE7D4"/>
+      <path d="M33 33 L35 21 L44 29 Z" fill="#FFB4A2"/>
+      <path d="M71 33 L69 21 L60 29 Z" fill="#FFB4A2"/>
+      <circle cx="52" cy="46" r="25" fill="#CFF5EA"/>
+      <circle cx="43" cy="45" r="4.2" fill="#2E4A44"/>
+      <circle cx="61" cy="45" r="4.2" fill="#2E4A44"/>
       <circle cx="44.5" cy="43.5" r="1.4" fill="#fff"/>
       <circle cx="62.5" cy="43.5" r="1.4" fill="#fff"/>
-      <ellipse cx="34" cy="54" rx="6" ry="4" fill="#FFB9C6" opacity=".85"/>
-      <ellipse cx="70" cy="54" rx="6" ry="4" fill="#FFB9C6" opacity=".85"/>
-      <path d="M52 52l-3 2.8h6z" fill="#FF8DA1"/>
-      <path d="M52 55.4c-1.7 2.8-5.6 2.6-6.9-.4M52 55.4c1.7 2.8 5.6 2.6 6.9-.4" stroke="#3A2B3F" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <ellipse cx="34" cy="54" rx="6" ry="4" fill="#FFB4A2" opacity=".85"/>
+      <ellipse cx="70" cy="54" rx="6" ry="4" fill="#FFB4A2" opacity=".85"/>
+      <path d="M52 52l-3 2.8h6z" fill="#FF9E86"/>
+      <path d="M52 55.4c-1.7 2.8-5.6 2.6-6.9-.4M52 55.4c1.7 2.8 5.6 2.6 6.9-.4" stroke="#2E4A44" stroke-width="2.6" fill="none" stroke-linecap="round"/>
     </symbol>
   </defs>
 </svg>
@@ -384,23 +394,23 @@
 var PHIEU = (function () {
   "use strict";
 
-  var MEO = ["meo-tim", "meo-map", "meo-vay", "meo-ngu"];
-  var MEO_TEN = { "meo-tim": "Mèo ôm tim", "meo-map": "Mèo mập", "meo-vay": "Mèo vẫy tay", "meo-ngu": "Mèo ngủ" };
+  var MEO = ["meo-vay", "meo-sao", "meo-map", "meo-ngu"];
+  var MEO_TEN = { "meo-vay": "Mèo vẫy tay", "meo-sao": "Mèo ôm sao", "meo-map": "Mèo mập", "meo-ngu": "Mèo ngủ" };
 
   var GOI_Y_LOI = [
-    "ăn hết suất dù không thích rau",
+    "làm xong việc khó mà không càu nhàu",
     "đi ngủ trước mười hai giờ, ba đêm liền",
-    "kiên nhẫn nghe anh kể chuyện công việc suốt bốn mươi phút",
-    "không dỗi khi anh về muộn",
-    "tự giác uống đủ nước cả tuần",
-    "cười thật khi anh kể chuyện cười nhạt"
+    "uống hết bình nước trước bốn giờ chiều",
+    "dọn xong cái bàn làm việc bừa cả tuần",
+    "trả lời tin nhắn ngay, không để cách hôm",
+    "nhớ ăn sáng ba ngày liền"
   ];
   var GOI_Y_THUONG = [
-    "một lần được chọn phim, không được cãi",
-    "một bữa ăn tuỳ chọn, anh trả",
-    "một cái ôm mười phút, không nói gì",
-    "một buổi ngủ nướng, anh dọn nhà",
-    "một lời xin lỗi vô điều kiện"
+    "một lần được chọn quán ăn",
+    "một buổi không bị nhắc việc",
+    "một ly trà sữa, cỡ lớn",
+    "một lần được đổi ý, không bị hỏi tại sao",
+    "một buổi tối không ai làm phiền"
   ];
 
   function homNay() {
@@ -410,12 +420,12 @@ var PHIEU = (function () {
 
   function macDinh() {
     return {
-      t: "Người Thương",
-      l: GOI_Y_LOI[2],
+      t: "Bạn Ngoan",
+      l: GOI_Y_LOI[0],
       r: GOI_Y_THUONG[0],
-      g: "Anh",
+      g: "Ban Phát Phiếu",
       s: "5",
-      c: "meo-tim",
+      c: "meo-vay",
       n: homNay()
     };
   }
@@ -476,22 +486,22 @@ var PHIEU = (function () {
     return "Số " + ("00" + (h % 999 + 1)).slice(-3);
   }
 
-  function timHtml(n) {
+  function saoHtml(n) {
     n = Math.max(0, Math.min(5, parseInt(n, 10) || 0));
     var s = "", i;
     for (i = 1; i <= 5; i++) {
       s += '<svg viewBox="0 0 32 30" class="' + (i <= n ? "bat" : "tat") +
-           '" fill="' + (i <= n ? "#FF5E7A" : "#F7EFE8") + '" aria-hidden="true"><use href="#tim"/></svg>';
+           '" fill="' + (i <= n ? "#FFC95C" : "#163B36") + '" aria-hidden="true"><use href="#sao"/></svg>';
     }
     return s;
   }
 
   function meoHtml(c) {
-    if (MEO.indexOf(c) < 0) c = "meo-tim";
+    if (MEO.indexOf(c) < 0) c = "meo-vay";
     var phu = c === "meo-ngu" ? "meo-map" : "meo-ngu";
     return '<div class="meo meo-1"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#' + c + '"/></svg></div>' +
            '<div class="meo meo-2"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#' + phu + '"/></svg></div>' +
-           '<div class="meo meo-3"><svg viewBox="0 0 32 30" fill="#FF5E7A" aria-hidden="true"><use href="#tim"/></svg></div>';
+           '<div class="meo meo-3"><svg viewBox="0 0 32 30" fill="#FFC95C" aria-hidden="true"><use href="#sao"/></svg></div>';
   }
 
   function veThe(el, d) {
@@ -500,7 +510,7 @@ var PHIEU = (function () {
       '<div class="dau-the"><span class="nhan-the">Phiếu bé ngoan</span></div>' +
       '<p class="trao">Trao cho</p>' +
       '<h1 class="ten">' + esc(d.t || macDinh().t) + '</h1>' +
-      '<div class="tim" role="img" aria-label="' + n + ' trên 5 tim">' + timHtml(n) + '</div>' +
+      '<div class="sao" role="img" aria-label="' + n + ' trên 5 sao">' + saoHtml(n) + '</div>' +
       '<p class="vi"><span>Vì đã</span>' + esc(d.l) + '</p>' +
       (d.r ? '<div class="doi"><span class="doi-nhan">Đổi được</span>' +
              '<strong class="doi-noi">' + esc(d.r) + '</strong></div>' : '') +

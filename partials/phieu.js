@@ -6,23 +6,23 @@
 var PHIEU = (function () {
   "use strict";
 
-  var MEO = ["meo-tim", "meo-map", "meo-vay", "meo-ngu"];
-  var MEO_TEN = { "meo-tim": "Mèo ôm tim", "meo-map": "Mèo mập", "meo-vay": "Mèo vẫy tay", "meo-ngu": "Mèo ngủ" };
+  var MEO = ["meo-vay", "meo-sao", "meo-map", "meo-ngu"];
+  var MEO_TEN = { "meo-vay": "Mèo vẫy tay", "meo-sao": "Mèo ôm sao", "meo-map": "Mèo mập", "meo-ngu": "Mèo ngủ" };
 
   var GOI_Y_LOI = [
-    "ăn hết suất dù không thích rau",
+    "làm xong việc khó mà không càu nhàu",
     "đi ngủ trước mười hai giờ, ba đêm liền",
-    "kiên nhẫn nghe anh kể chuyện công việc suốt bốn mươi phút",
-    "không dỗi khi anh về muộn",
-    "tự giác uống đủ nước cả tuần",
-    "cười thật khi anh kể chuyện cười nhạt"
+    "uống hết bình nước trước bốn giờ chiều",
+    "dọn xong cái bàn làm việc bừa cả tuần",
+    "trả lời tin nhắn ngay, không để cách hôm",
+    "nhớ ăn sáng ba ngày liền"
   ];
   var GOI_Y_THUONG = [
-    "một lần được chọn phim, không được cãi",
-    "một bữa ăn tuỳ chọn, anh trả",
-    "một cái ôm mười phút, không nói gì",
-    "một buổi ngủ nướng, anh dọn nhà",
-    "một lời xin lỗi vô điều kiện"
+    "một lần được chọn quán ăn",
+    "một buổi không bị nhắc việc",
+    "một ly trà sữa, cỡ lớn",
+    "một lần được đổi ý, không bị hỏi tại sao",
+    "một buổi tối không ai làm phiền"
   ];
 
   function homNay() {
@@ -32,12 +32,12 @@ var PHIEU = (function () {
 
   function macDinh() {
     return {
-      t: "Người Thương",
-      l: GOI_Y_LOI[2],
+      t: "Bạn Ngoan",
+      l: GOI_Y_LOI[0],
       r: GOI_Y_THUONG[0],
-      g: "Anh",
+      g: "Ban Phát Phiếu",
       s: "5",
-      c: "meo-tim",
+      c: "meo-vay",
       n: homNay()
     };
   }
@@ -98,22 +98,22 @@ var PHIEU = (function () {
     return "Số " + ("00" + (h % 999 + 1)).slice(-3);
   }
 
-  function timHtml(n) {
+  function saoHtml(n) {
     n = Math.max(0, Math.min(5, parseInt(n, 10) || 0));
     var s = "", i;
     for (i = 1; i <= 5; i++) {
       s += '<svg viewBox="0 0 32 30" class="' + (i <= n ? "bat" : "tat") +
-           '" fill="' + (i <= n ? "#FF5E7A" : "#F7EFE8") + '" aria-hidden="true"><use href="#tim"/></svg>';
+           '" fill="' + (i <= n ? "#FFC95C" : "#163B36") + '" aria-hidden="true"><use href="#sao"/></svg>';
     }
     return s;
   }
 
   function meoHtml(c) {
-    if (MEO.indexOf(c) < 0) c = "meo-tim";
+    if (MEO.indexOf(c) < 0) c = "meo-vay";
     var phu = c === "meo-ngu" ? "meo-map" : "meo-ngu";
     return '<div class="meo meo-1"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#' + c + '"/></svg></div>' +
            '<div class="meo meo-2"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#' + phu + '"/></svg></div>' +
-           '<div class="meo meo-3"><svg viewBox="0 0 32 30" fill="#FF5E7A" aria-hidden="true"><use href="#tim"/></svg></div>';
+           '<div class="meo meo-3"><svg viewBox="0 0 32 30" fill="#FFC95C" aria-hidden="true"><use href="#sao"/></svg></div>';
   }
 
   function veThe(el, d) {
@@ -122,7 +122,7 @@ var PHIEU = (function () {
       '<div class="dau-the"><span class="nhan-the">Phiếu bé ngoan</span></div>' +
       '<p class="trao">Trao cho</p>' +
       '<h1 class="ten">' + esc(d.t || macDinh().t) + '</h1>' +
-      '<div class="tim" role="img" aria-label="' + n + ' trên 5 tim">' + timHtml(n) + '</div>' +
+      '<div class="sao" role="img" aria-label="' + n + ' trên 5 sao">' + saoHtml(n) + '</div>' +
       '<p class="vi"><span>Vì đã</span>' + esc(d.l) + '</p>' +
       (d.r ? '<div class="doi"><span class="doi-nhan">Đổi được</span>' +
              '<strong class="doi-noi">' + esc(d.r) + '</strong></div>' : '') +

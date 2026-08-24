@@ -1,0 +1,223 @@
+<title>Có Phiếu Gửi Bạn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Be+Vietnam+Pro:wght@400;500;600&display=swap">
+<style>
+{{include:partials/tokens.css}}
+
+  body {
+    background:
+      radial-gradient(46% 34% at 8% 2%, var(--mint-nhat), transparent 66%),
+      radial-gradient(42% 34% at 96% 98%, #FFE7C2, transparent 64%),
+      var(--nen);
+    background-attachment: fixed;
+    overflow-x: clip;
+  }
+
+  .trang {
+    min-height: 100svh;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: clamp(34px, 7vw, 72px) clamp(24px, 5vw, 40px) clamp(44px, 8vw, 80px);
+    display: flex; flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(22px, 4vw, 34px);
+    text-align: center;
+  }
+
+  .mi {
+    font-size: .72rem; font-weight: 600;
+    letter-spacing: .28em; text-transform: uppercase;
+    color: var(--mint);
+  }
+  h1 {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(2.1rem, 8vw, 3.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    text-wrap: balance;
+    color: var(--muc);
+  }
+  .phu {
+    margin: 0;
+    max-width: 34ch;
+    font-size: clamp(1rem, 3vw, 1.12rem);
+    line-height: 1.6;
+    color: var(--muc-mo);
+    text-wrap: pretty;
+  }
+
+  /* ---------- khối quét ---------- */
+  .quet {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(8px, 2vw, 20px);
+    margin-top: 4px;
+  }
+  .chi-dan { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .nhan-quet {
+    margin: 0;
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(1.4rem, 5vw, 2.1rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    color: var(--muc);
+    transform: rotate(-5deg);
+    text-wrap: balance;
+  }
+  .nhan-quet em { font-style: normal; color: var(--mint); }
+  .mui { width: clamp(110px, 20vw, 180px); color: var(--mint); }
+  .mui.doc { display: none; width: clamp(50px, 13vw, 70px); }
+  .mui svg { width: 100%; height: auto; display: block; }
+
+  .bang {
+    position: relative;
+    background: var(--the);
+    padding: clamp(16px, 3vw, 24px);
+    border-radius: 26px;
+    border: 1px solid var(--vien);
+    box-shadow: 0 30px 60px -30px rgba(22, 59, 54, 0.4);
+  }
+  .bang svg.ma { display: block; width: clamp(190px, 44vw, 262px); height: auto; color: var(--muc); }
+
+  .meo-canh {
+    position: absolute;
+    width: clamp(64px, 14vw, 96px);
+    filter: var(--keyline);
+    pointer-events: none;
+  }
+  .meo-canh svg { width: 100%; height: auto; display: block; }
+  .m-a { top: -34px; right: -22px; transform: rotate(10deg); }
+  .m-b { bottom: -26px; left: -24px; transform: rotate(-12deg); width: clamp(52px, 11vw, 74px); }
+
+  .buoc {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 10px;
+    font-size: .92rem; color: var(--muc-mo);
+  }
+  .buoc span {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--the);
+    border: 1px solid var(--vien);
+    border-radius: 999px;
+    padding: 9px 15px;
+    font-weight: 500;
+  }
+  .buoc b {
+    display: grid; place-items: center;
+    width: 21px; height: 21px; border-radius: 50%;
+    background: var(--mint-nhat); color: var(--muc);
+    font-size: .78rem;
+  }
+
+  .du-phong { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .du-phong p { margin: 0; font-size: .9rem; color: var(--xam); }
+  .nut-mo {
+    font: inherit; font-size: .98rem; font-weight: 600;
+    text-decoration: none;
+    padding: 13px 24px;
+    border-radius: 999px;
+    background: var(--mint);
+    color: #fff;
+    border: 1px solid transparent;
+    transition: background .16s ease;
+  }
+  .nut-mo:hover { background: #12A085; }
+
+  @media (max-width: 720px) {
+    .quet { grid-template-columns: 1fr; justify-items: center; gap: 6px; }
+    .chi-dan { order: -1; }
+    .mui.ngang { display: none; }
+    .mui.doc { display: block; }
+    .m-b { bottom: -14px; left: -14px; width: clamp(44px, 10vw, 58px); }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .bang { animation: hien .6s cubic-bezier(.16, .8, .3, 1.2) both; }
+    @keyframes hien { from { opacity: 0; transform: translateY(16px) scale(.97); } }
+    .mui.ngang { animation: nhun 1.6s ease-in-out infinite; }
+    @keyframes nhun { 50% { transform: translateX(8px); } }
+    .mui.doc { animation: nhun-doc 1.6s ease-in-out infinite; }
+    @keyframes nhun-doc { 50% { transform: translateY(8px); } }
+    .m-a { animation: lac 3.6s ease-in-out infinite; }
+    @keyframes lac {
+      0%, 100% { transform: rotate(10deg) translateY(0); }
+      50%      { transform: rotate(10deg) translateY(-5px); }
+    }
+  }
+</style>
+
+{{include:partials/sprite.html}}
+
+<div class="trang">
+  <span class="mi">Có người gửi bạn cái này</span>
+  <h1>Một tấm phiếu bé ngoan</h1>
+  <p class="phu">Phiếu nằm trong mã dưới đây. Mở camera điện thoại, quét là thấy.</p>
+
+  <div class="quet">
+    <div class="chi-dan">
+      <p class="nhan-quet">Quét <em>vào đây</em>!</p>
+      <div class="mui ngang" aria-hidden="true">
+        <svg viewBox="0 0 200 92">
+          <path d="M8 22c26 42 82 52 158 42" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+          <path d="M132 40l30 24-38 13" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="mui doc" aria-hidden="true">
+        <svg viewBox="0 0 84 112">
+          <path d="M16 8c34 14 10 40 26 82" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+          <path d="M22 66l20 26 22-22" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="bang">
+      <svg class="ma" id="qr" role="img" aria-label="Mã QR mở phiếu bé ngoan"></svg>
+      <div class="meo-canh m-a" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#meo-vay"/></svg></div>
+      <div class="meo-canh m-b" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#meo-sao"/></svg></div>
+    </div>
+  </div>
+
+  <div class="buoc">
+    <span><b>1</b>Mở camera điện thoại</span>
+    <span><b>2</b>Hướng vào mã</span>
+    <span><b>3</b>Bấm đường dẫn hiện ra</span>
+  </div>
+
+  <div class="du-phong">
+    <p>Đang xem sẵn trên điện thoại rồi?</p>
+    <a class="nut-mo" id="nut-mo" href="#">Mở phiếu luôn</a>
+  </div>
+</div>
+
+<script>
+{{include:partials/qr.js}}
+</script>
+<script>
+(function () {
+  "use strict";
+  var url = location.href.replace(/[^/#?]*(?:[?#].*)?$/, "") + "phieu.html" + location.hash;
+  document.getElementById("nut-mo").href = url;
+
+  var q;
+  try { q = QR.taoMa(url, "M"); }
+  catch (e) { try { q = QR.taoMa(url, "L"); } catch (e2) { q = null; } }
+
+  var svg = document.getElementById("qr");
+  if (!q) {
+    svg.outerHTML = '<p class="phu">Liên kết này dài quá nên không dựng được mã QR. ' +
+                    'Bấm nút bên dưới để mở phiếu trực tiếp nhé.</p>';
+    return;
+  }
+  var vien = 4, s = q.n + 2 * vien;
+  svg.setAttribute("viewBox", (-vien) + " " + (-vien) + " " + s + " " + s);
+  svg.innerHTML =
+    '<rect x="' + (-vien) + '" y="' + (-vien) + '" width="' + s + '" height="' + s + '" fill="#FFFFFF"/>' +
+    '<path d="' + QR.duongDan(q) + '" fill="none" stroke="currentColor" stroke-width="1" shape-rendering="crispEdges"/>';
+})();
+</script>

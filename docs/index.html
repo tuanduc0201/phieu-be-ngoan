@@ -3,66 +3,69 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#120D1A">
-<meta name="description" content="Làm phiếu bé ngoan tặng người thương: điền lời khen, chọn mèo, đưa mã QR cho người ấy quét.">
-<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#F1FAF6">
+<meta name="description" content="Làm phiếu bé ngoan: soạn nội dung, tạo mã QR và gửi liên kết cho người nhận.">
+<meta name="color-scheme" content="light">
 <style>*{margin:0;padding:0}html,body{min-height:100%}svg,img{max-width:100%}</style>
 <title>Làm Phiếu Bé Ngoan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Be+Vietnam+Pro:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Be+Vietnam+Pro:wght@400;500;600&display=swap">
 <style>
   *, *::before, *::after { box-sizing: border-box; }
 
   :root {
-    /* nền đêm */
-    --dem:      #120D1A;
-    --dem-2:    #1A1226;
-    --the:      #1F1730;
-    --the-2:    #2C1A34;
+    /* nền sáng: mint sương và kem */
+    --nen:      #F1FAF6;
+    --nen-2:    #FFF7EC;
+    --the:      #FFFFFF;
+    --the-2:    #F3FFFB;
 
-    /* chữ */
-    --nga:      #F7EFE8;
-    --nga-mo:   #CFC3C9;
-    --xam:      #9C90AA;   /* xám lệch tím cho ăn với sắc nhấn */
+    /* chữ: mực xanh rừng, không dùng đen thuần */
+    --muc:      #163B36;
+    --muc-mo:   #3E625C;
+    --xam:      #7F9A94;
 
-    /* nhấn */
-    --hong:     #FF5E7A;
-    --hong-nhat:#FFA8B8;
-    --dong:     #E4B363;
+    /* sắc nhấn pastel */
+    --mint:     #17B195;
+    --mint-nhat:#B6EFE1;
+    --mint-rat: #E4FAF4;
+    --dao:      #FF9E86;
+    --vang:     #FFC95C;
+    --lav:      #B9AEFF;
 
-    --vien:     rgba(247, 239, 232, 0.14);
-    --vien-ro:  rgba(247, 239, 232, 0.28);
+    --vien:     rgba(22, 59, 54, 0.12);
+    --vien-ro:  rgba(22, 59, 54, 0.26);
 
-    --serif: Fraunces, "Playfair Display", Georgia, "Times New Roman", serif;
+    --serif: "Bricolage Grotesque", "Be Vietnam Pro", system-ui, sans-serif;
     --sans: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
 
     /* viền trắng kiểu sticker + bóng nổi */
     --keyline:
-      drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff)
-      drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff)
-      drop-shadow(1.5px 1.5px 0 #fff) drop-shadow(-1.5px 1.5px 0 #fff)
-      drop-shadow(1.5px -1.5px 0 #fff) drop-shadow(-1.5px -1.5px 0 #fff)
-      drop-shadow(0 8px 14px rgba(0, 0, 0, 0.45));
+      drop-shadow(2.5px 0 0 #fff) drop-shadow(-2.5px 0 0 #fff)
+      drop-shadow(0 2.5px 0 #fff) drop-shadow(0 -2.5px 0 #fff)
+      drop-shadow(1.8px 1.8px 0 #fff) drop-shadow(-1.8px 1.8px 0 #fff)
+      drop-shadow(1.8px -1.8px 0 #fff) drop-shadow(-1.8px -1.8px 0 #fff)
+      drop-shadow(0 6px 12px rgba(22, 59, 54, 0.22));
   }
 
   body {
     margin: 0;
-    background: var(--dem);
-    color: var(--nga);
+    background: var(--nen);
+    color: var(--muc);
     font-family: var(--sans);
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
-  :focus-visible { outline: 2px solid var(--hong); outline-offset: 3px; border-radius: 8px; }
+  :focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; border-radius: 8px; }
 
   body {
     background:
-      radial-gradient(46% 34% at 8% 4%, rgba(255, 94, 122, 0.14), transparent 70%),
-      radial-gradient(40% 34% at 96% 96%, rgba(228, 179, 99, 0.10), transparent 70%),
-      var(--dem);
+      radial-gradient(44% 32% at 4% 0%, var(--mint-nhat), transparent 64%),
+      radial-gradient(40% 32% at 98% 100%, #FFE7C2, transparent 62%),
+      var(--nen);
     background-attachment: fixed;
     overflow-x: clip;   /* mèo dán tràn mép không được sinh thanh cuộn ngang */
   }
@@ -70,29 +73,28 @@
   .trang {
     max-width: 1180px;
     margin: 0 auto;
-    padding: clamp(28px, 6vw, 64px) clamp(18px, 4vw, 40px) clamp(48px, 8vw, 96px);
+    padding: clamp(28px, 6vw, 64px) clamp(22px, 4vw, 40px) clamp(48px, 8vw, 96px);
     display: flex; flex-direction: column;
     gap: clamp(28px, 5vw, 44px);
   }
 
   /* ---------- đầu trang ---------- */
-  .dinh { display: flex; flex-direction: column; gap: 12px; max-width: 46ch; }
+  .dinh { display: flex; flex-direction: column; gap: 12px; max-width: 52ch; }
   .mi {
-    font-size: .7rem; font-weight: 600;
-    letter-spacing: .3em; text-transform: uppercase;
-    color: var(--dong);
+    font-size: .72rem; font-weight: 600;
+    letter-spacing: .28em; text-transform: uppercase;
+    color: var(--mint);
   }
   .dinh h1 {
     margin: 0;
     font-family: var(--serif);
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-size: clamp(2.3rem, 7vw, 3.6rem);
+    font-weight: 700;
+    font-size: clamp(2.2rem, 7vw, 3.5rem);
     line-height: 1.02;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.035em;
     text-wrap: balance;
   }
-  .dinh p { margin: 0; color: var(--nga-mo); font-size: clamp(.98rem, 2.6vw, 1.08rem); line-height: 1.6; }
+  .dinh p { margin: 0; color: var(--muc-mo); font-size: clamp(.98rem, 2.6vw, 1.08rem); line-height: 1.6; }
 
   /* ---------- khung hai cột ---------- */
   .khung {
@@ -113,29 +115,29 @@
   }
   .o input, .o textarea {
     font: inherit; font-size: 1rem;
-    color: var(--nga);
-    background: rgba(247, 239, 232, 0.045);
+    color: var(--muc);
+    background: var(--the);
     border: 1px solid var(--vien);
     border-radius: 14px;
     padding: 13px 15px;
     width: 100%;
-    transition: border-color .18s ease, background .18s ease;
+    transition: border-color .18s ease, box-shadow .18s ease;
   }
   .o input:hover, .o textarea:hover { border-color: var(--vien-ro); }
   .o input:focus, .o textarea:focus {
     outline: none;
-    border-color: var(--hong);
-    background: rgba(255, 94, 122, 0.07);
+    border-color: var(--mint);
+    box-shadow: 0 0 0 3px var(--mint-rat);
   }
   .o textarea { resize: vertical; min-height: 76px; line-height: 1.5; }
-  .o input::placeholder, .o textarea::placeholder { color: var(--xam); opacity: .7; }
+  .o input::placeholder, .o textarea::placeholder { color: var(--xam); }
   .hai { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 
   .goi { display: flex; flex-wrap: wrap; gap: 7px; }
   .goi button {
     font: inherit; font-size: .82rem;
     cursor: pointer;
-    color: var(--nga-mo);
+    color: var(--muc-mo);
     background: transparent;
     border: 1px solid var(--vien);
     border-radius: 999px;
@@ -143,14 +145,14 @@
     text-align: left;
     transition: color .16s ease, border-color .16s ease, background .16s ease;
   }
-  .goi button:hover { color: var(--nga); border-color: var(--hong); background: rgba(255, 94, 122, 0.08); }
+  .goi button:hover { color: var(--muc); border-color: var(--mint); background: var(--mint-rat); }
 
   .chon { display: flex; flex-wrap: wrap; gap: 8px; }
   .chon button {
     font: inherit; font-size: .9rem; font-weight: 500;
     cursor: pointer;
-    color: var(--nga-mo);
-    background: rgba(247, 239, 232, 0.04);
+    color: var(--muc-mo);
+    background: var(--the);
     border: 1px solid var(--vien);
     border-radius: 12px;
     padding: 9px 14px;
@@ -158,11 +160,12 @@
     transition: all .16s ease;
   }
   .chon button[aria-pressed="true"] {
-    color: var(--nga);
-    border-color: var(--hong);
-    background: rgba(255, 94, 122, 0.14);
+    color: var(--muc);
+    border-color: var(--mint);
+    background: var(--mint-rat);
+    box-shadow: inset 0 0 0 1px var(--mint);
   }
-  .chon .tim-nho { width: 15px; height: 15px; display: block; }
+  .chon .sao-nho { width: 15px; height: 15px; display: block; }
   .chon .meo-nho { width: 26px; height: 26px; display: block; }
 
   /* ---------- cột phải ---------- */
@@ -172,74 +175,96 @@
     font-size: .68rem; font-weight: 600;
     letter-spacing: .2em; text-transform: uppercase; color: var(--xam);
   }
+  .xem .the { max-width: 100%; }
 
-  /* khối quét */
-  .quet {
+  /* ---------- tạo mã ---------- */
+  .tao { display: flex; flex-direction: column; gap: 18px; }
+
+  .nut-lon {
+    font: inherit; font-size: 1.02rem; font-weight: 600;
+    cursor: pointer;
+    padding: 15px 24px;
+    border-radius: 999px;
+    border: none;
+    background: var(--mint);
+    color: #fff;
+    align-self: flex-start;
+    display: inline-flex; align-items: center; gap: 10px;
+    box-shadow: 0 10px 22px -12px rgba(23, 177, 149, 0.9);
+    transition: background .16s ease, transform .12s ease;
+  }
+  .nut-lon:hover { background: #12A085; }
+  .nut-lon:active { transform: translateY(1px); }
+
+  .kq {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    gap: clamp(10px, 2.4vw, 26px);
-  }
-  .chi-dan { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .nhan-quet {
-    margin: 0;
-    font-family: var(--serif);
-    font-weight: 600;
-    font-size: clamp(1.3rem, 4.4vw, 1.9rem);
-    line-height: 1.05;
-    color: var(--hong-nhat);
-    transform: rotate(-5deg);
-    text-wrap: balance;
-    text-align: center;
-  }
-  .mui { width: clamp(104px, 18vw, 168px); color: var(--hong); }
-  .mui.doc { display: none; width: clamp(48px, 12vw, 66px); }
-  .mui svg { width: 100%; height: auto; display: block; }
-
-  .ma {
-    background: #FFFDFB;
-    padding: clamp(13px, 2.6vw, 20px);
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: clamp(16px, 2.6vw, 24px);
+    align-items: start;
+    background: var(--the);
+    border: 1px solid var(--vien);
     border-radius: 22px;
-    box-shadow: 0 26px 50px -26px rgba(0, 0, 0, 0.85);
-    justify-self: end;
+    padding: clamp(16px, 3vw, 22px);
+    box-shadow: 0 24px 46px -30px rgba(22, 59, 54, 0.4);
   }
-  .ma svg { display: block; width: clamp(168px, 34vw, 232px); height: auto; color: #1F1730; }
+  .kq[hidden] { display: none; }
+  @media (max-width: 560px) { .kq { grid-template-columns: 1fr; justify-items: center; text-align: center; } }
 
-  @media (max-width: 920px) {
-    .quet { grid-template-columns: 1fr; justify-items: center; gap: 6px; }
-    .chi-dan { order: -1; }
-    .mui.ngang { display: none; }
-    .mui.doc { display: block; }
-    .ma { justify-self: center; }
+  .kq .ma-nho {
+    background: #fff;
+    border: 1px solid var(--vien);
+    border-radius: 16px;
+    padding: 10px;
   }
+  .kq .ma-nho svg { display: block; width: clamp(120px, 26vw, 156px); height: auto; color: var(--muc); }
+
+  .cot-link { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .cot-link > label {
+    font-size: .68rem; font-weight: 600;
+    letter-spacing: .2em; text-transform: uppercase; color: var(--xam);
+  }
+  .hop { display: flex; gap: 8px; }
+  .hop input {
+    font: inherit; font-size: .88rem;
+    flex: 1; min-width: 0;
+    color: var(--muc-mo);
+    background: var(--mint-rat);
+    border: 1px solid var(--vien);
+    border-radius: 12px;
+    padding: 11px 13px;
+    text-overflow: ellipsis;
+  }
+  .hop button {
+    font: inherit; font-size: .9rem; font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    padding: 11px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--mint);
+    background: var(--mint);
+    color: #fff;
+    transition: background .16s ease;
+  }
+  .hop button:hover { background: #12A085; }
+
+  .kq .ghi { margin: 0; font-size: .86rem; line-height: 1.6; color: var(--muc-mo); }
+  .kq .xem-qr {
+    font-size: .9rem; font-weight: 600;
+    color: var(--mint); text-decoration: none;
+    align-self: flex-start;
+  }
+  .kq .xem-qr:hover { text-decoration: underline; }
 
   .canh-bao {
     display: none;
     font-size: .88rem; line-height: 1.5;
-    color: var(--dong);
-    background: rgba(228, 179, 99, 0.1);
-    border: 1px solid rgba(228, 179, 99, 0.3);
+    color: #8A5A12;
+    background: #FFF3DC;
+    border: 1px solid #F5D9A0;
     border-radius: 12px;
     padding: 11px 14px;
   }
   .canh-bao.hien { display: block; }
-
-  .nut { display: flex; flex-wrap: wrap; gap: 10px; }
-  .nut button, .nut a {
-    font: inherit; font-size: .96rem; font-weight: 500;
-    cursor: pointer; text-decoration: none;
-    padding: 13px 20px;
-    border-radius: 999px;
-    border: 1px solid transparent;
-    display: inline-flex; align-items: center; gap: 8px;
-    transition: all .16s ease;
-  }
-  .nut .chinh { background: var(--hong); color: #241019; }
-  .nut .chinh:hover { background: var(--hong-nhat); }
-  .nut .mo { background: transparent; color: var(--nga); border-color: var(--vien-ro); }
-  .nut .mo:hover { border-color: var(--hong); color: var(--hong-nhat); }
-
-  .ghi-chu { margin: 0; font-size: .84rem; line-height: 1.6; color: var(--xam); max-width: 52ch; }
 
   /* ============ TẤM PHIẾU ============ */
   .the {
@@ -249,20 +274,20 @@
     padding: clamp(26px, 6.5vw, 44px) clamp(22px, 6vw, 40px) clamp(22px, 5vw, 34px);
     border-radius: 28px;
     background:
-      radial-gradient(120% 80% at 12% 0%, rgba(255, 94, 122, 0.22), transparent 60%),
-      radial-gradient(90% 70% at 100% 100%, rgba(228, 179, 99, 0.16), transparent 62%),
-      linear-gradient(158deg, var(--the-2), var(--the) 58%);
-    border: 1px solid var(--vien-ro);
-    box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      radial-gradient(120% 80% at 6% 0%, var(--mint-rat), transparent 58%),
+      radial-gradient(90% 70% at 100% 100%, #FFF4E2, transparent 60%),
+      linear-gradient(158deg, var(--the-2), var(--the) 62%);
+    border: 1px solid var(--vien);
+    box-shadow: 0 28px 60px -34px rgba(22, 59, 54, 0.45), 0 2px 0 rgba(22, 59, 54, 0.04);
     container-type: inline-size;
   }
-  /* vệt sáng chéo rất nhẹ, cho cảm giác giấy tráng */
-  .the::after {
+  /* dải mint mảnh ở mép trên, cho ra dáng giấy in */
+  .the::before {
     content: "";
-    position: absolute; inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(102deg, transparent 42%, rgba(255, 255, 255, 0.05) 50%, transparent 58%);
-    pointer-events: none;
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 6px;
+    border-radius: 28px 28px 0 0;
+    background: linear-gradient(90deg, var(--mint), var(--mint-nhat) 45%, var(--vang));
   }
 
   .dau-the {
@@ -275,14 +300,14 @@
   .nhan-the {
     font-size: clamp(.62rem, 2.4cqw, .74rem);
     font-weight: 600;
-    letter-spacing: .32em;
+    letter-spacing: .3em;
     text-transform: uppercase;
-    color: var(--dong);
+    color: var(--mint);
   }
   .so-the {
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
-    color: var(--nga-mo);
+    color: var(--muc-mo);
   }
 
   .trao {
@@ -294,67 +319,76 @@
   }
 
   .ten {
-    margin: .18em 0 0;
+    margin: .14em 0 0;
     font-family: var(--serif);
-    font-optical-sizing: auto;
-    font-weight: 600;
-    font-size: clamp(2.3rem, 13cqw, 3.9rem);
+    font-weight: 700;
+    font-size: clamp(2.2rem, 12.5cqw, 3.7rem);
     line-height: 1.02;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     text-wrap: balance;
-    color: var(--nga);
+    color: var(--muc);
   }
   .ten::after {
     content: "";
     display: block;
-    width: clamp(52px, 18cqw, 84px);
-    height: 3px;
-    margin-top: .42em;
-    border-radius: 3px;
-    background: linear-gradient(90deg, var(--hong), rgba(255, 94, 122, 0));
+    width: clamp(56px, 20cqw, 92px);
+    height: 5px;
+    margin-top: .38em;
+    border-radius: 5px;
+    background: linear-gradient(90deg, var(--mint), var(--mint-nhat));
   }
 
-  .tim {
-    display: flex; gap: .32em;
+  .sao {
+    display: flex; gap: .3em;
     margin-top: clamp(18px, 4.4cqw, 26px);
   }
-  .tim svg { width: clamp(20px, 6.2cqw, 27px); height: auto; display: block; }
-  .tim .tat { opacity: .22; }
+  .sao svg { width: clamp(22px, 6.6cqw, 30px); height: auto; display: block; }
+  .sao .tat { opacity: .16; }
 
   .vi {
     margin: clamp(16px, 4cqw, 22px) 0 0;
     font-family: var(--serif);
     font-weight: 500;
-    font-style: italic;
-    font-size: clamp(1.06rem, 4.6cqw, 1.42rem);
-    line-height: 1.5;
-    color: var(--nga);
+    font-size: clamp(1.06rem, 4.6cqw, 1.38rem);
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+    color: var(--muc);
     text-wrap: pretty;
   }
-  .vi span { color: var(--xam); font-style: normal; font-family: var(--sans); font-size: .74em; display: block; margin-bottom: .3em; letter-spacing: .16em; text-transform: uppercase; }
+  .vi span {
+    display: block;
+    margin-bottom: .34em;
+    font-family: var(--sans);
+    font-size: .68em;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--xam);
+  }
 
   /* cuống vé "đổi được" */
   .doi {
     margin-top: clamp(22px, 5.4cqw, 32px);
     padding: clamp(14px, 3.6cqw, 20px) clamp(16px, 4cqw, 22px);
-    border: 1px dashed var(--vien-ro);
+    border: 2px dashed var(--mint-nhat);
     border-radius: 18px;
-    background: rgba(255, 255, 255, 0.035);
-    display: flex; flex-direction: column; gap: .28em;
+    background: var(--mint-rat);
+    display: flex; flex-direction: column; gap: .3em;
   }
   .doi-nhan {
     font-size: clamp(.6rem, 2.4cqw, .7rem);
     font-weight: 600;
-    letter-spacing: .26em;
+    letter-spacing: .24em;
     text-transform: uppercase;
-    color: var(--dong);
+    color: var(--mint);
   }
   .doi-noi {
     font-family: var(--serif);
     font-weight: 600;
-    font-size: clamp(1.12rem, 5cqw, 1.5rem);
+    font-size: clamp(1.1rem, 5cqw, 1.44rem);
     line-height: 1.25;
-    color: var(--nga);
+    letter-spacing: -0.015em;
+    color: var(--muc);
     text-wrap: balance;
   }
 
@@ -371,7 +405,7 @@
   .chan-the b {
     font-family: var(--serif); font-weight: 600;
     font-size: clamp(.98rem, 4cqw, 1.14rem);
-    color: var(--nga);
+    color: var(--muc);
   }
   .chan-the .ngay b { font-variant-numeric: tabular-nums; }
   .chan-the .ngay { text-align: right; }
@@ -382,7 +416,6 @@
     letter-spacing: .12em;
     text-transform: uppercase;
     color: var(--xam);
-    opacity: .8;
   }
 
   /* ============ MÈO DÁN ============ */
@@ -395,7 +428,7 @@
   .meo svg { width: 100%; height: auto; display: block; }
   .meo-1 { width: clamp(74px, 21cqw, 108px); top: -34px;  right: -18px; transform: rotate(9deg); }
   .meo-2 { width: clamp(58px, 16cqw, 82px);  bottom: -20px; right: -22px; transform: rotate(-11deg); }
-  .meo-3 { width: clamp(48px, 13cqw, 66px);  bottom: 34%; left: -24px; transform: rotate(14deg); }
+  .meo-3 { width: clamp(44px, 12cqw, 60px);  bottom: 34%; left: -22px; transform: rotate(-12deg); }
 
   @media (prefers-reduced-motion: no-preference) {
     .meo-1 { animation: nhun-meo 3.4s ease-in-out infinite; }
@@ -404,134 +437,124 @@
       50%      { transform: rotate(9deg) translateY(-5px); }
     }
   }
-
-  /* thu nhỏ thẻ trong khung xem trước cho vừa cột */
-  .xem .the { max-width: 100%; }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .mui.ngang { animation: nhun 1.6s ease-in-out infinite; }
-    @keyframes nhun { 50% { transform: translateX(8px); } }
-    .mui.doc { animation: nhun-doc 1.6s ease-in-out infinite; }
-    @keyframes nhun-doc { 50% { transform: translateY(8px); } }
-  }
 </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
-    <symbol id="tim" viewBox="0 0 32 30">
-      <path d="M16 28C8.6 22.4 2 17.4 2 11.2 2 6.4 5.8 3 10.2 3c2.5 0 4.6 1.1 5.8 2.9C17.2 4.1 19.3 3 21.8 3 26.2 3 30 6.4 30 11.2c0 6.2-6.6 11.2-14 16.8z"/>
+    <symbol id="sao" viewBox="0 0 32 30">
+      <path d="M16 1.5 L19.3 10.5 L28.8 10.8 L21.3 16.7 L23.9 25.9 L16 20.6 L8.1 25.9 L10.7 16.7 L3.2 10.8 L12.7 10.5 Z"/>
     </symbol>
 
     <!-- mèo mập ngồi, mắt nhắm tít -->
     <symbol id="meo-map" viewBox="0 0 100 100">
-      <ellipse cx="50" cy="80" rx="29" ry="19" fill="#F3E2CF"/>
-      <ellipse cx="33" cy="94" rx="9" ry="5.5" fill="#FFF4E6"/>
-      <ellipse cx="67" cy="94" rx="9" ry="5.5" fill="#FFF4E6"/>
-      <path d="M25 36 L28 11 L47 27 Z" fill="#F3E2CF"/>
-      <path d="M75 36 L72 11 L53 27 Z" fill="#F3E2CF"/>
-      <path d="M29 31 L31 18 L41 27 Z" fill="#FFB9C6"/>
-      <path d="M71 31 L69 18 L59 27 Z" fill="#FFB9C6"/>
-      <circle cx="50" cy="47" r="27" fill="#F6E7D5"/>
-      <path d="M36 45c2.4 3.4 6.6 3.4 9 0" stroke="#3A2B3F" stroke-width="3.2" fill="none" stroke-linecap="round"/>
-      <path d="M55 45c2.4 3.4 6.6 3.4 9 0" stroke="#3A2B3F" stroke-width="3.2" fill="none" stroke-linecap="round"/>
-      <ellipse cx="31" cy="55" rx="7" ry="4.6" fill="#FFB9C6" opacity=".85"/>
-      <ellipse cx="69" cy="55" rx="7" ry="4.6" fill="#FFB9C6" opacity=".85"/>
-      <path d="M50 54l-3.4 3h6.8z" fill="#FF8DA1"/>
-      <path d="M50 57v2.6m0 0c-1.9 3-6.2 2.8-7.6-.4M50 59.6c1.9 3 6.2 2.8 7.6-.4" stroke="#3A2B3F" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <ellipse cx="50" cy="80" rx="29" ry="19" fill="#FFE3C0"/>
+      <ellipse cx="33" cy="94" rx="9" ry="5.5" fill="#FFF3E2"/>
+      <ellipse cx="67" cy="94" rx="9" ry="5.5" fill="#FFF3E2"/>
+      <path d="M25 36 L28 11 L47 27 Z" fill="#FFE3C0"/>
+      <path d="M75 36 L72 11 L53 27 Z" fill="#FFE3C0"/>
+      <path d="M29 31 L31 18 L41 27 Z" fill="#FFB4A2"/>
+      <path d="M71 31 L69 18 L59 27 Z" fill="#FFB4A2"/>
+      <circle cx="50" cy="47" r="27" fill="#FFEDD6"/>
+      <path d="M36 45c2.4 3.4 6.6 3.4 9 0" stroke="#2E4A44" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+      <path d="M55 45c2.4 3.4 6.6 3.4 9 0" stroke="#2E4A44" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="31" cy="55" rx="7" ry="4.6" fill="#FFB4A2" opacity=".85"/>
+      <ellipse cx="69" cy="55" rx="7" ry="4.6" fill="#FFB4A2" opacity=".85"/>
+      <path d="M50 54l-3.4 3h6.8z" fill="#FF9E86"/>
+      <path d="M50 57v2.6m0 0c-1.9 3-6.2 2.8-7.6-.4M50 59.6c1.9 3 6.2 2.8 7.6-.4" stroke="#2E4A44" stroke-width="2.8" fill="none" stroke-linecap="round"/>
     </symbol>
 
-    <!-- mèo vàng ôm trái tim -->
-    <symbol id="meo-tim" viewBox="0 0 100 100">
-      <ellipse cx="50" cy="78" rx="26" ry="20" fill="#FFD9A5"/>
-      <path d="M27 38 L30 14 L48 29 Z" fill="#FFD9A5"/>
-      <path d="M73 38 L70 14 L52 29 Z" fill="#FFD9A5"/>
-      <path d="M31 33 L33 21 L42 29 Z" fill="#FFB9C6"/>
-      <path d="M69 33 L67 21 L58 29 Z" fill="#FFB9C6"/>
-      <circle cx="50" cy="46" r="25" fill="#FFE3BC"/>
-      <path d="M43 28c1.6 2.6 1.6 4.6 0 7M50 26.4c1.7 2.8 1.7 5 0 7.6M57 28c-1.6 2.6-1.6 4.6 0 7" stroke="#E9A94F" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <circle cx="41" cy="46" r="4.4" fill="#3A2B3F"/>
-      <circle cx="59" cy="46" r="4.4" fill="#3A2B3F"/>
+    <!-- mèo cam ôm ngôi sao -->
+    <symbol id="meo-sao" viewBox="0 0 100 100">
+      <ellipse cx="50" cy="78" rx="26" ry="20" fill="#FFC078"/>
+      <path d="M27 38 L30 14 L48 29 Z" fill="#FFC078"/>
+      <path d="M73 38 L70 14 L52 29 Z" fill="#FFC078"/>
+      <path d="M31 33 L33 21 L42 29 Z" fill="#FFB4A2"/>
+      <path d="M69 33 L67 21 L58 29 Z" fill="#FFB4A2"/>
+      <circle cx="50" cy="46" r="25" fill="#FFD9A5"/>
+      <path d="M43 28c1.6 2.6 1.6 4.6 0 7M50 26.4c1.7 2.8 1.7 5 0 7.6M57 28c-1.6 2.6-1.6 4.6 0 7" stroke="#EFA959" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="41" cy="46" r="4.4" fill="#2E4A44"/>
+      <circle cx="59" cy="46" r="4.4" fill="#2E4A44"/>
       <circle cx="42.6" cy="44.4" r="1.5" fill="#fff"/>
       <circle cx="60.6" cy="44.4" r="1.5" fill="#fff"/>
-      <ellipse cx="32" cy="54" rx="6" ry="4" fill="#FF9DAE" opacity=".8"/>
-      <ellipse cx="68" cy="54" rx="6" ry="4" fill="#FF9DAE" opacity=".8"/>
-      <path d="M50 52l-3 2.8h6z" fill="#FF8DA1"/>
-      <path d="M50 55.6c-1.6 2.6-5.4 2.4-6.6-.4M50 55.6c1.6 2.6 5.4 2.4 6.6-.4" stroke="#3A2B3F" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-      <path d="M50 92c-9-6.2-15-10.6-15-16.6 0-4.4 3.5-7.4 7.4-7.4 2.9 0 5.6 1.6 7.6 4.2 2-2.6 4.7-4.2 7.6-4.2 3.9 0 7.4 3 7.4 7.4C65 81.4 59 85.8 50 92z" fill="#FF5E7A"/>
-      <ellipse cx="28" cy="80" rx="8" ry="6" fill="#FFE3BC" transform="rotate(-18 28 80)"/>
-      <ellipse cx="72" cy="80" rx="8" ry="6" fill="#FFE3BC" transform="rotate(18 72 80)"/>
+      <ellipse cx="32" cy="54" rx="6" ry="4" fill="#FF9E86" opacity=".8"/>
+      <ellipse cx="68" cy="54" rx="6" ry="4" fill="#FF9E86" opacity=".8"/>
+      <path d="M50 52l-3 2.8h6z" fill="#FF9E86"/>
+      <path d="M50 55.6c-1.6 2.6-5.4 2.4-6.6-.4M50 55.6c1.6 2.6 5.4 2.4 6.6-.4" stroke="#2E4A44" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <path d="M50 66.5 L54.4 78.4 L67 78.8 L57.1 86.6 L60.5 98.7 L50 91.7 L39.5 98.7 L42.9 86.6 L33 78.8 L45.6 78.4 Z" fill="#FFC95C" stroke="#F5A623" stroke-width="2" stroke-linejoin="round"/>
+      <ellipse cx="28" cy="80" rx="8" ry="6" fill="#FFD9A5" transform="rotate(-18 28 80)"/>
+      <ellipse cx="72" cy="80" rx="8" ry="6" fill="#FFD9A5" transform="rotate(18 72 80)"/>
     </symbol>
 
-    <!-- mèo xám cuộn tròn ngủ -->
+    <!-- mèo tím cuộn tròn ngủ -->
     <symbol id="meo-ngu" viewBox="0 0 100 100">
-      <path d="M88 62c0 14.4-17 24-38 24S12 76.4 12 62s17-22 38-22 38 7.6 38 22z" fill="#DCD5E6"/>
-      <path d="M86 60c6-2 10 3 8 9-1.6 4.8-7 6-10.6 3.4" fill="none" stroke="#DCD5E6" stroke-width="9" stroke-linecap="round"/>
-      <circle cx="36" cy="60" r="21" fill="#EAE5F2"/>
-      <path d="M20 50 L21 33 L34 44 Z" fill="#EAE5F2"/>
-      <path d="M50 46 L52 30 L38 41 Z" fill="#EAE5F2"/>
-      <path d="M23 46 L24 37 L31 44 Z" fill="#FFB9C6"/>
-      <path d="M47 43 L48 34 L41 41 Z" fill="#FFB9C6"/>
-      <path d="M26 58c1.8 2.6 5 2.6 6.8 0" stroke="#3A2B3F" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-      <path d="M40 58c1.8 2.6 5 2.6 6.8 0" stroke="#3A2B3F" stroke-width="2.8" fill="none" stroke-linecap="round"/>
-      <ellipse cx="22" cy="66" rx="5.4" ry="3.6" fill="#FFB9C6" opacity=".8"/>
-      <ellipse cx="50" cy="66" rx="5.4" ry="3.6" fill="#FFB9C6" opacity=".8"/>
-      <path d="M36 65l-2.6 2.4h5.2z" fill="#FF8DA1"/>
-      <path d="M62 30h10l-10 12h10" stroke="#FFA8B8" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M78 14h7l-7 8h7" stroke="#FFA8B8" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M88 62c0 14.4-17 24-38 24S12 76.4 12 62s17-22 38-22 38 7.6 38 22z" fill="#CFC6FF"/>
+      <path d="M86 60c6-2 10 3 8 9-1.6 4.8-7 6-10.6 3.4" fill="none" stroke="#CFC6FF" stroke-width="9" stroke-linecap="round"/>
+      <circle cx="36" cy="60" r="21" fill="#E1DCFF"/>
+      <path d="M20 50 L21 33 L34 44 Z" fill="#E1DCFF"/>
+      <path d="M50 46 L52 30 L38 41 Z" fill="#E1DCFF"/>
+      <path d="M23 46 L24 37 L31 44 Z" fill="#FFB4A2"/>
+      <path d="M47 43 L48 34 L41 41 Z" fill="#FFB4A2"/>
+      <path d="M26 58c1.8 2.6 5 2.6 6.8 0" stroke="#2E4A44" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <path d="M40 58c1.8 2.6 5 2.6 6.8 0" stroke="#2E4A44" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <ellipse cx="22" cy="66" rx="5.4" ry="3.6" fill="#FFB4A2" opacity=".8"/>
+      <ellipse cx="50" cy="66" rx="5.4" ry="3.6" fill="#FFB4A2" opacity=".8"/>
+      <path d="M36 65l-2.6 2.4h5.2z" fill="#FF9E86"/>
+      <path d="M62 30h10l-10 12h10" stroke="#17B195" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M78 14h7l-7 8h7" stroke="#17B195" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
     </symbol>
 
-    <!-- mèo vẫy tay -->
+    <!-- mèo mint vẫy tay -->
     <symbol id="meo-vay" viewBox="0 0 100 100">
-      <ellipse cx="52" cy="79" rx="25" ry="19" fill="#F3E2CF"/>
-      <path d="M70 72 L84 48" stroke="#F3E2CF" stroke-width="13" stroke-linecap="round" fill="none"/>
-      <circle cx="87" cy="43" r="9" fill="#FFF4E6"/>
-      <path d="M84 38.5v3.2M88 37.6v3.6M91.6 39v3" stroke="#E8CDB0" stroke-width="2" stroke-linecap="round"/>
-      <path d="M29 38 L32 14 L50 29 Z" fill="#F3E2CF"/>
-      <path d="M75 38 L72 14 L54 29 Z" fill="#F3E2CF"/>
-      <path d="M33 33 L35 21 L44 29 Z" fill="#FFB9C6"/>
-      <path d="M71 33 L69 21 L60 29 Z" fill="#FFB9C6"/>
-      <circle cx="52" cy="46" r="25" fill="#F6E7D5"/>
-      <circle cx="43" cy="45" r="4.2" fill="#3A2B3F"/>
-      <circle cx="61" cy="45" r="4.2" fill="#3A2B3F"/>
+      <ellipse cx="52" cy="79" rx="25" ry="19" fill="#9FE7D4"/>
+      <path d="M70 72 L84 48" stroke="#9FE7D4" stroke-width="13" stroke-linecap="round" fill="none"/>
+      <circle cx="87" cy="43" r="9" fill="#CFF5EA"/>
+      <path d="M84 38.5v3.2M88 37.6v3.6M91.6 39v3" stroke="#6FCDB8" stroke-width="2" stroke-linecap="round"/>
+      <path d="M29 38 L32 14 L50 29 Z" fill="#9FE7D4"/>
+      <path d="M75 38 L72 14 L54 29 Z" fill="#9FE7D4"/>
+      <path d="M33 33 L35 21 L44 29 Z" fill="#FFB4A2"/>
+      <path d="M71 33 L69 21 L60 29 Z" fill="#FFB4A2"/>
+      <circle cx="52" cy="46" r="25" fill="#CFF5EA"/>
+      <circle cx="43" cy="45" r="4.2" fill="#2E4A44"/>
+      <circle cx="61" cy="45" r="4.2" fill="#2E4A44"/>
       <circle cx="44.5" cy="43.5" r="1.4" fill="#fff"/>
       <circle cx="62.5" cy="43.5" r="1.4" fill="#fff"/>
-      <ellipse cx="34" cy="54" rx="6" ry="4" fill="#FFB9C6" opacity=".85"/>
-      <ellipse cx="70" cy="54" rx="6" ry="4" fill="#FFB9C6" opacity=".85"/>
-      <path d="M52 52l-3 2.8h6z" fill="#FF8DA1"/>
-      <path d="M52 55.4c-1.7 2.8-5.6 2.6-6.9-.4M52 55.4c1.7 2.8 5.6 2.6 6.9-.4" stroke="#3A2B3F" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <ellipse cx="34" cy="54" rx="6" ry="4" fill="#FFB4A2" opacity=".85"/>
+      <ellipse cx="70" cy="54" rx="6" ry="4" fill="#FFB4A2" opacity=".85"/>
+      <path d="M52 52l-3 2.8h6z" fill="#FF9E86"/>
+      <path d="M52 55.4c-1.7 2.8-5.6 2.6-6.9-.4M52 55.4c1.7 2.8 5.6 2.6 6.9-.4" stroke="#2E4A44" stroke-width="2.6" fill="none" stroke-linecap="round"/>
     </symbol>
   </defs>
 </svg>
 
 <div class="trang">
   <header class="dinh">
-    <span class="mi">Dành cho người thương</span>
-    <h1>Làm phiếu bé ngoan</h1>
-    <p>Điền vài dòng bên dưới, rồi đưa mã QR cho người ấy quét. Điện thoại họ sẽ mở ra đúng tấm phiếu này — không cần cài gì, không cần đăng nhập.</p>
+    <span class="mi">Phiếu bé ngoan</span>
+    <h1>Làm phiếu, rồi gửi liên kết</h1>
+    <p>Soạn phiếu bên dưới rồi bấm tạo mã QR. Bạn sẽ được một liên kết để gửi đi — người nhận bấm vào là thấy mã QR, quét bằng điện thoại thì phiếu hiện ra.</p>
   </header>
 
   <div class="khung">
     <form class="bang" id="bang" autocomplete="off">
       <div class="o">
         <label for="i-t">Trao cho ai</label>
-        <input id="i-t" data-k="t" placeholder="Bảo Ngọc">
+        <input id="i-t" data-k="t" placeholder="Tên người được khen">
       </div>
 
       <div class="o">
         <label for="i-l">Vì đã…</label>
-        <textarea id="i-l" data-k="l" placeholder="kiên nhẫn nghe anh kể chuyện công việc suốt bốn mươi phút"></textarea>
+        <textarea id="i-l" data-k="l" placeholder="làm xong việc khó mà không càu nhàu"></textarea>
         <div class="goi" id="goi-l"></div>
       </div>
 
       <div class="o">
         <label for="i-r">Đổi được</label>
-        <input id="i-r" data-k="r" placeholder="một lần được chọn phim, không được cãi">
+        <input id="i-r" data-k="r" placeholder="một lần được chọn quán ăn">
         <div class="goi" id="goi-r"></div>
       </div>
 
       <div class="o">
-        <span class="nhan">Mấy tim</span>
+        <span class="nhan">Mấy sao</span>
         <div class="chon" id="chon-s"></div>
       </div>
 
@@ -543,7 +566,7 @@
       <div class="hai">
         <div class="o">
           <label for="i-g">Người trao</label>
-          <input id="i-g" data-k="g" placeholder="Anh">
+          <input id="i-g" data-k="g" placeholder="Ban Phát Phiếu">
         </div>
         <div class="o">
           <label for="i-n">Ngày</label>
@@ -558,35 +581,26 @@
         <article class="the" id="the"></article>
       </div>
 
-      <div class="quet">
-        <div class="chi-dan">
-          <p class="nhan-quet">Quét vào đây!</p>
-          <div class="mui ngang" aria-hidden="true">
-            <svg viewBox="0 0 200 92">
-              <path d="M8 22c26 42 82 52 158 42" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
-              <path d="M132 40l30 24-38 13" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+      <div class="tao">
+        <button type="button" class="nut-lon" id="nut-tao">Tạo mã QR và liên kết</button>
+
+        <p class="canh-bao" id="canh-bao"></p>
+
+        <div class="kq" id="kq" hidden>
+          <div class="ma-nho">
+            <svg id="qr" role="img" aria-label="Mã QR mở phiếu bé ngoan"></svg>
           </div>
-          <div class="mui doc" aria-hidden="true">
-            <svg viewBox="0 0 84 112">
-              <path d="M16 8c34 14 10 40 26 82" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
-              <path d="M22 66l20 26 22-22" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+          <div class="cot-link">
+            <label for="o-link">Liên kết gửi đi</label>
+            <div class="hop">
+              <input id="o-link" readonly>
+              <button type="button" id="nut-sao">Sao chép</button>
+            </div>
+            <p class="ghi">Gửi liên kết này cho người ta. Họ bấm vào sẽ thấy trang có mã QR to để quét. Mã nhỏ bên cạnh chính là mã đó — bạn cũng có thể chìa máy cho họ quét ngay.</p>
+            <a class="xem-qr" id="nut-xem" href="#" target="_blank" rel="noopener">Xem trước trang mã QR →</a>
           </div>
         </div>
-        <div class="ma">
-          <svg id="qr" role="img" aria-label="Mã QR mở phiếu bé ngoan"></svg>
-        </div>
       </div>
-
-      <p class="canh-bao" id="canh-bao"></p>
-
-      <div class="nut">
-        <button type="button" class="chinh" id="nut-sao">Sao chép liên kết</button>
-        <a class="mo" id="nut-mo" href="#" target="_blank" rel="noopener">Mở phiếu trong tab mới</a>
-      </div>
-
-      <p class="ghi-chu">Mã QR đổi theo từng chữ bạn nhập. Nội dung phiếu nằm trong phần sau dấu <b>#</b> của địa chỉ nên không được gửi lên máy chủ — lời nhắn chỉ nằm trong liên kết và trong máy người xem.</p>
     </div>
   </div>
 </div>
@@ -895,23 +909,23 @@ var QR = (function () {
 var PHIEU = (function () {
   "use strict";
 
-  var MEO = ["meo-tim", "meo-map", "meo-vay", "meo-ngu"];
-  var MEO_TEN = { "meo-tim": "Mèo ôm tim", "meo-map": "Mèo mập", "meo-vay": "Mèo vẫy tay", "meo-ngu": "Mèo ngủ" };
+  var MEO = ["meo-vay", "meo-sao", "meo-map", "meo-ngu"];
+  var MEO_TEN = { "meo-vay": "Mèo vẫy tay", "meo-sao": "Mèo ôm sao", "meo-map": "Mèo mập", "meo-ngu": "Mèo ngủ" };
 
   var GOI_Y_LOI = [
-    "ăn hết suất dù không thích rau",
+    "làm xong việc khó mà không càu nhàu",
     "đi ngủ trước mười hai giờ, ba đêm liền",
-    "kiên nhẫn nghe anh kể chuyện công việc suốt bốn mươi phút",
-    "không dỗi khi anh về muộn",
-    "tự giác uống đủ nước cả tuần",
-    "cười thật khi anh kể chuyện cười nhạt"
+    "uống hết bình nước trước bốn giờ chiều",
+    "dọn xong cái bàn làm việc bừa cả tuần",
+    "trả lời tin nhắn ngay, không để cách hôm",
+    "nhớ ăn sáng ba ngày liền"
   ];
   var GOI_Y_THUONG = [
-    "một lần được chọn phim, không được cãi",
-    "một bữa ăn tuỳ chọn, anh trả",
-    "một cái ôm mười phút, không nói gì",
-    "một buổi ngủ nướng, anh dọn nhà",
-    "một lời xin lỗi vô điều kiện"
+    "một lần được chọn quán ăn",
+    "một buổi không bị nhắc việc",
+    "một ly trà sữa, cỡ lớn",
+    "một lần được đổi ý, không bị hỏi tại sao",
+    "một buổi tối không ai làm phiền"
   ];
 
   function homNay() {
@@ -921,12 +935,12 @@ var PHIEU = (function () {
 
   function macDinh() {
     return {
-      t: "Người Thương",
-      l: GOI_Y_LOI[2],
+      t: "Bạn Ngoan",
+      l: GOI_Y_LOI[0],
       r: GOI_Y_THUONG[0],
-      g: "Anh",
+      g: "Ban Phát Phiếu",
       s: "5",
-      c: "meo-tim",
+      c: "meo-vay",
       n: homNay()
     };
   }
@@ -987,22 +1001,22 @@ var PHIEU = (function () {
     return "Số " + ("00" + (h % 999 + 1)).slice(-3);
   }
 
-  function timHtml(n) {
+  function saoHtml(n) {
     n = Math.max(0, Math.min(5, parseInt(n, 10) || 0));
     var s = "", i;
     for (i = 1; i <= 5; i++) {
       s += '<svg viewBox="0 0 32 30" class="' + (i <= n ? "bat" : "tat") +
-           '" fill="' + (i <= n ? "#FF5E7A" : "#F7EFE8") + '" aria-hidden="true"><use href="#tim"/></svg>';
+           '" fill="' + (i <= n ? "#FFC95C" : "#163B36") + '" aria-hidden="true"><use href="#sao"/></svg>';
     }
     return s;
   }
 
   function meoHtml(c) {
-    if (MEO.indexOf(c) < 0) c = "meo-tim";
+    if (MEO.indexOf(c) < 0) c = "meo-vay";
     var phu = c === "meo-ngu" ? "meo-map" : "meo-ngu";
     return '<div class="meo meo-1"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#' + c + '"/></svg></div>' +
            '<div class="meo meo-2"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#' + phu + '"/></svg></div>' +
-           '<div class="meo meo-3"><svg viewBox="0 0 32 30" fill="#FF5E7A" aria-hidden="true"><use href="#tim"/></svg></div>';
+           '<div class="meo meo-3"><svg viewBox="0 0 32 30" fill="#FFC95C" aria-hidden="true"><use href="#sao"/></svg></div>';
   }
 
   function veThe(el, d) {
@@ -1011,7 +1025,7 @@ var PHIEU = (function () {
       '<div class="dau-the"><span class="nhan-the">Phiếu bé ngoan</span></div>' +
       '<p class="trao">Trao cho</p>' +
       '<h1 class="ten">' + esc(d.t || macDinh().t) + '</h1>' +
-      '<div class="tim" role="img" aria-label="' + n + ' trên 5 tim">' + timHtml(n) + '</div>' +
+      '<div class="sao" role="img" aria-label="' + n + ' trên 5 sao">' + saoHtml(n) + '</div>' +
       '<p class="vi"><span>Vì đã</span>' + esc(d.l) + '</p>' +
       (d.r ? '<div class="doi"><span class="doi-nhan">Đổi được</span>' +
              '<strong class="doi-noi">' + esc(d.r) + '</strong></div>' : '') +
@@ -1038,8 +1052,9 @@ var PHIEU = (function () {
   "use strict";
 
   var el = function (id) { return document.getElementById(id); };
-  var KHOA = "tao-phieu-v1";
-  var GOC = location.href.replace(/[^/]*$/, "") + "phieu.html";
+  var KHOA = "tao-phieu-v2";
+  var THU_MUC = location.href.replace(/[^/#?]*(?:[?#].*)?$/, "");
+  var daTao = false;
 
   var d = PHIEU.macDinh();
   try {
@@ -1051,7 +1066,7 @@ var PHIEU = (function () {
   var hs = "";
   for (var i = 1; i <= 5; i++) {
     hs += '<button type="button" data-dat="s=' + i + '" aria-pressed="false">' +
-          '<svg class="tim-nho" viewBox="0 0 32 30" fill="#FF5E7A" aria-hidden="true"><use href="#tim"/></svg>' + i + '</button>';
+          '<svg class="sao-nho" viewBox="0 0 32 30" fill="#FFC95C" aria-hidden="true"><use href="#sao"/></svg>' + i + '</button>';
   }
   el("chon-s").innerHTML = hs;
 
@@ -1069,38 +1084,44 @@ var PHIEU = (function () {
   goiY("goi-l", PHIEU.GOI_Y_LOI, "l");
   goiY("goi-r", PHIEU.GOI_Y_THUONG, "r");
 
-  // --- vẽ mã QR ---
-  function veQR(url) {
-    var q, mucCuoi = "M";
-    try { q = QR.taoMa(url, "M"); }
+  // --- mã QR: nội dung là địa chỉ trang phiếu, giống mã người nhận sẽ quét ---
+  function veQR(urlPhieu) {
+    var q;
+    try { q = QR.taoMa(urlPhieu, "M"); }
     catch (e1) {
-      try { q = QR.taoMa(url, "L"); mucCuoi = "L"; }
+      try { q = QR.taoMa(urlPhieu, "L"); }
       catch (e2) { return null; }
     }
     var vien = 4, s = q.n + 2 * vien, svg = el("qr");
     svg.setAttribute("viewBox", (-vien) + " " + (-vien) + " " + s + " " + s);
     svg.innerHTML =
-      '<rect x="' + (-vien) + '" y="' + (-vien) + '" width="' + s + '" height="' + s + '" fill="#FFFDFB"/>' +
+      '<rect x="' + (-vien) + '" y="' + (-vien) + '" width="' + s + '" height="' + s + '" fill="#FFFFFF"/>' +
       '<path d="' + QR.duongDan(q) + '" fill="none" stroke="currentColor" stroke-width="1" shape-rendering="crispEdges"/>';
-    return { v: q.phienBan, muc: mucCuoi };
+    return q.phienBan;
   }
 
-  function ve() {
-    PHIEU.veThe(el("the"), d);
+  function capNhatKetQua() {
+    var neo = PHIEU.maHoa(d);
+    var linkGui = THU_MUC + "qr.html" + (neo ? "#" + neo : "");
+    var linkPhieu = THU_MUC + "phieu.html" + (neo ? "#" + neo : "");
 
-    var url = PHIEU.diaChiPhieu(GOC, d);
-    el("nut-mo").href = url;
+    el("o-link").value = linkGui;
+    el("nut-xem").href = linkGui;
 
-    var kq = veQR(url), cb = el("canh-bao");
-    if (!kq) {
-      cb.textContent = "Nội dung dài quá nên không nhét vừa mã QR. Rút ngắn dòng “Vì đã…” hoặc “Đổi được” giúp mình nhé.";
+    var v = veQR(linkPhieu), cb = el("canh-bao");
+    if (!v) {
+      cb.textContent = "Nội dung dài quá, không nhét vừa mã QR. Rút ngắn dòng “Vì đã…” hoặc “Đổi được” giúp mình nhé.";
       cb.classList.add("hien");
-    } else if (kq.v >= 16) {
-      cb.textContent = "Mã QR đang khá dày (phiên bản " + kq.v + "). Vẫn quét được nhưng nên rút ngắn lời nhắn cho máy quét nhanh hơn.";
+    } else if (v >= 16) {
+      cb.textContent = "Mã QR đang khá dày (phiên bản " + v + "). Vẫn quét được, nhưng rút ngắn lời nhắn thì máy quét nhanh hơn.";
       cb.classList.add("hien");
     } else {
       cb.classList.remove("hien");
     }
+  }
+
+  function ve() {
+    PHIEU.veThe(el("the"), d);
 
     document.querySelectorAll("[data-k]").forEach(function (inp) {
       if (inp.value !== d[inp.getAttribute("data-k")]) inp.value = d[inp.getAttribute("data-k")];
@@ -1110,8 +1131,19 @@ var PHIEU = (function () {
       b.setAttribute("aria-pressed", String(d[p[0]] === p[1]));
     });
 
+    // đã tạo rồi thì cập nhật luôn để liên kết không bị cũ so với phiếu
+    if (daTao) capNhatKetQua();
+
     try { localStorage.setItem(KHOA, JSON.stringify(d)); } catch (e) { /* bỏ qua */ }
   }
+
+  el("nut-tao").addEventListener("click", function () {
+    daTao = true;
+    el("kq").hidden = false;
+    capNhatKetQua();
+    el("nut-tao").textContent = "Tạo lại mã QR";
+    el("kq").scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
 
   document.addEventListener("click", function (e) {
     var b = e.target.closest("button[data-dat], button[data-goi]");
@@ -1134,14 +1166,17 @@ var PHIEU = (function () {
   });
 
   el("nut-sao").addEventListener("click", function () {
-    var nut = el("nut-sao"), cu = nut.textContent, url = PHIEU.diaChiPhieu(GOC, d);
+    var nut = el("nut-sao"), cu = nut.textContent, o = el("o-link");
     function xong(ok) {
-      nut.textContent = ok ? "Đã sao chép" : "Không sao chép được";
+      nut.textContent = ok ? "Đã sao chép" : "Không được";
       setTimeout(function () { nut.textContent = cu; }, 2000);
     }
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url).then(function () { xong(true); }, function () { xong(false); });
-    } else { xong(false); }
+      navigator.clipboard.writeText(o.value).then(function () { xong(true); }, function () { xong(false); });
+    } else {
+      o.select();
+      xong(false);
+    }
   });
 
   ve();

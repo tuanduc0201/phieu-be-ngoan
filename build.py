@@ -3,8 +3,9 @@
 
     python3 build.py
 
-tao-phieu.html       -> docs/index.html   (trang tạo phiếu, có mã QR sinh tại chỗ)
-phieu-be-ngoan.html  -> docs/phieu.html   (trang phiếu, đích của mã QR)
+tao-phieu.html       -> docs/index.html   (soạn phiếu, tạo mã QR và liên kết để gửi)
+trang-qr.html        -> docs/qr.html     (trang người nhận mở: chỉ có mã QR để quét)
+phieu-be-ngoan.html  -> docs/phieu.html   (tấm phiếu, đích của mã QR)
 
 Hai file nguồn viết theo dạng "chỉ phần nội dung" (không có <!doctype>/<head>/
 <body>) và dùng chỉ thị {{include: đường/dẫn}} để chèn các mảnh chung trong
@@ -20,12 +21,14 @@ DOCS = GOC / "docs"
 
 TRANG = {
     "tao-phieu.html": "index.html",
+    "trang-qr.html": "qr.html",
     "phieu-be-ngoan.html": "phieu.html",
 }
 
 MO_TA = {
-    "tao-phieu.html": "Làm phiếu bé ngoan tặng người thương: điền lời khen, chọn mèo, đưa mã QR cho người ấy quét.",
-    "phieu-be-ngoan.html": "Một tấm phiếu bé ngoan dành riêng cho người thương.",
+    "tao-phieu.html": "Làm phiếu bé ngoan: soạn nội dung, tạo mã QR và gửi liên kết cho người nhận.",
+    "trang-qr.html": "Có người gửi bạn một tấm phiếu bé ngoan — quét mã QR để mở.",
+    "phieu-be-ngoan.html": "Một tấm phiếu bé ngoan.",
 }
 
 KHUNG = """<!doctype html>
@@ -33,9 +36,9 @@ KHUNG = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#120D1A">
+<meta name="theme-color" content="#F1FAF6">
 <meta name="description" content="{mo_ta}">
-<meta name="color-scheme" content="dark">
+<meta name="color-scheme" content="light">
 <style>*{{margin:0;padding:0}}html,body{{min-height:100%}}svg,img{{max-width:100%}}</style>
 {dau}
 </head>

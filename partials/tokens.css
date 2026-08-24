@@ -1,45 +1,48 @@
   *, *::before, *::after { box-sizing: border-box; }
 
   :root {
-    /* nền đêm */
-    --dem:      #120D1A;
-    --dem-2:    #1A1226;
-    --the:      #1F1730;
-    --the-2:    #2C1A34;
+    /* nền sáng: mint sương và kem */
+    --nen:      #F1FAF6;
+    --nen-2:    #FFF7EC;
+    --the:      #FFFFFF;
+    --the-2:    #F3FFFB;
 
-    /* chữ */
-    --nga:      #F7EFE8;
-    --nga-mo:   #CFC3C9;
-    --xam:      #9C90AA;   /* xám lệch tím cho ăn với sắc nhấn */
+    /* chữ: mực xanh rừng, không dùng đen thuần */
+    --muc:      #163B36;
+    --muc-mo:   #3E625C;
+    --xam:      #7F9A94;
 
-    /* nhấn */
-    --hong:     #FF5E7A;
-    --hong-nhat:#FFA8B8;
-    --dong:     #E4B363;
+    /* sắc nhấn pastel */
+    --mint:     #17B195;
+    --mint-nhat:#B6EFE1;
+    --mint-rat: #E4FAF4;
+    --dao:      #FF9E86;
+    --vang:     #FFC95C;
+    --lav:      #B9AEFF;
 
-    --vien:     rgba(247, 239, 232, 0.14);
-    --vien-ro:  rgba(247, 239, 232, 0.28);
+    --vien:     rgba(22, 59, 54, 0.12);
+    --vien-ro:  rgba(22, 59, 54, 0.26);
 
-    --serif: Fraunces, "Playfair Display", Georgia, "Times New Roman", serif;
+    --serif: "Bricolage Grotesque", "Be Vietnam Pro", system-ui, sans-serif;
     --sans: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
 
     /* viền trắng kiểu sticker + bóng nổi */
     --keyline:
-      drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff)
-      drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff)
-      drop-shadow(1.5px 1.5px 0 #fff) drop-shadow(-1.5px 1.5px 0 #fff)
-      drop-shadow(1.5px -1.5px 0 #fff) drop-shadow(-1.5px -1.5px 0 #fff)
-      drop-shadow(0 8px 14px rgba(0, 0, 0, 0.45));
+      drop-shadow(2.5px 0 0 #fff) drop-shadow(-2.5px 0 0 #fff)
+      drop-shadow(0 2.5px 0 #fff) drop-shadow(0 -2.5px 0 #fff)
+      drop-shadow(1.8px 1.8px 0 #fff) drop-shadow(-1.8px 1.8px 0 #fff)
+      drop-shadow(1.8px -1.8px 0 #fff) drop-shadow(-1.8px -1.8px 0 #fff)
+      drop-shadow(0 6px 12px rgba(22, 59, 54, 0.22));
   }
 
   body {
     margin: 0;
-    background: var(--dem);
-    color: var(--nga);
+    background: var(--nen);
+    color: var(--muc);
     font-family: var(--sans);
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
 
-  :focus-visible { outline: 2px solid var(--hong); outline-offset: 3px; border-radius: 8px; }
+  :focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; border-radius: 8px; }
