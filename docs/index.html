@@ -912,6 +912,8 @@ var PHIEU = (function () {
   var MEO = ["meo-vay", "meo-sao", "meo-map", "meo-ngu"];
   var MEO_TEN = { "meo-vay": "Mèo vẫy tay", "meo-sao": "Mèo ôm sao", "meo-map": "Mèo mập", "meo-ngu": "Mèo ngủ" };
 
+  var SO_PHIEU = "Số 2504";
+
   var GOI_Y_LOI = [
     "làm xong việc khó mà không càu nhàu",
     "đi ngủ trước mười hai giờ, ba đêm liền",
@@ -995,12 +997,6 @@ var PHIEU = (function () {
       .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
 
-  function soPhieu(d) {
-    var s = (d.t || "") + "|" + (d.l || ""), h = 7, i;
-    for (i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 997;
-    return "Số " + ("00" + (h % 999 + 1)).slice(-3);
-  }
-
   function saoHtml(n) {
     n = Math.max(0, Math.min(5, parseInt(n, 10) || 0));
     var s = "", i;
@@ -1033,7 +1029,7 @@ var PHIEU = (function () {
         '<div><span class="nhan-nho">Người trao</span><b>' + esc(d.g) + '</b></div>' +
         '<div class="ngay"><span class="nhan-nho">Ngày</span><b>' + esc(d.n) + '</b></div>' +
       '</div>' +
-      '<div class="hieu-luc"><span class="so-the">' + esc(soPhieu(d)) + '</span>' +
+      '<div class="hieu-luc"><span class="so-the">' + esc(SO_PHIEU) + '</span>' +
       ' · vô thời hạn · không hoàn lại</div>' +
       meoHtml(d.c);
   }
