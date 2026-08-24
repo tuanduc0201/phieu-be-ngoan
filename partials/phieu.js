@@ -123,7 +123,9 @@ var PHIEU = (function () {
   function veThe(el, d, xemTruoc) {
     var n = Math.max(0, Math.min(5, parseInt(d.s, 10) || 0));
     el.innerHTML =
-      '<div class="dau-the"><span class="nhan-the">Phiếu bé ngoan</span></div>' +
+      '<div class="dau-the"><span class="nhan-the">Phiếu bé ngoan</span>' +
+      '<div class="tag-treo" aria-hidden="true"><div class="tag-day"></div>' +
+      '<img class="tag-anh" src="data:image/jpeg;base64,' + PHIEU._TAG_B64 + '" alt=""></div></div>' +
       '<p class="trao">Trao cho</p>' +
       '<h1 class="ten">' + esc(d.t || macDinh().t) + '</h1>' +
       '<div class="sao" role="img" aria-label="' + n + ' trên 5 sao">' + saoHtml(n) + '</div>' +
@@ -140,8 +142,6 @@ var PHIEU = (function () {
       '</div>' +
       '<div class="hieu-luc"><span class="so-the">Số ' + esc(d.so || "1") + '</span>' +
       ' · vô thời hạn · không hoàn lại</div>' +
-      '<div class="tag-treo" aria-hidden="true"><div class="tag-day"></div>' +
-      '<img class="tag-anh" src="data:image/jpeg;base64,' + PHIEU._TAG_B64 + '" alt=""></div>' +
       meoHtml(d.c);
   }
 

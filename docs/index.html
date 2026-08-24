@@ -291,6 +291,7 @@
   }
 
   .dau-the {
+    position: relative;
     display: flex; align-items: center;
     gap: 14px;
     padding-right: clamp(58px, 20cqw, 92px);   /* chừa chỗ cho mèo dán góc trên */
@@ -472,32 +473,32 @@
     }
     .tag-treo { animation: lac-tag 4s ease-in-out infinite; }
     @keyframes lac-tag {
-      0%, 100% { transform: rotate(-8deg); }
-      50%      { transform: rotate(-4deg); }
+      0%, 100% { transform: rotate(6deg); }
+      50%      { transform: rotate(2deg); }
     }
   }
 
   /* ============ TAG TREO ============ */
   .tag-treo {
     position: absolute;
-    top: -38px; left: 18px;
+    top: 100%; right: 6px;
     z-index: 3;
     display: flex; flex-direction: column; align-items: center;
     pointer-events: none;
-    transform: rotate(-8deg);
+    transform: rotate(6deg);
     transform-origin: top center;
   }
   .tag-day {
-    width: 2px; height: 22px;
-    background: linear-gradient(180deg, var(--xam), var(--vien));
+    width: 2px; height: 18px;
+    background: linear-gradient(180deg, var(--vien), var(--xam));
     border-radius: 1px;
   }
   .tag-anh {
-    width: clamp(44px, 13cqw, 62px);
-    height: clamp(44px, 13cqw, 62px);
-    border-radius: 10px;
+    width: clamp(80px, 22cqw, 110px);
+    height: clamp(80px, 22cqw, 110px);
+    border-radius: 14px;
     border: 3px solid #fff;
-    box-shadow: 0 4px 14px -4px rgba(22, 59, 54, 0.35);
+    box-shadow: 0 6px 18px -4px rgba(22, 59, 54, 0.35);
     object-fit: cover;
     display: block;
   }
@@ -1094,7 +1095,9 @@ var PHIEU = (function () {
   function veThe(el, d, xemTruoc) {
     var n = Math.max(0, Math.min(5, parseInt(d.s, 10) || 0));
     el.innerHTML =
-      '<div class="dau-the"><span class="nhan-the">Phiếu bé ngoan</span></div>' +
+      '<div class="dau-the"><span class="nhan-the">Phiếu bé ngoan</span>' +
+      '<div class="tag-treo" aria-hidden="true"><div class="tag-day"></div>' +
+      '<img class="tag-anh" src="data:image/jpeg;base64,' + PHIEU._TAG_B64 + '" alt=""></div></div>' +
       '<p class="trao">Trao cho</p>' +
       '<h1 class="ten">' + esc(d.t || macDinh().t) + '</h1>' +
       '<div class="sao" role="img" aria-label="' + n + ' trên 5 sao">' + saoHtml(n) + '</div>' +
@@ -1111,8 +1114,6 @@ var PHIEU = (function () {
       '</div>' +
       '<div class="hieu-luc"><span class="so-the">Số ' + esc(d.so || "1") + '</span>' +
       ' · vô thời hạn · không hoàn lại</div>' +
-      '<div class="tag-treo" aria-hidden="true"><div class="tag-day"></div>' +
-      '<img class="tag-anh" src="data:image/jpeg;base64,' + PHIEU._TAG_B64 + '" alt=""></div>' +
       meoHtml(d.c);
   }
 
