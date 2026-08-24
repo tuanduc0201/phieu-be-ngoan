@@ -8,6 +8,7 @@ var PHIEU = (function () {
 
   var MEO = ["meo-vay", "meo-sao", "meo-map", "meo-ngu"];
   var MEO_TEN = { "meo-vay": "Mèo vẫy tay", "meo-sao": "Mèo ôm sao", "meo-map": "Mèo mập", "meo-ngu": "Mèo ngủ" };
+  var TAG_B64 = "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";
 
   /* Nơi nhận thư khi người ta bấm "Sử dụng". FormSubmit không cần tài khoản,
      nhưng lần gửi đầu tiên nó chỉ gửi thư kích hoạt tới địa chỉ này — phải bấm
@@ -139,6 +140,8 @@ var PHIEU = (function () {
       '</div>' +
       '<div class="hieu-luc"><span class="so-the">Số ' + esc(d.so || "1") + '</span>' +
       ' · vô thời hạn · không hoàn lại</div>' +
+      '<div class="tag-treo" aria-hidden="true"><div class="tag-day"></div>' +
+      '<img class="tag-anh" src="data:image/jpeg;base64,' + PHIEU._TAG_B64 + '" alt=""></div>' +
       meoHtml(d.c);
   }
 
@@ -224,6 +227,7 @@ var PHIEU = (function () {
     MEO: MEO, MEO_TEN: MEO_TEN,
     GOI_Y_LOI: GOI_Y_LOI, GOI_Y_THUONG: GOI_Y_THUONG,
     macDinh: macDinh, homNay: homNay,
+    _TAG_B64: TAG_B64,
     maHoa: maHoa, giaiMa: giaiMa, tuDiaChi: tuDiaChi, diaChiPhieu: diaChiPhieu,
     veThe: veThe, ganNutDung: ganNutDung
   };

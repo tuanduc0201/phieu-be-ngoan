@@ -1,3 +1,5 @@
 __pycache__/
 *.pyc
 .venv/
+partials/.tag-line.txt
+partials/tag-meo.b64
