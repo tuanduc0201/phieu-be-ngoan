@@ -151,6 +151,18 @@ var PHIEU = (function () {
            hai(dt.getDate()) + "." + hai(dt.getMonth() + 1) + "." + dt.getFullYear();
   }
 
+  /* FormSubmit trả lỗi bằng tiếng Anh, đổi sang tiếng Việt cho người nhận đọc */
+  function loiTiengViet(msg) {
+    msg = String(msg || "");
+    if (/activat/i.test(msg)) {
+      return "Hộp thư nhận chưa được kích hoạt, nên chưa báo được. Nhắn người trao phiếu kiểm tra email giúp nhé.";
+    }
+    if (/web server/i.test(msg)) {
+      return "Trang đang mở từ file trên máy nên không gửi được — mở bằng đường dẫn trên mạng nhé.";
+    }
+    return "Chưa gửi được, thử lại nhé.";
+  }
+
   function khoaNut(nut, luc) {
     nut.disabled = true;
     nut.classList.add("da-dung");
@@ -198,9 +210,7 @@ var PHIEU = (function () {
         } else {
           nut.disabled = false;
           nut.textContent = "Sử dụng";
-          tt.textContent = kq && kq.message
-            ? "Chưa gửi được: " + kq.message
-            : "Chưa gửi được, thử lại nhé.";
+          tt.textContent = loiTiengViet(kq && kq.message);
         }
       }).catch(function () {
         nut.disabled = false;
