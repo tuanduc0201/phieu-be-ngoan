@@ -3,666 +3,536 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#FFEDE1">
-<meta name="description" content="Phiếu bé ngoan cho lớp mầm non — điền tên bé, chọn sao và in khổ A5 ngang.">
+<meta name="theme-color" content="#120D1A">
+<meta name="description" content="Một tấm phiếu bé ngoan dành riêng cho người thương.">
+<meta name="color-scheme" content="dark">
 <style>*{margin:0;padding:0}html,body{min-height:100%}svg,img{max-width:100%}</style>
 <title>Phiếu Bé Ngoan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Be+Vietnam+Pro:wght@400;500;600&display=swap">
 <style>
   *, *::before, *::after { box-sizing: border-box; }
 
   :root {
-    /* giấy — luôn sáng, vì phiếu là tờ giấy */
-    --paper:      #FFFDF8;
-    --paper-2:    #FFF6EA;
-    --ink:        #3B3355;
-    --ink-soft:   #7A709A;
-    --hong:       #FF8FA8;
-    --hong-soft:  #FFE4EA;
-    --mint:       #4FC7B8;
-    --mint-soft:  #DBF6F1;
-    --vang:       #FFC24A;
-    --vang-soft:  #FFF0CC;
-    --tim:        #B69CFF;
-    --acc:        var(--hong);
-    --acc-soft:   var(--hong-soft);
+    /* nền đêm */
+    --dem:      #120D1A;
+    --dem-2:    #1A1226;
+    --the:      #1F1730;
+    --the-2:    #2C1A34;
 
-    /* chrome — phần khung quanh phiếu, đổi theo theme */
-    --bg:         #FFEDE1;
-    --bg-2:       #FFE2D3;
-    --surface:    #FFFFFF;
-    --surface-2:  #FFF7F1;
-    --line:       #F0D6C6;
-    --text:       #4A3F63;
-    --text-soft:  #8B7FA6;
-    --focus:      #6C4BD8;
+    /* chữ */
+    --nga:      #F7EFE8;
+    --nga-mo:   #CFC3C9;
+    --xam:      #9C90AA;   /* xám lệch tím cho ăn với sắc nhấn */
 
-    --r: 22px;
-  }
+    /* nhấn */
+    --hong:     #FF5E7A;
+    --hong-nhat:#FFA8B8;
+    --dong:     #E4B363;
 
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg:        #221D33;
-      --bg-2:      #1A1628;
-      --surface:   #2E2743;
-      --surface-2: #372F4F;
-      --line:      #453B63;
-      --text:      #F1ECFF;
-      --text-soft: #A79BC7;
-      --focus:     #C7B4FF;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg:        #221D33;
-    --bg-2:      #1A1628;
-    --surface:   #2E2743;
-    --surface-2: #372F4F;
-    --line:      #453B63;
-    --text:      #F1ECFF;
-    --text-soft: #A79BC7;
-    --focus:     #C7B4FF;
+    --vien:     rgba(247, 239, 232, 0.14);
+    --vien-ro:  rgba(247, 239, 232, 0.28);
+
+    --serif: Fraunces, "Playfair Display", Georgia, "Times New Roman", serif;
+    --sans: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+    /* viền trắng kiểu sticker + bóng nổi */
+    --keyline:
+      drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff)
+      drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff)
+      drop-shadow(1.5px 1.5px 0 #fff) drop-shadow(-1.5px 1.5px 0 #fff)
+      drop-shadow(1.5px -1.5px 0 #fff) drop-shadow(-1.5px -1.5px 0 #fff)
+      drop-shadow(0 8px 14px rgba(0, 0, 0, 0.45));
   }
 
   body {
     margin: 0;
-    background: var(--bg);
-    background-image: radial-gradient(circle at 12% 8%, var(--bg-2), transparent 55%),
-                      radial-gradient(circle at 88% 92%, var(--bg-2), transparent 50%);
-    color: var(--text);
-    font-family: Quicksand, "Segoe UI", system-ui, sans-serif;
-    font-weight: 600;
+    background: var(--dem);
+    color: var(--nga);
+    font-family: var(--sans);
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
-  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 8px; }
+  :focus-visible { outline: 2px solid var(--hong); outline-offset: 3px; border-radius: 8px; }
 
-  .wrap {
-    max-width: 1180px;
-    margin: 0 auto;
-    padding: 20px 16px 56px;
-    display: flex;
-    flex-direction: column;
-    gap: 22px;
-  }
-
-  /* ---------- lời chào trên cùng ---------- */
-  .hi { display: flex; flex-direction: column; gap: 4px; padding: 6px 4px 0; }
-  .hi b {
-    font-family: "Baloo 2", Quicksand, sans-serif;
-    font-weight: 800; font-size: clamp(1.35rem, 5vw, 1.75rem);
-    letter-spacing: -0.01em;
-  }
-  .hi span { color: var(--text-soft); font-size: 0.95rem; }
-
-  /* ================= TẤM PHIẾU ================= */
-  .stage { display: flex; justify-content: center; }
-
-  .phieu {
+  /* ---------- sảnh: chỉ có tấm phiếu, không có gì khác ---------- */
+  .sanh {
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    padding: clamp(30px, 6vw, 56px) clamp(28px, 5vw, 40px);
     position: relative;
-    width: 100%;
-    max-width: 760px;
-    aspect-ratio: 210 / 148;
-    min-height: 430px;
-    padding: 3.1%;
-    border-radius: 30px;
-    background: var(--paper);
-    color: var(--ink);
-    box-shadow: 0 18px 44px -18px rgba(59, 51, 85, 0.45), 0 2px 0 rgba(59,51,85,.08);
     overflow: hidden;
-    container-type: inline-size;
   }
-  .phieu[data-mau="mint"] { --acc: var(--mint); --acc-soft: var(--mint-soft); }
-  .phieu[data-mau="vang"] { --acc: var(--vang); --acc-soft: var(--vang-soft); }
-
-  /* nền: chấm bi + vệt màu góc */
-  .phieu::before {
-    content: ""; position: absolute; inset: 0; z-index: 0;
+  .sanh::before {
+    content: "";
+    position: absolute; inset: -20%;
     background:
-      radial-gradient(circle at 0% 0%, var(--acc-soft) 0, transparent 34%),
-      radial-gradient(circle at 100% 100%, var(--acc-soft) 0, transparent 30%),
-      radial-gradient(var(--acc-soft) 1.6px, transparent 1.7px);
-    background-size: 100% 100%, 100% 100%, 16px 16px;
-    opacity: .9;
-  }
-
-  /* viền kép kiểu tem dán */
-  .frame {
-    position: absolute; inset: 2.3%;
-    border: 3px solid var(--ink);
-    border-radius: 22px;
-    z-index: 1;
+      radial-gradient(38% 30% at 22% 18%, rgba(255, 94, 122, 0.16), transparent 70%),
+      radial-gradient(34% 28% at 82% 82%, rgba(228, 179, 99, 0.12), transparent 70%);
     pointer-events: none;
   }
-  .frame::after {
-    content: ""; position: absolute; inset: 7px;
-    border: 2px dashed var(--acc);
-    border-radius: 16px;
-    opacity: .85;
+
+  /* tim bay lơ lửng phía sau, rất nhẹ */
+  .bui { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .bui i {
+    position: absolute;
+    display: block;
+    width: 14px; height: 14px;
+    background: var(--hong);
+    opacity: .12;
+    clip-path: path("M7 13.5C3.9 11 0.5 8.6 0.5 5.4 0.5 3 2.4 1.3 4.5 1.3c1.2 0 2.2.5 2.5 1.4.3-.9 1.3-1.4 2.5-1.4 2.1 0 4 1.7 4 4.1 0 3.2-3.4 5.6-6.5 8.1z");
+    transform: scale(1);
+  }
+  .bui i:nth-child(1) { left: 12%; top: 22%; width: 26px; height: 26px; }
+  .bui i:nth-child(2) { left: 80%; top: 30%; width: 18px; height: 18px; }
+  .bui i:nth-child(3) { left: 26%; top: 74%; width: 34px; height: 34px; opacity: .08; }
+  .bui i:nth-child(4) { left: 68%; top: 80%; width: 20px; height: 20px; }
+
+  /* ============ TẤM PHIẾU ============ */
+  .the {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    padding: clamp(26px, 6.5vw, 44px) clamp(22px, 6vw, 40px) clamp(22px, 5vw, 34px);
+    border-radius: 28px;
+    background:
+      radial-gradient(120% 80% at 12% 0%, rgba(255, 94, 122, 0.22), transparent 60%),
+      radial-gradient(90% 70% at 100% 100%, rgba(228, 179, 99, 0.16), transparent 62%),
+      linear-gradient(158deg, var(--the-2), var(--the) 58%);
+    border: 1px solid var(--vien-ro);
+    box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    container-type: inline-size;
+  }
+  /* vệt sáng chéo rất nhẹ, cho cảm giác giấy tráng */
+  .the::after {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(102deg, transparent 42%, rgba(255, 255, 255, 0.05) 50%, transparent 58%);
+    pointer-events: none;
   }
 
-  .inner {
-    position: relative; z-index: 2;
-    height: 100%;
-    padding: 5.2% 7% 6.8%;
-    display: flex; flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 1.2cqw;
+  .dau-the {
+    display: flex; align-items: center;
+    gap: 14px;
+    padding-right: clamp(58px, 20cqw, 92px);   /* chừa chỗ cho mèo dán góc trên */
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--vien);
   }
-
-  .truong {
-    font-size: clamp(.6rem, 1.85cqw, .82rem);
-    font-weight: 700;
-    letter-spacing: .16em;
+  .nhan-the {
+    font-size: clamp(.62rem, 2.4cqw, .74rem);
+    font-weight: 600;
+    letter-spacing: .32em;
     text-transform: uppercase;
-    color: var(--ink-soft);
+    color: var(--dong);
+  }
+  .so-the {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: var(--nga-mo);
   }
 
-  .title {
-    font-family: "Baloo 2", Quicksand, sans-serif;
-    font-weight: 800;
-    font-size: clamp(1.9rem, 8.4cqw, 4rem);
-    line-height: .96;
-    letter-spacing: -0.015em;
-    text-wrap: balance;
-    color: var(--acc);
-    -webkit-text-stroke: max(2px, .38cqw) var(--ink);
-    paint-order: stroke fill;
-    text-shadow: 0 .5cqw 0 rgba(59,51,85,.16);
-    margin: .1em 0 0;
+  .trao {
+    margin: clamp(20px, 5cqw, 30px) 0 0;
+    font-size: clamp(.78rem, 3cqw, .9rem);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--xam);
   }
-
-  .tuan {
-    display: inline-block;
-    font-size: clamp(.66rem, 2.05cqw, .95rem);
-    font-weight: 700;
-    padding: .32em 1.1em;
-    border: 2px solid var(--ink);
-    border-radius: 999px;
-    background: var(--paper-2);
-  }
-
-  .tang { font-size: clamp(.66rem, 2cqw, .92rem); color: var(--ink-soft); font-weight: 700; margin-top: .6cqw; }
 
   .ten {
-    font-family: "Baloo 2", Quicksand, sans-serif;
-    font-weight: 700;
-    font-size: clamp(1.5rem, 7cqw, 3.2rem);
-    line-height: 1.06;
-    letter-spacing: -0.01em;
-    text-wrap: balance;
-    padding: 0 .2em .06em;
-    border-bottom: max(3px, .5cqw) solid var(--acc);
-    min-width: 42%;
-    max-width: 100%;
-  }
-  .lop { font-size: clamp(.66rem, 2cqw, .92rem); color: var(--ink-soft); font-weight: 700; }
-
-  .sao { display: flex; gap: .8cqw; margin-top: .4cqw; }
-  .sao svg { width: clamp(20px, 5.4cqw, 40px); height: auto; display: block; }
-  .sao .off { opacity: .28; }
-
-  .khen {
-    font-size: clamp(.78rem, 2.55cqw, 1.2rem);
-    font-weight: 700;
-    line-height: 1.35;
-    text-wrap: balance;
-    max-width: 76%;
-    color: var(--ink);
-  }
-  .khen::before, .khen::after { content: "“"; color: var(--acc); font-family: "Baloo 2", serif; }
-  .khen::after { content: "”"; }
-
-  .chan {
-    margin-top: auto;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: end;
-    gap: 4%;
-    padding-left: 17cqw;
-    font-size: clamp(.6rem, 1.85cqw, .82rem);
-    color: var(--ink-soft);
-    font-weight: 700;
-  }
-  .chan .ngay { text-align: left; padding-bottom: .15em; }
-  .chan .gv { text-align: right; }
-  .chan .gv b {
-    display: block;
-    font-family: "Baloo 2", Quicksand, sans-serif;
-    font-size: clamp(.72rem, 2.3cqw, 1.05rem);
-    color: var(--ink);
-    margin-top: .2em;
-  }
-
-  .stickers { position: static; }
-
-  /* con dấu tròn */
-  .dau {
-    position: absolute;
-    right: 5.5%; top: 8%;
-    width: clamp(54px, 13.5cqw, 92px);
-    aspect-ratio: 1;
-    display: grid; place-items: center;
-    border-radius: 50%;
-    border: 3px solid var(--acc);
-    background: color-mix(in srgb, var(--acc-soft) 78%, var(--paper));
-    transform: rotate(9deg);
-    font-family: "Baloo 2", Quicksand, sans-serif;
-    font-weight: 800;
-    font-size: clamp(.6rem, 2.15cqw, .92rem);
-    line-height: 1.08;
-    color: var(--ink);
-    text-transform: uppercase;
-    letter-spacing: .04em;
-    z-index: 3;
-  }
-  .dau::before {
-    content: ""; position: absolute; inset: 5px;
-    border: 2px dotted var(--acc); border-radius: 50%;
-  }
-  .dau span { display: block; font-size: 1.5em; line-height: 1; }
-
-  /* bạn thú ngộ nghĩnh */
-  .ban {
-    position: absolute;
-    left: 6.5%; bottom: 7.5%;
-    width: clamp(52px, 13.5cqw, 96px);
-    transform: rotate(-6deg);
-    z-index: 3;
-  }
-  .ban svg { width: 100%; height: auto; display: block; }
-
-  /* trang trí lơ lửng */
-  .deco { position: absolute; z-index: 1; pointer-events: none; }
-  .deco svg { display: block; width: 100%; height: auto; }
-  .d1 { top: 6.5%; left: 5.5%; width: clamp(28px, 7.4cqw, 54px); transform: rotate(-8deg); }
-  .d2 { top: 30%; left: 5%; width: clamp(20px, 5cqw, 34px); transform: rotate(-16deg); }
-  .d3 { bottom: 24%; right: 5%; width: clamp(16px, 4.2cqw, 28px); transform: rotate(8deg); }
-  .d4 { top: 44%; right: 5%; width: clamp(20px, 5.2cqw, 34px); }
-
-  /* ================= BẢNG ĐIỀU KHIỂN ================= */
-  .panel {
-    background: var(--surface);
-    border: 2px solid var(--line);
-    border-radius: var(--r);
-    padding: 18px;
-  }
-  .panel > summary {
-    cursor: pointer;
-    list-style: none;
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 12px;
-    font-family: "Baloo 2", Quicksand, sans-serif;
-    font-weight: 700; font-size: 1.12rem;
-    color: var(--text);
-  }
-  .panel > summary::-webkit-details-marker { display: none; }
-  .panel > summary .chev { transition: transform .2s ease; font-size: .9rem; color: var(--text-soft); }
-  .panel[open] > summary .chev { transform: rotate(180deg); }
-
-  .fields {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 14px;
-    margin-top: 18px;
-  }
-  .f { display: flex; flex-direction: column; gap: 6px; }
-  .f.wide { grid-column: 1 / -1; }
-  .f label { font-size: .78rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--text-soft); }
-  .f input, .f select, .f textarea {
-    font: inherit;
+    margin: .18em 0 0;
+    font-family: var(--serif);
+    font-optical-sizing: auto;
     font-weight: 600;
-    color: var(--text);
-    background: var(--surface-2);
-    border: 2px solid var(--line);
-    border-radius: 14px;
-    padding: 11px 13px;
-    width: 100%;
+    font-size: clamp(2.3rem, 13cqw, 3.9rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    color: var(--nga);
   }
-  .f textarea { resize: vertical; min-height: 62px; line-height: 1.4; }
-  .f input::placeholder, .f textarea::placeholder { color: var(--text-soft); opacity: .75; }
-
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chip {
-    font: inherit; font-weight: 700; font-size: .92rem;
-    cursor: pointer;
-    padding: 9px 14px;
-    border-radius: 999px;
-    border: 2px solid var(--line);
-    background: var(--surface-2);
-    color: var(--text);
-    display: inline-flex; align-items: center; gap: 7px;
+  .ten::after {
+    content: "";
+    display: block;
+    width: clamp(52px, 18cqw, 84px);
+    height: 3px;
+    margin-top: .42em;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--hong), rgba(255, 94, 122, 0));
   }
-  .chip[aria-pressed="true"] { border-color: var(--focus); background: color-mix(in srgb, var(--focus) 14%, var(--surface)); }
-  .chip .dot { width: 15px; height: 15px; border-radius: 50%; border: 2px solid var(--text); }
 
-  .acts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-  .btn {
-    font: inherit; font-weight: 700; font-size: 1rem;
-    cursor: pointer;
-    padding: 13px 22px;
-    border-radius: 999px;
-    border: 2px solid var(--ink);
-    background: var(--hong);
-    color: #3B3355;
-    display: inline-flex; align-items: center; gap: 9px;
-    box-shadow: 0 4px 0 #3B3355;
+  .tim {
+    display: flex; gap: .32em;
+    margin-top: clamp(18px, 4.4cqw, 26px);
   }
-  .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #3B3355; }
-  .btn.ghost { background: var(--surface-2); color: var(--text); border-color: var(--line); box-shadow: 0 4px 0 var(--line); }
-  .btn.ghost:active { box-shadow: 0 1px 0 var(--line); }
+  .tim svg { width: clamp(20px, 6.2cqw, 27px); height: auto; display: block; }
+  .tim .tat { opacity: .22; }
 
-  .note { margin: 14px 4px 0; font-size: .88rem; color: var(--text-soft); line-height: 1.55; }
-
-  @media (max-width: 560px) {
-    .phieu { min-height: 0; aspect-ratio: auto; border-radius: 26px; }
-    .inner { padding: 8% 7.5%; gap: 2.4cqw; }
-    .khen { max-width: 100%; }
-    .stickers {
-      display: flex; align-items: flex-end; justify-content: center;
-      gap: 7%; width: 100%; margin: 1.5cqw 0 .5cqw;
-    }
-    .ban { position: static; width: 27cqw; }
-    .dau { position: static; width: 25cqw; transform: rotate(8deg); }
-    .chan { padding-left: 0; margin-top: 1cqw; gap: 6%; }
-    .d3 { bottom: 14%; }
-    .d4 { top: 40%; }
+  .vi {
+    margin: clamp(16px, 4cqw, 22px) 0 0;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-style: italic;
+    font-size: clamp(1.06rem, 4.6cqw, 1.42rem);
+    line-height: 1.5;
+    color: var(--nga);
+    text-wrap: pretty;
   }
+  .vi span { color: var(--xam); font-style: normal; font-family: var(--sans); font-size: .74em; display: block; margin-bottom: .3em; letter-spacing: .16em; text-transform: uppercase; }
+
+  /* cuống vé "đổi được" */
+  .doi {
+    margin-top: clamp(22px, 5.4cqw, 32px);
+    padding: clamp(14px, 3.6cqw, 20px) clamp(16px, 4cqw, 22px);
+    border: 1px dashed var(--vien-ro);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.035);
+    display: flex; flex-direction: column; gap: .28em;
+  }
+  .doi-nhan {
+    font-size: clamp(.6rem, 2.4cqw, .7rem);
+    font-weight: 600;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    color: var(--dong);
+  }
+  .doi-noi {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(1.12rem, 5cqw, 1.5rem);
+    line-height: 1.25;
+    color: var(--nga);
+    text-wrap: balance;
+  }
+
+  .chan-the {
+    margin-top: clamp(22px, 5.4cqw, 32px);
+    padding-top: clamp(14px, 3.4cqw, 18px);
+    border-top: 1px solid var(--vien);
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 18px;
+  }
+  .chan-the div { display: flex; flex-direction: column; gap: .3em; }
+  .chan-the .nhan-nho {
+    font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: var(--xam);
+  }
+  .chan-the b {
+    font-family: var(--serif); font-weight: 600;
+    font-size: clamp(.98rem, 4cqw, 1.14rem);
+    color: var(--nga);
+  }
+  .chan-the .ngay b { font-variant-numeric: tabular-nums; }
+  .chan-the .ngay { text-align: right; }
+
+  .hieu-luc {
+    margin-top: clamp(12px, 3cqw, 16px);
+    font-size: .64rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--xam);
+    opacity: .8;
+  }
+
+  /* ============ MÈO DÁN ============ */
+  .meo {
+    position: absolute;
+    filter: var(--keyline);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .meo svg { width: 100%; height: auto; display: block; }
+  .meo-1 { width: clamp(74px, 21cqw, 108px); top: -34px;  right: -18px; transform: rotate(9deg); }
+  .meo-2 { width: clamp(58px, 16cqw, 82px);  bottom: -20px; right: -22px; transform: rotate(-11deg); }
+  .meo-3 { width: clamp(48px, 13cqw, 66px);  bottom: 34%; left: -24px; transform: rotate(14deg); }
 
   @media (prefers-reduced-motion: no-preference) {
-    .stage .phieu { animation: pop .5s cubic-bezier(.2,.9,.3,1.3) both; }
-    @keyframes pop { from { opacity: 0; transform: translateY(14px) scale(.97); } }
+    .meo-1 { animation: nhun-meo 3.4s ease-in-out infinite; }
+    @keyframes nhun-meo {
+      0%, 100% { transform: rotate(9deg) translateY(0); }
+      50%      { transform: rotate(9deg) translateY(-5px); }
+    }
   }
 
-  /* ================= IN ================= */
-  @page { size: A5 landscape; margin: 0; }
+  /* ---------- xuất hiện ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    .the { animation: len .7s cubic-bezier(.16, .8, .3, 1) both; }
+    @keyframes len { from { opacity: 0; transform: translateY(22px) scale(.985); } }
+    .the .tim svg { animation: bung .45s cubic-bezier(.2, .9, .3, 1.5) both; }
+    .the .tim svg:nth-child(1) { animation-delay: .42s; }
+    .the .tim svg:nth-child(2) { animation-delay: .50s; }
+    .the .tim svg:nth-child(3) { animation-delay: .58s; }
+    .the .tim svg:nth-child(4) { animation-delay: .66s; }
+    .the .tim svg:nth-child(5) { animation-delay: .74s; }
+    @keyframes bung { from { opacity: 0; transform: scale(.4) rotate(-14deg); } }
+    .bui i { animation: troi 9s ease-in-out infinite alternate; }
+    .bui i:nth-child(2) { animation-duration: 11s; animation-delay: -3s; }
+    .bui i:nth-child(3) { animation-duration: 13s; animation-delay: -6s; }
+    .bui i:nth-child(4) { animation-duration: 10s; animation-delay: -1.5s; }
+    @keyframes troi { to { transform: translate(14px, -22px) rotate(12deg); } }
+  }
+
   @media print {
-    body { background: #fff !important; }
-    .wrap { padding: 0; max-width: none; gap: 0; }
-    .hi, .panel, .note { display: none !important; }
-    .stage { display: block; }
-    .phieu {
-      max-width: none; width: 100%; height: 100vh;
-      aspect-ratio: auto; min-height: 0;
-      border-radius: 0; box-shadow: none;
-      animation: none;
-      -webkit-print-color-adjust: exact; print-color-adjust: exact;
-    }
+    .sanh { min-height: 0; padding: 0; }
+    .sanh::before, .bui { display: none; }
+    .the { box-shadow: none; animation: none; max-width: none; }
+    .the .tim svg { animation: none; }
   }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="hi">
-    <b>Phiếu bé ngoan 🌈</b>
-    <span>Điền tên bé rồi bấm <em>In phiếu</em> — hoặc sao chép liên kết để gửi cho phụ huynh.</span>
-  </div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="tim" viewBox="0 0 32 30">
+      <path d="M16 28C8.6 22.4 2 17.4 2 11.2 2 6.4 5.8 3 10.2 3c2.5 0 4.6 1.1 5.8 2.9C17.2 4.1 19.3 3 21.8 3 26.2 3 30 6.4 30 11.2c0 6.2-6.6 11.2-14 16.8z"/>
+    </symbol>
 
-  <div class="stage">
-    <div class="phieu" id="phieu" data-mau="hong">
-      <div class="frame"></div>
+    <!-- mèo mập ngồi, mắt nhắm tít -->
+    <symbol id="meo-map" viewBox="0 0 100 100">
+      <ellipse cx="50" cy="80" rx="29" ry="19" fill="#F3E2CF"/>
+      <ellipse cx="33" cy="94" rx="9" ry="5.5" fill="#FFF4E6"/>
+      <ellipse cx="67" cy="94" rx="9" ry="5.5" fill="#FFF4E6"/>
+      <path d="M25 36 L28 11 L47 27 Z" fill="#F3E2CF"/>
+      <path d="M75 36 L72 11 L53 27 Z" fill="#F3E2CF"/>
+      <path d="M29 31 L31 18 L41 27 Z" fill="#FFB9C6"/>
+      <path d="M71 31 L69 18 L59 27 Z" fill="#FFB9C6"/>
+      <circle cx="50" cy="47" r="27" fill="#F6E7D5"/>
+      <path d="M36 45c2.4 3.4 6.6 3.4 9 0" stroke="#3A2B3F" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+      <path d="M55 45c2.4 3.4 6.6 3.4 9 0" stroke="#3A2B3F" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+      <ellipse cx="31" cy="55" rx="7" ry="4.6" fill="#FFB9C6" opacity=".85"/>
+      <ellipse cx="69" cy="55" rx="7" ry="4.6" fill="#FFB9C6" opacity=".85"/>
+      <path d="M50 54l-3.4 3h6.8z" fill="#FF8DA1"/>
+      <path d="M50 57v2.6m0 0c-1.9 3-6.2 2.8-7.6-.4M50 59.6c1.9 3 6.2 2.8 7.6-.4" stroke="#3A2B3F" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+    </symbol>
 
-      <div class="deco d1">
-        <svg viewBox="0 0 60 40" aria-hidden="true">
-          <path d="M12 30h34a8 8 0 0 0 0-16 12 12 0 0 0-22-4A9 9 0 0 0 12 30z" fill="#fff" stroke="#3B3355" stroke-width="2.6" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <div class="deco d2">
-        <svg viewBox="0 0 40 40" aria-hidden="true">
-          <circle cx="20" cy="20" r="15" fill="#FFC24A" stroke="#3B3355" stroke-width="2.6"/>
-          <circle cx="14" cy="16" r="2.6" fill="#3B3355"/><circle cx="26" cy="16" r="2.6" fill="#3B3355"/>
-          <path d="M13 25c3.6 4 10.4 4 14 0" stroke="#3B3355" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div class="deco d3">
-        <svg viewBox="0 0 30 30" aria-hidden="true">
-          <path d="M15 2l3.6 8.4L27 12l-6.6 5.4L22 27l-7-4.6L8 27l1.6-9.6L3 12l8.4-1.6z" fill="#B69CFF" stroke="#3B3355" stroke-width="2.4" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <div class="deco d4">
-        <svg viewBox="0 0 40 52" aria-hidden="true">
-          <path d="M20 34c9-6 14-12 14-18A9 9 0 0 0 20 11 9 9 0 0 0 6 16c0 6 5 12 14 18z" fill="#FF8FA8" stroke="#3B3355" stroke-width="2.6" stroke-linejoin="round"/>
-          <path d="M20 34v14" stroke="#3B3355" stroke-width="2.4" stroke-linecap="round"/>
-        </svg>
-      </div>
+    <!-- mèo vàng ôm trái tim -->
+    <symbol id="meo-tim" viewBox="0 0 100 100">
+      <ellipse cx="50" cy="78" rx="26" ry="20" fill="#FFD9A5"/>
+      <path d="M27 38 L30 14 L48 29 Z" fill="#FFD9A5"/>
+      <path d="M73 38 L70 14 L52 29 Z" fill="#FFD9A5"/>
+      <path d="M31 33 L33 21 L42 29 Z" fill="#FFB9C6"/>
+      <path d="M69 33 L67 21 L58 29 Z" fill="#FFB9C6"/>
+      <circle cx="50" cy="46" r="25" fill="#FFE3BC"/>
+      <path d="M43 28c1.6 2.6 1.6 4.6 0 7M50 26.4c1.7 2.8 1.7 5 0 7.6M57 28c-1.6 2.6-1.6 4.6 0 7" stroke="#E9A94F" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="41" cy="46" r="4.4" fill="#3A2B3F"/>
+      <circle cx="59" cy="46" r="4.4" fill="#3A2B3F"/>
+      <circle cx="42.6" cy="44.4" r="1.5" fill="#fff"/>
+      <circle cx="60.6" cy="44.4" r="1.5" fill="#fff"/>
+      <ellipse cx="32" cy="54" rx="6" ry="4" fill="#FF9DAE" opacity=".8"/>
+      <ellipse cx="68" cy="54" rx="6" ry="4" fill="#FF9DAE" opacity=".8"/>
+      <path d="M50 52l-3 2.8h6z" fill="#FF8DA1"/>
+      <path d="M50 55.6c-1.6 2.6-5.4 2.4-6.6-.4M50 55.6c1.6 2.6 5.4 2.4 6.6-.4" stroke="#3A2B3F" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      <path d="M50 92c-9-6.2-15-10.6-15-16.6 0-4.4 3.5-7.4 7.4-7.4 2.9 0 5.6 1.6 7.6 4.2 2-2.6 4.7-4.2 7.6-4.2 3.9 0 7.4 3 7.4 7.4C65 81.4 59 85.8 50 92z" fill="#FF5E7A"/>
+      <ellipse cx="28" cy="80" rx="8" ry="6" fill="#FFE3BC" transform="rotate(-18 28 80)"/>
+      <ellipse cx="72" cy="80" rx="8" ry="6" fill="#FFE3BC" transform="rotate(18 72 80)"/>
+    </symbol>
 
-      <div class="inner">
-        <div class="truong" id="v-truong">Trường Mầm non Hoa Sen</div>
-        <h1 class="title">Phiếu Bé Ngoan</h1>
-        <div class="tuan" id="v-tuan">Tuần 1 · Tháng 8</div>
+    <!-- mèo xám cuộn tròn ngủ -->
+    <symbol id="meo-ngu" viewBox="0 0 100 100">
+      <path d="M88 62c0 14.4-17 24-38 24S12 76.4 12 62s17-22 38-22 38 7.6 38 22z" fill="#DCD5E6"/>
+      <path d="M86 60c6-2 10 3 8 9-1.6 4.8-7 6-10.6 3.4" fill="none" stroke="#DCD5E6" stroke-width="9" stroke-linecap="round"/>
+      <circle cx="36" cy="60" r="21" fill="#EAE5F2"/>
+      <path d="M20 50 L21 33 L34 44 Z" fill="#EAE5F2"/>
+      <path d="M50 46 L52 30 L38 41 Z" fill="#EAE5F2"/>
+      <path d="M23 46 L24 37 L31 44 Z" fill="#FFB9C6"/>
+      <path d="M47 43 L48 34 L41 41 Z" fill="#FFB9C6"/>
+      <path d="M26 58c1.8 2.6 5 2.6 6.8 0" stroke="#3A2B3F" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <path d="M40 58c1.8 2.6 5 2.6 6.8 0" stroke="#3A2B3F" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+      <ellipse cx="22" cy="66" rx="5.4" ry="3.6" fill="#FFB9C6" opacity=".8"/>
+      <ellipse cx="50" cy="66" rx="5.4" ry="3.6" fill="#FFB9C6" opacity=".8"/>
+      <path d="M36 65l-2.6 2.4h5.2z" fill="#FF8DA1"/>
+      <path d="M62 30h10l-10 12h10" stroke="#FFA8B8" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M78 14h7l-7 8h7" stroke="#FFA8B8" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
 
-        <div class="tang">Thân tặng bạn nhỏ</div>
-        <div class="ten" id="v-ten">Bé Yêu</div>
-        <div class="lop" id="v-lop">Lớp Mầm 1</div>
+    <!-- mèo vẫy tay -->
+    <symbol id="meo-vay" viewBox="0 0 100 100">
+      <ellipse cx="52" cy="79" rx="25" ry="19" fill="#F3E2CF"/>
+      <path d="M70 72 L84 48" stroke="#F3E2CF" stroke-width="13" stroke-linecap="round" fill="none"/>
+      <circle cx="87" cy="43" r="9" fill="#FFF4E6"/>
+      <path d="M84 38.5v3.2M88 37.6v3.6M91.6 39v3" stroke="#E8CDB0" stroke-width="2" stroke-linecap="round"/>
+      <path d="M29 38 L32 14 L50 29 Z" fill="#F3E2CF"/>
+      <path d="M75 38 L72 14 L54 29 Z" fill="#F3E2CF"/>
+      <path d="M33 33 L35 21 L44 29 Z" fill="#FFB9C6"/>
+      <path d="M71 33 L69 21 L60 29 Z" fill="#FFB9C6"/>
+      <circle cx="52" cy="46" r="25" fill="#F6E7D5"/>
+      <circle cx="43" cy="45" r="4.2" fill="#3A2B3F"/>
+      <circle cx="61" cy="45" r="4.2" fill="#3A2B3F"/>
+      <circle cx="44.5" cy="43.5" r="1.4" fill="#fff"/>
+      <circle cx="62.5" cy="43.5" r="1.4" fill="#fff"/>
+      <ellipse cx="34" cy="54" rx="6" ry="4" fill="#FFB9C6" opacity=".85"/>
+      <ellipse cx="70" cy="54" rx="6" ry="4" fill="#FFB9C6" opacity=".85"/>
+      <path d="M52 52l-3 2.8h6z" fill="#FF8DA1"/>
+      <path d="M52 55.4c-1.7 2.8-5.6 2.6-6.9-.4M52 55.4c1.7 2.8 5.6 2.6 6.9-.4" stroke="#3A2B3F" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
 
-        <div class="sao" id="v-sao" role="img" aria-label="Số sao"></div>
-
-        <p class="khen" id="v-khen">Bé đi học đúng giờ, ăn hết suất và biết giúp cô xếp đồ chơi!</p>
-
-        <div class="stickers">
-          <div class="ban" id="v-ban"></div>
-          <div class="dau" aria-hidden="true"><span>&#9733;</span>B&#233;<br>ngoan</div>
-        </div>
-
-        <div class="chan">
-          <div class="ngay" id="v-ngay">Ngày 24 tháng 8 năm 2026</div>
-          <div class="gv">Cô giáo chủ nhiệm<b id="v-gv">Cô Thu Hà</b></div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <details class="panel" id="panel" open>
-    <summary>Tùy chỉnh phiếu <span class="chev">▾</span></summary>
-
-    <div class="fields">
-      <div class="f">
-        <label for="i-ten">Tên bé</label>
-        <input id="i-ten" data-k="ten" placeholder="Nguyễn Minh Khôi" autocomplete="off">
-      </div>
-      <div class="f">
-        <label for="i-lop">Lớp</label>
-        <input id="i-lop" data-k="lop" placeholder="Lớp Mầm 1" autocomplete="off">
-      </div>
-      <div class="f">
-        <label for="i-truong">Trường</label>
-        <input id="i-truong" data-k="truong" placeholder="Trường Mầm non Hoa Sen" autocomplete="off">
-      </div>
-      <div class="f">
-        <label for="i-tuan">Tuần / tháng</label>
-        <input id="i-tuan" data-k="tuan" placeholder="Tuần 1 · Tháng 8" autocomplete="off">
-      </div>
-      <div class="f">
-        <label for="i-gv">Cô giáo</label>
-        <input id="i-gv" data-k="gv" placeholder="Cô Thu Hà" autocomplete="off">
-      </div>
-      <div class="f">
-        <label for="i-ngay">Ngày trao</label>
-        <input id="i-ngay" data-k="ngay" placeholder="Ngày 24 tháng 8 năm 2026" autocomplete="off">
-      </div>
-
-      <div class="f wide">
-        <label for="i-khen">Lời khen</label>
-        <textarea id="i-khen" data-k="khen" placeholder="Bé đi học đúng giờ, ăn hết suất..."></textarea>
-        <div class="chips" id="goi-y"></div>
-      </div>
-
-      <div class="f wide">
-        <label>Số sao</label>
-        <div class="chips" id="chon-sao"></div>
-      </div>
-
-      <div class="f">
-        <label>Bạn nhỏ đồng hành</label>
-        <div class="chips" id="chon-ban"></div>
-      </div>
-      <div class="f">
-        <label>Tông màu</label>
-        <div class="chips" id="chon-mau"></div>
-      </div>
-    </div>
-
-    <div class="acts">
-      <button class="btn" id="btn-in" type="button">🖨️ In phiếu</button>
-      <button class="btn ghost" id="btn-link" type="button">🔗 Sao chép liên kết phiếu này</button>
-      <button class="btn ghost" id="btn-reset" type="button">↺ Mẫu mặc định</button>
-    </div>
-
-    <p class="note">Liên kết đã sao chép mang theo mọi thông tin trên phiếu — gửi cho phụ huynh là họ thấy đúng phiếu của bé. Khi in, chọn khổ <b>A5 ngang</b> và bật <b>In hình nền / Background graphics</b> để giữ màu.</p>
-  </details>
-</div>
+<main class="sanh">
+  <div class="bui" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <article class="the" id="the"></article>
+</main>
 
 <script>
-(function () {
+/* Dữ liệu phiếu + bộ dựng thẻ, dùng chung cho trang tạo và trang phiếu.
+
+   Nội dung phiếu nằm trong phần neo (#...) của địa chỉ dưới dạng base64url của
+   JSON. Phần neo không được gửi lên máy chủ, nên lời nhắn không lọt vào log của
+   GitHub Pages. */
+var PHIEU = (function () {
   "use strict";
 
-  var MAC = {
-    gau: '<svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="26" cy="30" r="15" fill="#C98A5B" stroke="#3B3355" stroke-width="4"/><circle cx="94" cy="30" r="15" fill="#C98A5B" stroke="#3B3355" stroke-width="4"/><circle cx="26" cy="30" r="7" fill="#FFC7D3"/><circle cx="94" cy="30" r="7" fill="#FFC7D3"/><circle cx="60" cy="66" r="42" fill="#E0A472" stroke="#3B3355" stroke-width="4"/><ellipse cx="60" cy="82" rx="24" ry="19" fill="#FFEBD6" stroke="#3B3355" stroke-width="3.4"/><circle cx="45" cy="57" r="5" fill="#3B3355"/><circle cx="75" cy="57" r="5" fill="#3B3355"/><ellipse cx="60" cy="76" rx="7" ry="5.4" fill="#3B3355"/><path d="M50 89c5.4 5 14.6 5 20 0" stroke="#3B3355" stroke-width="3.6" fill="none" stroke-linecap="round"/></svg>',
-    tho: '<svg viewBox="0 0 120 120" aria-hidden="true"><ellipse cx="42" cy="26" rx="11" ry="25" fill="#F6F1FA" stroke="#3B3355" stroke-width="4"/><ellipse cx="78" cy="26" rx="11" ry="25" fill="#F6F1FA" stroke="#3B3355" stroke-width="4"/><ellipse cx="42" cy="26" rx="4.6" ry="16" fill="#FFC7D3"/><ellipse cx="78" cy="26" rx="4.6" ry="16" fill="#FFC7D3"/><circle cx="60" cy="72" r="38" fill="#FFFDF8" stroke="#3B3355" stroke-width="4"/><circle cx="46" cy="66" r="5" fill="#3B3355"/><circle cx="74" cy="66" r="5" fill="#3B3355"/><circle cx="34" cy="80" r="6.5" fill="#FFC7D3"/><circle cx="86" cy="80" r="6.5" fill="#FFC7D3"/><path d="M60 78l-5 5h10z" fill="#FF8FA8" stroke="#3B3355" stroke-width="2.6" stroke-linejoin="round"/><path d="M52 90c4.4 4.4 11.6 4.4 16 0" stroke="#3B3355" stroke-width="3.6" fill="none" stroke-linecap="round"/></svg>',
-    meo: '<svg viewBox="0 0 120 120" aria-hidden="true"><path d="M24 44l2-30 24 16z" fill="#FFD79A" stroke="#3B3355" stroke-width="4" stroke-linejoin="round"/><path d="M96 44l-2-30-24 16z" fill="#FFD79A" stroke="#3B3355" stroke-width="4" stroke-linejoin="round"/><circle cx="60" cy="70" r="40" fill="#FFE6B8" stroke="#3B3355" stroke-width="4"/><path d="M44 62c0 4-2 6-4.5 6S35 66 35 62s2-6 4.5-6 4.5 2 4.5 6z" fill="#3B3355"/><path d="M85 62c0 4-2 6-4.5 6S76 66 76 62s2-6 4.5-6 4.5 2 4.5 6z" fill="#3B3355"/><path d="M60 76l-4.5 4h9z" fill="#FF8FA8" stroke="#3B3355" stroke-width="2.4" stroke-linejoin="round"/><path d="M60 80v4m0 0c-2.5 4-8 4-10.5.5M60 84c2.5 4 8 4 10.5.5" stroke="#3B3355" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M14 66h16M14 76h16M106 66H90M106 76H90" stroke="#3B3355" stroke-width="3" stroke-linecap="round"/></svg>',
-    cun: '<svg viewBox="0 0 120 120" aria-hidden="true"><ellipse cx="22" cy="56" rx="13" ry="26" fill="#A9805E" stroke="#3B3355" stroke-width="4" transform="rotate(-12 22 56)"/><ellipse cx="98" cy="56" rx="13" ry="26" fill="#A9805E" stroke="#3B3355" stroke-width="4" transform="rotate(12 98 56)"/><circle cx="60" cy="64" r="40" fill="#E5C39D" stroke="#3B3355" stroke-width="4"/><circle cx="46" cy="58" r="5" fill="#3B3355"/><circle cx="74" cy="58" r="5" fill="#3B3355"/><ellipse cx="60" cy="80" rx="20" ry="15" fill="#FFF3E2" stroke="#3B3355" stroke-width="3.2"/><ellipse cx="60" cy="74" rx="7" ry="5.4" fill="#3B3355"/><path d="M60 79v4m0 0c-2.4 4-8 3.6-10-.4M60 83c2.4 4 8 3.6 10-.4" stroke="#3B3355" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M56 92c2.6 3 5.4 3 8 0" stroke="#FF8FA8" stroke-width="4" fill="none" stroke-linecap="round"/></svg>'
-  };
-  var BAN_TEN = { gau: "🐻 Gấu", tho: "🐰 Thỏ", meo: "🐱 Mèo", cun: "🐶 Cún" };
-  var MAU_TEN = { hong: ["Hồng đào", "#FF8FA8"], mint: ["Xanh mint", "#4FC7B8"], vang: ["Vàng nắng", "#FFC24A"] };
-  var GOI_Y = [
-    "Bé đi học đúng giờ, ăn hết suất và biết giúp cô xếp đồ chơi!",
-    "Bé ngoan, biết chia sẻ đồ chơi với các bạn trong lớp.",
-    "Bé hăng hái phát biểu và hát rất hay trong giờ âm nhạc.",
-    "Bé tự xúc cơm, tự cất ba lô, ngủ trưa thật ngoan.",
-    "Bé lễ phép chào cô, chào bố mẹ và các bạn mỗi ngày."
+  var MEO = ["meo-tim", "meo-map", "meo-vay", "meo-ngu"];
+  var MEO_TEN = { "meo-tim": "Mèo ôm tim", "meo-map": "Mèo mập", "meo-vay": "Mèo vẫy tay", "meo-ngu": "Mèo ngủ" };
+
+  var GOI_Y_LOI = [
+    "ăn hết suất dù không thích rau",
+    "đi ngủ trước mười hai giờ, ba đêm liền",
+    "kiên nhẫn nghe anh kể chuyện công việc suốt bốn mươi phút",
+    "không dỗi khi anh về muộn",
+    "tự giác uống đủ nước cả tuần",
+    "cười thật khi anh kể chuyện cười nhạt"
   ];
-  var MAC_DINH = {
-    ten: "Bé Yêu", lop: "Lớp Mầm 1", truong: "Trường Mầm non Hoa Sen",
-    tuan: "Tuần 1 · Tháng 8", gv: "Cô Thu Hà", ngay: "",
-    khen: GOI_Y[0], sao: "5", ban: "gau", mau: "hong"
-  };
-  var KHOA = "phieu-be-ngoan-v1";
+  var GOI_Y_THUONG = [
+    "một lần được chọn phim, không được cãi",
+    "một bữa ăn tuỳ chọn, anh trả",
+    "một cái ôm mười phút, không nói gì",
+    "một buổi ngủ nướng, anh dọn nhà",
+    "một lời xin lỗi vô điều kiện"
+  ];
 
   function homNay() {
-    var d = new Date();
-    return "Ngày " + d.getDate() + " tháng " + (d.getMonth() + 1) + " năm " + d.getFullYear();
-  }
-  MAC_DINH.ngay = homNay();
-
-  var el = function (id) { return document.getElementById(id); };
-  var trang = {};
-
-  function doc() {
-    var out = {};
-    Object.keys(MAC_DINH).forEach(function (k) { out[k] = MAC_DINH[k]; });
-    var luu = null;
-    try { luu = JSON.parse(localStorage.getItem(KHOA) || "null"); } catch (e) { luu = null; }
-    if (luu) Object.keys(out).forEach(function (k) { if (typeof luu[k] === "string") out[k] = luu[k]; });
-    var q = new URLSearchParams(location.search);
-    Object.keys(out).forEach(function (k) { if (q.has(k)) out[k] = q.get(k); });
-    return out;
+    var d = new Date(), hai = function (x) { return (x < 10 ? "0" : "") + x; };
+    return hai(d.getDate()) + "." + hai(d.getMonth() + 1) + "." + d.getFullYear();
   }
 
-  function luuLai() {
-    try { localStorage.setItem(KHOA, JSON.stringify(trang)); } catch (e) {}
+  function macDinh() {
+    return {
+      t: "Người Thương",
+      l: GOI_Y_LOI[2],
+      r: GOI_Y_THUONG[0],
+      g: "Anh",
+      s: "5",
+      c: "meo-tim",
+      n: homNay()
+    };
   }
 
-  function sao(n) {
-    var s = "";
-    for (var i = 1; i <= 5; i++) {
-      s += '<svg viewBox="0 0 32 32" class="' + (i <= n ? "on" : "off") + '" aria-hidden="true">' +
-        '<path d="M16 2.6l4 8.6 9.4 1.2-6.9 6.3 1.8 9.3L16 23.4 7.7 28l1.8-9.3-6.9-6.3L12 11.2z" ' +
-        'fill="' + (i <= n ? "#FFC24A" : "#FFFDF8") + '" stroke="#3B3355" stroke-width="2.4" stroke-linejoin="round"/></svg>';
+  // --- mã hoá / giải mã phần neo ---
+  function b64url(s) {
+    return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  }
+  function unB64url(s) {
+    s = s.replace(/-/g, "+").replace(/_/g, "/");
+    while (s.length % 4) s += "=";
+    return atob(s);
+  }
+  function nhiPhanSangChuoi(u8) {
+    var s = "", i;
+    for (i = 0; i < u8.length; i++) s += String.fromCharCode(u8[i]);
+    return s;
+  }
+
+  function maHoa(d) {
+    var gon = {}, k;
+    var md = macDinh();
+    for (k in d) if (d[k] && d[k] !== md[k]) gon[k] = d[k];   // chỉ ghi phần khác mặc định cho mã QR gọn
+    if (!Object.keys(gon).length) return "";
+    return b64url(nhiPhanSangChuoi(new TextEncoder().encode(JSON.stringify(gon))));
+  }
+
+  function giaiMa(neo) {
+    var d = macDinh();
+    if (!neo) return d;
+    try {
+      var raw = unB64url(neo.replace(/^#/, ""));
+      var u8 = new Uint8Array(raw.length), i;
+      for (i = 0; i < raw.length; i++) u8[i] = raw.charCodeAt(i);
+      var o = JSON.parse(new TextDecoder().decode(u8));
+      for (i in o) if (typeof o[i] === "string" || typeof o[i] === "number") d[i] = String(o[i]);
+    } catch (e) { /* neo hỏng thì dùng mặc định */ }
+    return d;
+  }
+
+  function tuDiaChi() { return giaiMa(location.hash); }
+
+  function diaChiPhieu(goc, d) {
+    var m = maHoa(d);
+    return goc + (m ? "#" + m : "");
+  }
+
+  // --- dựng thẻ ---
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  function soPhieu(d) {
+    var s = (d.t || "") + "|" + (d.l || ""), h = 7, i;
+    for (i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 997;
+    return "Số " + ("00" + (h % 999 + 1)).slice(-3);
+  }
+
+  function timHtml(n) {
+    n = Math.max(0, Math.min(5, parseInt(n, 10) || 0));
+    var s = "", i;
+    for (i = 1; i <= 5; i++) {
+      s += '<svg viewBox="0 0 32 30" class="' + (i <= n ? "bat" : "tat") +
+           '" fill="' + (i <= n ? "#FF5E7A" : "#F7EFE8") + '" aria-hidden="true"><use href="#tim"/></svg>';
     }
     return s;
   }
 
-  function ve() {
-    el("v-ten").textContent = trang.ten || MAC_DINH.ten;
-    el("v-lop").textContent = trang.lop;
-    el("v-truong").textContent = trang.truong;
-    el("v-tuan").textContent = trang.tuan;
-    el("v-gv").textContent = trang.gv;
-    el("v-ngay").textContent = trang.ngay;
-    el("v-khen").textContent = trang.khen;
-    el("v-sao").innerHTML = sao(parseInt(trang.sao, 10) || 5);
-    el("v-sao").setAttribute("aria-label", trang.sao + " trên 5 sao");
-    el("v-ban").innerHTML = MAC[trang.ban] || MAC.gau;
-    el("phieu").setAttribute("data-mau", MAU_TEN[trang.mau] ? trang.mau : "hong");
-
-    document.querySelectorAll("[data-k]").forEach(function (i) {
-      if (i.value !== trang[i.getAttribute("data-k")]) i.value = trang[i.getAttribute("data-k")];
-    });
-    document.querySelectorAll(".chip[data-set]").forEach(function (b) {
-      var p = b.getAttribute("data-set").split("=");
-      b.setAttribute("aria-pressed", String(trang[p[0]] === p[1]));
-    });
+  function meoHtml(c) {
+    if (MEO.indexOf(c) < 0) c = "meo-tim";
+    var phu = c === "meo-ngu" ? "meo-map" : "meo-ngu";
+    return '<div class="meo meo-1"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#' + c + '"/></svg></div>' +
+           '<div class="meo meo-2"><svg viewBox="0 0 100 100" aria-hidden="true"><use href="#' + phu + '"/></svg></div>' +
+           '<div class="meo meo-3"><svg viewBox="0 0 32 30" fill="#FF5E7A" aria-hidden="true"><use href="#tim"/></svg></div>';
   }
 
-  function dat(k, v) { trang[k] = v; luuLai(); ve(); }
-
-  function chip(nhan, k, v, phu) {
-    return '<button type="button" class="chip" data-set="' + k + "=" + v + '">' + (phu || "") + nhan + "</button>";
+  function veThe(el, d) {
+    var n = Math.max(0, Math.min(5, parseInt(d.s, 10) || 0));
+    el.innerHTML =
+      '<div class="dau-the"><span class="nhan-the">Phiếu bé ngoan</span></div>' +
+      '<p class="trao">Trao cho</p>' +
+      '<h1 class="ten">' + esc(d.t || macDinh().t) + '</h1>' +
+      '<div class="tim" role="img" aria-label="' + n + ' trên 5 tim">' + timHtml(n) + '</div>' +
+      '<p class="vi"><span>Vì đã</span>' + esc(d.l) + '</p>' +
+      (d.r ? '<div class="doi"><span class="doi-nhan">Đổi được</span>' +
+             '<strong class="doi-noi">' + esc(d.r) + '</strong></div>' : '') +
+      '<div class="chan-the">' +
+        '<div><span class="nhan-nho">Người trao</span><b>' + esc(d.g) + '</b></div>' +
+        '<div class="ngay"><span class="nhan-nho">Ngày</span><b>' + esc(d.n) + '</b></div>' +
+      '</div>' +
+      '<div class="hieu-luc"><span class="so-the">' + esc(soPhieu(d)) + '</span>' +
+      ' · vô thời hạn · không hoàn lại</div>' +
+      meoHtml(d.c);
   }
 
-  // dựng các nhóm lựa chọn
-  var hSao = "";
-  for (var i = 5; i >= 1; i--) hSao += chip("★".repeat(i), "sao", String(i));
-  el("chon-sao").innerHTML = hSao;
-
-  el("chon-ban").innerHTML = Object.keys(BAN_TEN).map(function (k) {
-    return chip(BAN_TEN[k], "ban", k);
-  }).join("");
-
-  el("chon-mau").innerHTML = Object.keys(MAU_TEN).map(function (k) {
-    return chip(MAU_TEN[k][0], "mau", k, '<span class="dot" style="background:' + MAU_TEN[k][1] + '"></span>');
-  }).join("");
-
-  el("goi-y").innerHTML = GOI_Y.map(function (t, n) {
-    return '<button type="button" class="chip" data-goi="' + n + '">Mẫu ' + (n + 1) + "</button>";
-  }).join("");
-
-  document.addEventListener("click", function (e) {
-    var b = e.target.closest(".chip");
-    if (!b) return;
-    if (b.hasAttribute("data-set")) {
-      var p = b.getAttribute("data-set").split("=");
-      dat(p[0], p[1]);
-    } else if (b.hasAttribute("data-goi")) {
-      dat("khen", GOI_Y[parseInt(b.getAttribute("data-goi"), 10)]);
-    }
+  return {
+    MEO: MEO, MEO_TEN: MEO_TEN,
+    GOI_Y_LOI: GOI_Y_LOI, GOI_Y_THUONG: GOI_Y_THUONG,
+    macDinh: macDinh, homNay: homNay,
+    maHoa: maHoa, giaiMa: giaiMa, tuDiaChi: tuDiaChi, diaChiPhieu: diaChiPhieu,
+    veThe: veThe
+  };
+})();
+</script>
+<script>
+(function () {
+  var d = PHIEU.tuDiaChi();
+  PHIEU.veThe(document.getElementById("the"), d);
+  if (d.t) document.title = "Phiếu bé ngoan · " + d.t;
+  // đổi nội dung khi phần neo thay đổi (bấm lại liên kết khác)
+  window.addEventListener("hashchange", function () {
+    var m = PHIEU.tuDiaChi();
+    PHIEU.veThe(document.getElementById("the"), m);
+    if (m.t) document.title = "Phiếu bé ngoan · " + m.t;
   });
-
-  document.querySelectorAll("[data-k]").forEach(function (inp) {
-    inp.addEventListener("input", function () { dat(inp.getAttribute("data-k"), inp.value); });
-  });
-
-  el("btn-in").addEventListener("click", function () { window.print(); });
-
-  el("btn-reset").addEventListener("click", function () {
-    trang = {};
-    Object.keys(MAC_DINH).forEach(function (k) { trang[k] = MAC_DINH[k]; });
-    luuLai(); ve();
-  });
-
-  el("btn-link").addEventListener("click", function () {
-    var q = new URLSearchParams();
-    Object.keys(MAC_DINH).forEach(function (k) { if (trang[k]) q.set(k, trang[k]); });
-    var url = location.origin + location.pathname + "?" + q.toString();
-    var nut = el("btn-link"), cu = nut.innerHTML;
-    function xong(ok) {
-      nut.innerHTML = ok ? "✅ Đã sao chép liên kết" : "⚠️ Không sao chép được";
-      setTimeout(function () { nut.innerHTML = cu; }, 2200);
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url).then(function () { xong(true); }, function () { xong(false); });
-    } else { xong(false); }
-  });
-
-  trang = doc();
-  ve();
-
-  // mở sẵn bảng tùy chỉnh trên máy tính, gấp lại trên điện thoại
-  if (window.matchMedia("(max-width: 640px)").matches) el("panel").removeAttribute("open");
 })();
 </script>
 </body>

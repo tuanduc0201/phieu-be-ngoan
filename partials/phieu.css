@@ -1,0 +1,163 @@
+  /* ============ TẤM PHIẾU ============ */
+  .the {
+    position: relative;
+    width: 100%;
+    max-width: 560px;
+    padding: clamp(26px, 6.5vw, 44px) clamp(22px, 6vw, 40px) clamp(22px, 5vw, 34px);
+    border-radius: 28px;
+    background:
+      radial-gradient(120% 80% at 12% 0%, rgba(255, 94, 122, 0.22), transparent 60%),
+      radial-gradient(90% 70% at 100% 100%, rgba(228, 179, 99, 0.16), transparent 62%),
+      linear-gradient(158deg, var(--the-2), var(--the) 58%);
+    border: 1px solid var(--vien-ro);
+    box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    container-type: inline-size;
+  }
+  /* vệt sáng chéo rất nhẹ, cho cảm giác giấy tráng */
+  .the::after {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(102deg, transparent 42%, rgba(255, 255, 255, 0.05) 50%, transparent 58%);
+    pointer-events: none;
+  }
+
+  .dau-the {
+    display: flex; align-items: center;
+    gap: 14px;
+    padding-right: clamp(58px, 20cqw, 92px);   /* chừa chỗ cho mèo dán góc trên */
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--vien);
+  }
+  .nhan-the {
+    font-size: clamp(.62rem, 2.4cqw, .74rem);
+    font-weight: 600;
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    color: var(--dong);
+  }
+  .so-the {
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: var(--nga-mo);
+  }
+
+  .trao {
+    margin: clamp(20px, 5cqw, 30px) 0 0;
+    font-size: clamp(.78rem, 3cqw, .9rem);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--xam);
+  }
+
+  .ten {
+    margin: .18em 0 0;
+    font-family: var(--serif);
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-size: clamp(2.3rem, 13cqw, 3.9rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    color: var(--nga);
+  }
+  .ten::after {
+    content: "";
+    display: block;
+    width: clamp(52px, 18cqw, 84px);
+    height: 3px;
+    margin-top: .42em;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--hong), rgba(255, 94, 122, 0));
+  }
+
+  .tim {
+    display: flex; gap: .32em;
+    margin-top: clamp(18px, 4.4cqw, 26px);
+  }
+  .tim svg { width: clamp(20px, 6.2cqw, 27px); height: auto; display: block; }
+  .tim .tat { opacity: .22; }
+
+  .vi {
+    margin: clamp(16px, 4cqw, 22px) 0 0;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-style: italic;
+    font-size: clamp(1.06rem, 4.6cqw, 1.42rem);
+    line-height: 1.5;
+    color: var(--nga);
+    text-wrap: pretty;
+  }
+  .vi span { color: var(--xam); font-style: normal; font-family: var(--sans); font-size: .74em; display: block; margin-bottom: .3em; letter-spacing: .16em; text-transform: uppercase; }
+
+  /* cuống vé "đổi được" */
+  .doi {
+    margin-top: clamp(22px, 5.4cqw, 32px);
+    padding: clamp(14px, 3.6cqw, 20px) clamp(16px, 4cqw, 22px);
+    border: 1px dashed var(--vien-ro);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.035);
+    display: flex; flex-direction: column; gap: .28em;
+  }
+  .doi-nhan {
+    font-size: clamp(.6rem, 2.4cqw, .7rem);
+    font-weight: 600;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    color: var(--dong);
+  }
+  .doi-noi {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(1.12rem, 5cqw, 1.5rem);
+    line-height: 1.25;
+    color: var(--nga);
+    text-wrap: balance;
+  }
+
+  .chan-the {
+    margin-top: clamp(22px, 5.4cqw, 32px);
+    padding-top: clamp(14px, 3.4cqw, 18px);
+    border-top: 1px solid var(--vien);
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 18px;
+  }
+  .chan-the div { display: flex; flex-direction: column; gap: .3em; }
+  .chan-the .nhan-nho {
+    font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: var(--xam);
+  }
+  .chan-the b {
+    font-family: var(--serif); font-weight: 600;
+    font-size: clamp(.98rem, 4cqw, 1.14rem);
+    color: var(--nga);
+  }
+  .chan-the .ngay b { font-variant-numeric: tabular-nums; }
+  .chan-the .ngay { text-align: right; }
+
+  .hieu-luc {
+    margin-top: clamp(12px, 3cqw, 16px);
+    font-size: .64rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--xam);
+    opacity: .8;
+  }
+
+  /* ============ MÈO DÁN ============ */
+  .meo {
+    position: absolute;
+    filter: var(--keyline);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .meo svg { width: 100%; height: auto; display: block; }
+  .meo-1 { width: clamp(74px, 21cqw, 108px); top: -34px;  right: -18px; transform: rotate(9deg); }
+  .meo-2 { width: clamp(58px, 16cqw, 82px);  bottom: -20px; right: -22px; transform: rotate(-11deg); }
+  .meo-3 { width: clamp(48px, 13cqw, 66px);  bottom: 34%; left: -24px; transform: rotate(14deg); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .meo-1 { animation: nhun-meo 3.4s ease-in-out infinite; }
+    @keyframes nhun-meo {
+      0%, 100% { transform: rotate(9deg) translateY(0); }
+      50%      { transform: rotate(9deg) translateY(-5px); }
+    }
+  }

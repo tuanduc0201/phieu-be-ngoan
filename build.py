@@ -1,28 +1,31 @@
 #!/usr/bin/env python3
-"""Đóng gói các trang thành HTML độc lập trong docs/ để GitHub Pages phục vụ.
+"""Đóng gói hai trang nguồn thành HTML độc lập trong docs/ cho GitHub Pages.
 
-Các file .html ở gốc được viết theo dạng Artifact (chỉ có phần nội dung, không có
-<!doctype>/<head>/<body>) nên phải bọc lại mới mở đúng khi host bên ngoài.
+    python3 build.py
 
-    python3 build.py                      # dùng font từ Google Fonts (mặc định)
-    python3 build.py --font-css fonts.css # nhúng bộ font tự host
+tao-phieu.html       -> docs/index.html   (trang tạo phiếu, có mã QR sinh tại chỗ)
+phieu-be-ngoan.html  -> docs/phieu.html   (trang phiếu, đích của mã QR)
 
-quet-phieu-be-ngoan.html -> docs/index.html   (trang chiếu mã QR)
-phieu-be-ngoan.html      -> docs/phieu.html   (trang phiếu mà QR mở ra)
-
---font-css chỉ cần khi host áp CSP chặn fonts.googleapis.com (ví dụ catbox.moe).
-GitHub Pages không chặn nên bản mặc định dùng Google Fonts cho gọn file.
+Hai file nguồn viết theo dạng "chỉ phần nội dung" (không có <!doctype>/<head>/
+<body>) và dùng chỉ thị {{include: đường/dẫn}} để chèn các mảnh chung trong
+partials/. build.py bọc khung tài liệu và chèn các mảnh đó vào.
 """
 import argparse
 import pathlib
 import re
+import sys
 
 GOC = pathlib.Path(__file__).parent
 DOCS = GOC / "docs"
-# nguồn -> tên file khi xuất bản (GitHub Pages phục vụ thư mục docs/)
+
 TRANG = {
-    "quet-phieu-be-ngoan.html": "index.html",
+    "tao-phieu.html": "index.html",
     "phieu-be-ngoan.html": "phieu.html",
+}
+
+MO_TA = {
+    "tao-phieu.html": "Làm phiếu bé ngoan tặng người thương: điền lời khen, chọn mèo, đưa mã QR cho người ấy quét.",
+    "phieu-be-ngoan.html": "Một tấm phiếu bé ngoan dành riêng cho người thương.",
 }
 
 KHUNG = """<!doctype html>
@@ -30,8 +33,9 @@ KHUNG = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#FFEDE1">
+<meta name="theme-color" content="#120D1A">
 <meta name="description" content="{mo_ta}">
+<meta name="color-scheme" content="dark">
 <style>*{{margin:0;padding:0}}html,body{{min-height:100%}}svg,img{{max-width:100%}}</style>
 {dau}
 </head>
@@ -41,38 +45,47 @@ KHUNG = """<!doctype html>
 </html>
 """
 
-MO_TA = {
-    "phieu-be-ngoan.html": "Phiếu bé ngoan cho lớp mầm non — điền tên bé, chọn sao và in khổ A5 ngang.",
-    "quet-phieu-be-ngoan.html": "Quét mã QR để mở phiếu bé ngoan.",
-}
-
 # title/style có thẻ đóng, link là thẻ rỗng
 HEAD_RE = re.compile(
     r"<title\b[^>]*>.*?</title>\s*|<style\b[^>]*>.*?</style>\s*|<link\b[^>]*>\s*",
     re.S | re.I,
 )
+INCLUDE_RE = re.compile(r"\{\{include:\s*([^}\s]+)\s*\}\}")
 LA_FONT_GOOGLE = re.compile(r"fonts\.(googleapis|gstatic)\.com", re.I)
 
 
+def chen_manh(src: str, sau: int = 0) -> str:
+    """Thay mọi {{include: ...}} bằng nội dung file, cho phép lồng nhau."""
+    if sau > 8:
+        sys.exit("Chỉ thị include lồng quá sâu — có vòng lặp?")
+
+    def thay(m: re.Match) -> str:
+        p = GOC / m.group(1)
+        if not p.is_file():
+            sys.exit(f"Không tìm thấy mảnh cần chèn: {m.group(1)}")
+        return chen_manh(p.read_text(encoding="utf-8").rstrip("\n"), sau + 1)
+
+    return INCLUDE_RE.sub(thay, src)
+
+
 def dong_goi(ten: str, font_css: str | None = None) -> pathlib.Path:
-    src = (GOC / ten).read_text(encoding="utf-8")
+    src = chen_manh((GOC / ten).read_text(encoding="utf-8"))
     dau_moi: list[str] = []
 
     def hut(m: re.Match) -> str:
         the = m.group(0).rstrip()
-        # khi tự host font thì bỏ mọi thẻ trỏ ra Google Fonts
         if font_css and the.lower().startswith("<link") and LA_FONT_GOOGLE.search(the):
             return ""
         dau_moi.append(the)
         return ""
 
     # chỉ hút phần đầu file, dừng khi gặp thẻ nội dung đầu tiên
-    cat = src.find("\n<div")
+    cat = min((i for i in (src.find("\n<div"), src.find("\n<main"), src.find("\n<svg")) if i != -1),
+              default=-1)
     dau_phan, than_phan = (src[:cat], src[cat:]) if cat != -1 else (src, "")
     dau_phan = HEAD_RE.sub(hut, dau_phan)
 
     if font_css:
-        # chèn ngay sau <title> để font nạp sớm, trước phần CSS của trang
         vi_tri = 1 if dau_moi and dau_moi[0].lower().startswith("<title") else 0
         dau_moi.insert(vi_tri, "<style>\n" + font_css.strip() + "\n</style>")
 
@@ -89,7 +102,7 @@ def dong_goi(ten: str, font_css: str | None = None) -> pathlib.Path:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("trang", nargs="*", default=None, help="tên file cần đóng gói")
+    ap.add_argument("trang", nargs="*", default=None, help="tên file nguồn cần đóng gói")
     ap.add_argument("--font-css", help="file CSS @font-face tự host, nhúng thay cho Google Fonts")
     a = ap.parse_args()
 
