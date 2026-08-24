@@ -663,11 +663,10 @@ var PHIEU = (function () {
 <script>
 /* Pháo giấy chào phiếu: hai vòi phun từ hai góc dưới bắn chéo vào giữa, chạy 5
    giây rồi mờ dần và tự xoá canvas khỏi trang. Vẽ tay trên canvas, không dùng
-   thư viện ngoài. Ai đặt máy giảm hiệu ứng chuyển động thì bỏ qua hoàn toàn. */
+   thư viện ngoài. */
 (function () {
   "use strict";
 
-  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   var MAU = ["#17B195", "#FF9E86", "#FFC95C", "#B9AEFF", "#B6EFE1", "#FFFFFF"];
   var TONG = 5000;    // tổng thời gian sống
